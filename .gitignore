@@ -1,0 +1,17 @@
+/Servers/
+/.metadata
+/.recommenders
+/RemoteSystemsTempFiles
+/.project
+/.settings
+/target
+*.project
+.settings/
+*.classpath
+target/
+build/
+.idea
+*.iml
+/tms-srv/log
+/tms-platform/log
+*.DS_Store

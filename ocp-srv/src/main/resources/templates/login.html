@@ -1,0 +1,13 @@
+<!doctype html>
+<html lang="zh-cmn-Hans" xmlns:th="http://www.thymeleaf.org">
+
+<link rel="shortcut icon" th:href="@{|/images/logo/${logoDir}/logo.png|}" type="image/x-icon" />
+
+<head th:replace="common/layout::header(title=~{::title})">
+<title th:text="OCP接单系统"></title>
+</head>
+<body th:replace="common/login::body(title='OCP接单系统')" >
+</body>
+</html>
+<!--/*&lt;!&ndash;登录重定向标记,勿删除&ndash;&gt;*/-->
+<script>var redirect = 'login-redirect-flag';</script>

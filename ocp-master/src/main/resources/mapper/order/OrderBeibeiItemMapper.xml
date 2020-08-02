@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.topideal.supplychain.ocp.order.mapper.OrderBeibeiItemMapper">
+  <resultMap id="BaseResultMap" type="com.topideal.supplychain.ocp.order.model.OrderBeibeiItem">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="order_id" jdbcType="BIGINT" property="orderId" />
+    <result column="gnum" jdbcType="INTEGER" property="gnum" />
+    <result column="sku_id" jdbcType="VARCHAR" property="skuId" />
+    <result column="iid" jdbcType="VARCHAR" property="iid" />
+    <result column="url" jdbcType="VARCHAR" property="url" />
+    <result column="outer_id" jdbcType="VARCHAR" property="outerId" />
+    <result column="goods_num" jdbcType="VARCHAR" property="goodsNum" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="price" jdbcType="DECIMAL" property="price" />
+    <result column="origin_price" jdbcType="DECIMAL" property="originPrice" />
+    <result column="num" jdbcType="INTEGER" property="num" />
+    <result column="refund_status" jdbcType="VARCHAR" property="refundStatus" />
+    <result column="subtotal" jdbcType="DECIMAL" property="subtotal" />
+    <result column="total_fee" jdbcType="DECIMAL" property="totalFee" />
+    <result column="declare_amount" jdbcType="DECIMAL" property="declareAmount" />
+    <result column="sku_properties" jdbcType="VARCHAR" property="skuProperties" />
+    <result column="ship_city_property" jdbcType="VARCHAR" property="shipCityProperty" />
+    <result column="img" jdbcType="VARCHAR" property="img" />
+    <result column="brand" jdbcType="VARCHAR" property="brand" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="is_deleted" jdbcType="INTEGER" property="isDeleted" />
+    <result column="version" jdbcType="INTEGER" property="version" />
+    <result column="tenant_id" jdbcType="BIGINT" property="tenantId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, order_id, gnum, sku_id, iid, url, outer_id, goods_num, title, price, origin_price,
+    num, refund_status, subtotal, total_fee, sku_properties, ship_city_property, img,
+    brand, create_by, create_time, update_by, update_time, is_deleted, version, tenant_id,declare_amount
+  </sql>
+  <select id="selectByOrderId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from doc_order_beibei_item
+    where order_id = #{orderId,jdbcType=BIGINT}
+  </select>
+
+  <insert id="insert" parameterType="com.topideal.supplychain.ocp.order.model.OrderBeibeiItem">
+    insert into doc_order_beibei_item
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="orderId != null">
+        order_id,
+      </if>
+      <if test="gnum != null">
+        gnum,
+      </if>
+      <if test="skuId != null">
+        sku_id,
+      </if>
+      <if test="iid != null">
+        iid,
+      </if>
+      <if test="url != null">
+        url,
+      </if>
+      <if test="outerId != null">
+        outer_id,
+      </if>
+      <if test="goodsNum != null">
+        goods_num,
+      </if>
+      <if test="title != null">
+        title,
+      </if>
+      <if test="price != null">
+        price,
+      </if>
+      <if test="originPrice != null">
+        origin_price,
+      </if>
+      <if test="num != null">
+        num,
+      </if>
+      <if test="refundStatus != null">
+        refund_status,
+      </if>
+      <if test="subtotal != null">
+        subtotal,
+      </if>
+      <if test="totalFee != null">
+        total_fee,
+      </if>
+      <if test="skuProperties != null">
+        sku_properties,
+      </if>
+      <if test="shipCityProperty != null">
+        ship_city_property,
+      </if>
+      <if test="img != null">
+        img,
+      </if>
+      <if test="brand != null">
+        brand,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateBy != null">
+        update_by,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="isDeleted != null">
+        is_deleted,
+      </if>
+      <if test="version != null">
+        version,
+      </if>
+      <if test="tenantId != null">
+        tenant_id,
+      </if>
+      <if test="declareAmount != null">
+        declare_amount,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="orderId != null">
+        #{orderId,jdbcType=BIGINT},
+      </if>
+      <if test="gnum != null">
+        #{gnum,jdbcType=INTEGER},
+      </if>
+      <if test="skuId != null">
+        #{skuId,jdbcType=VARCHAR},
+      </if>
+      <if test="iid != null">
+        #{iid,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null">
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="outerId != null">
+        #{outerId,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsNum != null">
+        #{goodsNum,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="originPrice != null">
+        #{originPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="num != null">
+        #{num,jdbcType=INTEGER},
+      </if>
+      <if test="refundStatus != null">
+        #{refundStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="subtotal != null">
+        #{subtotal,jdbcType=DECIMAL},
+      </if>
+      <if test="totalFee != null">
+        #{totalFee,jdbcType=DECIMAL},
+      </if>
+      <if test="skuProperties != null">
+        #{skuProperties,jdbcType=VARCHAR},
+      </if>
+      <if test="shipCityProperty != null">
+        #{shipCityProperty,jdbcType=VARCHAR},
+      </if>
+      <if test="img != null">
+        #{img,jdbcType=VARCHAR},
+      </if>
+      <if test="brand != null">
+        #{brand,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDeleted != null">
+        #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="version != null">
+        #{version,jdbcType=INTEGER},
+      </if>
+      <if test="tenantId != null">
+        #{tenantId,jdbcType=BIGINT},
+      </if>
+      <if test="declareAmount != null">
+        #{declareAmount,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+
+</mapper>

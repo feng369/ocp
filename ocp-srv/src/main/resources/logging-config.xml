@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="60 seconds" INFO="false">
+  <contextName>logback</contextName>
+  <property name="log.file" value="/data/logs/ocp2"/>
+  <property name="log.file1" value="/data/logs/ocp2/logstash.log"/>
+
+  <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+      <pattern>%d{yyyy-MM-dd} %d{HH:mm:ss.SSS} %-5level --- [%thread] %logger{36} - %msg%n
+      </pattern>
+    </encoder>
+  </appender>
+
+  <appender name="file"
+    class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <file>${log.file}/ema.log</file>
+    <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+      　　　　　　　　　　　　　　
+      <fileNamePattern>${log.file}/ema.log.%i</fileNamePattern>
+      　　　　　　　　　　　　　　
+      <minIndex>1</minIndex>
+      　　　　　　　　　　　　　　
+      <maxIndex>10</maxIndex>
+      　　　　　　　　　　　　
+    </rollingPolicy>
+    　　　　　　　　　　　　
+    <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+      　　　　　　　　　　　　　　
+      <maxFileSize>10MB</maxFileSize>
+      　　　　　　　　　　　　
+    </triggeringPolicy>
+    <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+      <level>INFO</level>
+    </filter>
+    <encoder>
+      <pattern>%msg%n</pattern>
+    </encoder>
+  </appender>
+
+  <!--错误日志同步到kibana-->
+  <appender name="file1"
+    class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <file>${log.file1}</file>
+    <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+      　　　　　　　　　　　　　　
+      <fileNamePattern>${log.file}/logstash-%i.log.gz</fileNamePattern>
+      　　　　　　　　　　　　
+      <maxIndex>7</maxIndex>
+      　　　　　　　　　　　　
+    </rollingPolicy>
+
+    　　　　　　　　　　　　
+    <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+      　　　　　　　　　　　　　　
+      <maxFileSize>1024MB</maxFileSize>
+      　　　　　　　　　　　　
+    </triggeringPolicy>
+    <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+      <level>ERROR</level>
+    </filter>
+    <encoder>
+      <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n</pattern>
+      <charset>UTF-8</charset>
+    </encoder>
+  </appender>
+
+  <logger name="com.topideal.supplychain.web.log.service.impl.ExpInvokeLogServiceImpl"
+    additivity="true" level="INFO">
+    <appender-ref ref="file"/>
+  </logger>
+
+  <!--<logger name="com.topideal.supplychain.ocp"
+    additivity="true" level="DEBUG">
+    <appender-ref ref="console"/>
+  </logger>-->
+
+  <root level="ERROR">
+<!--
+    <appender-ref ref="console"/>
+-->
+    <appender-ref ref="file1"/>
+  </root>
+</configuration>

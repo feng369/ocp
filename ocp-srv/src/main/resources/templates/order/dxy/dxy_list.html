@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="zh-cmn-Hans" xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+
+<head th:replace="common/layout::header( ~{::title})">
+  <title id="title">丁香医生订单</title>
+</head>
+
+<body>
+<div class="contentBox">
+  <div class="ui fluid container box-form">
+    <form class="ui form" id="searchForm" method="post">
+      <div class="searchBox">
+        <ul>
+          <li>
+            <div class="smallBox">
+              <label>平台订单号</label>
+              <input class="easyui-textbox" data-options="multiline:true" name="orderIds" id="orderIds"
+                     prompt="平台订单号，支持批量，用英文逗号,或者换行符分割" style="width:150px;height:60px;"/>
+            </div>
+          </li>
+          <li>
+            <div class="smallBox">
+              <label>内部订单号</label>
+              <input class="easyui-textbox" data-options="multiline:true" name="codes" id="codes"
+                     prompt="内部订单号，支持批量，用英文逗号,或者换行符分割" style="width:150px;height:60px;"/>
+            </div>
+
+          </li>
+
+          <li>
+            <div class="smallBox">
+              <label>平台下单时间</label>
+              <input type="text" id="orderCreateTimeStart" name="orderCreateTimeStart"
+                     onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',maxDate:'#F{$dp.$D(\'orderCreateTimeEnd\');}'})"
+                     style="width: 150px;height: 24px;"/>
+            </div>
+
+            <div class="smallBox">
+              <label>至</label>
+              <input type="text" id="orderCreateTimeEnd" name="orderCreateTimeEnd"
+                     onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',minDate:'#F{$dp.$D(\'orderCreateTimeStart\');}'})"
+                     style="width: 150px;height: 24px;"/>
+            </div>
+
+          </li>
+
+          <li>
+            <div class="smallBox">
+              <label>系统创建时间</label>
+              <input type="text" id="createTimeStart" name="createTimeStart" th:value="${createTimeStart}"
+                     onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',maxDate:'#F{$dp.$D(\'createTimeEnd\');}'})"
+                     style="width: 150px;height: 24px;"/>
+            </div>
+
+            <div class="smallBox">
+              <label>至</label>
+              <input type="text" id="createTimeEnd" name="createTimeEnd"
+                     onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',minDate:'#F{$dp.$D(\'createTimeStart\');}'})"
+                     style="width: 150px;height: 24px;"/>
+            </div>
+
+          </li>
+
+          <li>
+
+            <div class="smallBox">
+              <label>申报关区</label>
+              <span class="selectBox">
+                                <select id="customsCode" class="form-select" name="customsCode"
+                                        style="width: 150px;height: 24px;">
+                                    <option value=""></option>
+                                    <option th:each="customsCode : ${T(com.topideal.supplychain.ocp.enums.CustomsCodeEnum).values()}"
+                                            th:text="${customsCode.desc}" th:value="${customsCode.value}" th:otherFields="${customsCode.value}"></option>
+                                </select>
+                                <i class="x icon clearBtn" title="清空"></i>
+                            </span>
+            </div>
+          </li>
+
+        </ul>
+      </div>
+      <div class="field" style="margin-top: 10px;text-align: center;">
+        <a href="#" class="ui mini primary button form-search"><i class="search icon"></i>查询</a>
+        <a href="#" class="ui mini primar grey button form-reset"><i class="undo icon"></i>重置</a>
+        <a href="#" id="show_i" onclick="hide()" style="float :right"><i
+            class="angle down icon"></i>显示条件</a>
+      </div>
+    </form>
+  </div>
+  <div class="tableBox">
+
+    <div id="tb">
+      <a shiro:hasPermission="order.dxy.repush" class="easyui-linkbutton" plain="true"
+         onclick="rePush()"><i class="red reply icon"></i>重推订单</a>
+    </div>
+
+    <table id="tt" striped="true" toolbar="#tb" style="height: 100%;"
+           data-options="rownumbers:true">
+      <thead>
+      <tr>
+        <th field="ck" checkbox="true"></th>
+        <th field="code" style="width: 180px" formatter="formatCode">内部订单号</th>
+        <th field="status" style="width: 100px">状态</th>
+        <th field="orderId" style="width: 180px">平台订单号</th>
+        <th field="platformCode" style="width: 150px">电商平台编码</th>
+        <th field="platformName" style="width: 180px">电商平台名称</th>
+        <th field="customsCode" style="width: 80px">申报关区</th>
+        <th field="busiMode" style="width: 80px">业务模式</th>
+        <th field="taxAmount" style="width: 100px">税费(元)</th>
+        <th field="freightAmount" style="width: 100px">运费(元)</th>
+        <th field="discountAmount" style="width: 100px">优惠金额(元)</th>
+        <th field="payType" style="width: 100px">支付类型</th>
+        <th field="payCompanyCode" style="width: 100px">支付企业编码</th>
+        <th field="paymentNo" style="width: 150px">支付流水号</th>
+        <th field="forwardSystem" style="width: 100px">下发系统</th>
+        <th field="receiverName" style="width: 150px">收件人</th>
+        <th field="receiverMobile" style="width: 150px">收件人电话</th>
+        <th field="receiverIdCard" style="width: 150px">收件人证件号</th>
+        <th field="address" style="width: 250px">收件人地址</th>
+        <th field="orderCreateTime" style="width: 150px">平台下单时间</th>
+        <th field="payTime" style="width: 150px">支付时间</th>
+        <th field="createTime" style="width: 150px">系统创建时间</th>
+      </tr>
+      </thead>
+    </table>
+  </div>
+</div>
+
+<div id="detailDiv"></div>
+<div id="modalDiv"></div>
+
+</body>
+</html>
+<script type="text/javascript">
+  /**
+   * 查询加载页面
+   */
+  $(function () {
+    var params = getFormJson("#searchForm");
+    initSearchHeight();
+    $('#tt').datagrid({
+      formId: "#searchForm",
+      url: basePath + '/orderDxy/json',
+      method: 'post',
+      queryParams: params,
+      pagination: true
+    });
+    $(window).resize();
+  });
+
+
+  /**
+   * 重新推送订单
+   */
+  function rePush() {
+    var checkedItems = $('#tt').datagrid('getChecked');
+    if (checkedItems.length < 1) {
+      tips.alert("请至少选择一行记录操作");
+      return;
+    }
+    var ids = [];
+    $.each(checkedItems, function (index, item) {
+      ids.push(item.id);
+    });
+    $.ajax({
+      url: basePath + "/orderDxy/rePush",
+      type: 'POST',
+      data: {ids: ids},
+      success: function (response) {
+        tips.alert(response.message);
+        if (response.flag === 'SUCCESS') {
+          $('#tt').datagrid('reload');
+        }
+      }
+    });
+  }
+
+  /**
+   * 订单的点击链接
+   */
+  function formatCode(value, row, index) {
+    var htmlStr = "<a class='hrefCss blue_link' id='showDetail' title='详情'  href='javascript:void(0)' "
+        + "onclick=showDetail('" + row.id + "')>"
+        + value + "</a>";
+    htmlStr = htmlStr + "</br>";
+    return htmlStr;
+  }
+
+  /**
+   * 打开商品详细
+   */
+  function showDetail(id) {
+    $('#detailDiv').dialog({
+      title: '【丁香医生】订单明细',
+      width: '80%',
+      height: '80%',
+      closed: false,
+      cache: false,
+      method: 'post',
+      href: basePath + '/orderDxy/showDetail/' + id,
+      modal: true
+    });
+  }
+
+
+</script>

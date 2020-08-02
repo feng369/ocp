@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="zh-cmn-Hans" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="common/layout::header( ~{::title})">
+    <title id="title">平台管理</title>
+</head>
+<body>
+
+
+
+<div class="ui container" style="margin-top:10px;width: 95%">
+    <form class="ui form" id="argsForm" method="post" th:action="@{/platform/editArgs}">
+        <div class="field">
+            <label>平台参数</label>
+            <input type="hidden" name="id" th:value="${platform.id}">
+            <div id="editor"></div>
+        </div>
+    </form>
+</div>
+
+<script th:inline="javascript">
+    var args = [[${platform.arguments}]]
+    $("#editor").jsoneditor({
+        inputName: "arguments",
+        json: args
+    });
+</script>
+</body>
+
+</html>

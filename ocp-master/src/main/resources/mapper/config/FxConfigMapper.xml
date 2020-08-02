@@ -1,0 +1,391 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.topideal.supplychain.ocp.config.mapper.FxConfigMapper" >
+  <resultMap id="BaseResultMap" type="com.topideal.supplychain.ocp.config.model.FxConfig" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="electric_code" property="electricCode" jdbcType="VARCHAR" />
+    <result column="platform_code" property="platformCode" jdbcType="VARCHAR" />
+    <result column="electric_name" property="electricName" jdbcType="VARCHAR" />
+    <result column="platform_name" property="platformName" jdbcType="VARCHAR" />
+    <result column="logistics_code" property="logisticsCode" jdbcType="VARCHAR" />
+    <result column="configuration" property="configuration" jdbcType="OTHER" />
+    <result column="customs_code" property="customsCode" jdbcType="VARCHAR" />
+    <result column="business_mode" property="businessMode" jdbcType="VARCHAR" />
+    <result column="forward_system" property="forwardSystem" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="create_by" property="createBy" jdbcType="BIGINT" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="BIGINT" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="store_code" property="storeCode" jdbcType="VARCHAR" />
+    <result column="tenant_id" property="tenantId" jdbcType="BIGINT" />
+    <result column="is_deleted" property="isDeleted" jdbcType="INTEGER" />
+    <result column="version" property="version" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, electric_code, platform_code, logistics_code, configuration, customs_code, business_mode, 
+    forward_system, status, remark, create_by, create_time,
+    update_by, update_time,  store_code, tenant_id,
+    is_deleted, version,electric_name,platform_name,code
+  </sql>
+  <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from cfg_fx_config
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <select id="findByUnique" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from cfg_fx_config
+    where electric_code = #{electricCode,jdbcType=VARCHAR} and platform_code= #{platformCode,jdbcType=VARCHAR}
+    and logistics_code = #{logisticsCode,jdbcType=VARCHAR} and customs_code = #{customsCode,jdbcType=VARCHAR}
+    and business_mode = #{businessMode,jdbcType=VARCHAR} and status = 0
+  </select>
+
+  <select id="pageList" resultMap="BaseResultMap" parameterType="com.topideal.supplychain.ocp.config.model.FxConfig">
+    select
+    <include refid="Base_Column_List"/>
+    from cfg_fx_config
+    <where>
+      <if test="code != null ">
+        AND code = #{code,jdbcType=VARCHAR}
+      </if>
+      <if test="status != null ">
+        AND status = #{status,jdbcType=INTEGER}
+      </if>
+      <if test="tenantId != null ">
+        AND tenant_id = #{tenantId,jdbcType=BIGINT}
+      </if>
+      <if test="customsCode != null">
+        AND customs_code = #{customsCode,jdbcType=VARCHAR}
+      </if>
+      <if test="platformCode!=null and platformCode!=''">
+        AND platform_code like concat('%',#{platformCode},'%')
+      </if>
+      <if test="electricCode!=null and electricCode!=''">
+        AND electric_code like concat('%',#{electricCode},'%')
+      </if>
+      <if test="logisticsCode!=null and logisticsCode!=''">
+        AND logistics_code like concat('%',#{logisticsCode},'%')
+      </if>
+      <if test="businessMode != null">
+        AND business_mode = #{businessMode,jdbcType=VARCHAR}
+      </if>
+    </where>
+    order by create_time desc
+  </select>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from cfg_fx_config
+        where is_deleted = 0
+    </select>
+
+    <select id="selectAllEnabled" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from cfg_fx_config
+        where is_deleted = 0 and status = 0
+    </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from cfg_fx_config
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete" parameterType="java.lang.Long" >
+    delete from cfg_fx_config
+    where id in
+    <foreach collection="ids.split(',')" item="item" open="(" separator="," close=")">
+      #{item,jdbcType=BIGINT}
+    </foreach>
+  </delete>
+
+  <insert id="insert" parameterType="com.topideal.supplychain.ocp.config.model.FxConfig" useGeneratedKeys="true" keyProperty="id">
+    insert into cfg_fx_config
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="electricCode != null" >
+        electric_code,
+      </if>
+      <if test="platformCode != null" >
+        platform_code,
+      </if>
+      <if test="logisticsCode != null" >
+        logistics_code,
+      </if>
+      <if test="configuration != null" >
+        configuration,
+      </if>
+      <if test="customsCode != null" >
+        customs_code,
+      </if>
+      <if test="businessMode != null" >
+        business_mode,
+      </if>
+      <if test="forwardSystem != null" >
+        forward_system,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="storeCode != null" >
+        store_code,
+      </if>
+      <if test="tenantId != null" >
+        tenant_id,
+      </if>
+      <if test="isDeleted != null" >
+        is_deleted,
+      </if>
+      <if test="version != null" >
+        version,
+      </if>
+      <if test="platformName != null" >
+        platform_name,
+      </if>
+      <if test="electricName != null" >
+        electric_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="electricCode != null" >
+        #{electricCode,jdbcType=VARCHAR},
+      </if>
+      <if test="platformCode != null" >
+        #{platformCode,jdbcType=VARCHAR},
+      </if>
+      <if test="logisticsCode != null" >
+        #{logisticsCode,jdbcType=VARCHAR},
+      </if>
+      <if test="configuration != null" >
+        #{configuration,jdbcType=OTHER},
+      </if>
+      <if test="customsCode != null" >
+        #{customsCode,jdbcType=VARCHAR},
+      </if>
+      <if test="businessMode != null" >
+        #{businessMode,jdbcType=VARCHAR},
+      </if>
+      <if test="forwardSystem != null" >
+        #{forwardSystem,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="storeCode != null" >
+        #{storeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="tenantId != null" >
+        #{tenantId,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null" >
+        #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="version != null" >
+        #{version,jdbcType=INTEGER},
+      </if>
+      <if test="platformName != null" >
+        #{platformName,jdbcType=VARCHAR},
+      </if>
+      <if test="electricName != null" >
+        #{electricName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="update" parameterType="com.topideal.supplychain.ocp.config.model.FxConfig" >
+    update cfg_fx_config
+    <set >
+      <if test="code != null" >
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="electricCode != null" >
+        electric_code = #{electricCode,jdbcType=VARCHAR},
+      </if>
+      <if test="platformCode != null" >
+        platform_code = #{platformCode,jdbcType=VARCHAR},
+      </if>
+      <if test="logisticsCode != null" >
+        logistics_code = #{logisticsCode,jdbcType=VARCHAR},
+      </if>
+      <if test="configuration != null" >
+        configuration = #{configuration,jdbcType=OTHER},
+      </if>
+      <if test="customsCode != null" >
+        customs_code = #{customsCode,jdbcType=VARCHAR},
+      </if>
+      <if test="businessMode != null" >
+        business_mode = #{businessMode,jdbcType=VARCHAR},
+      </if>
+      <if test="forwardSystem != null" >
+        forward_system = #{forwardSystem,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+
+      <if test="storeCode != null" >
+        store_code = #{storeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="tenantId != null" >
+        tenant_id = #{tenantId,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null" >
+        is_deleted = #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="version != null" >
+        version = #{version,jdbcType=INTEGER},
+      </if>
+      <if test="electricName != null" >
+        electric_name = #{electricName,jdbcType=VARCHAR},
+      </if>
+      <if test="platformName != null" >
+        platform_name = #{platformName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateByIds" parameterType="com.topideal.supplychain.ocp.config.model.FxConfig" >
+    update cfg_fx_config
+    <set >
+      <if test="code != null" >
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="electricCode != null" >
+        electric_code = #{electricCode,jdbcType=VARCHAR},
+      </if>
+      <if test="platformCode != null" >
+        platform_code = #{platformCode,jdbcType=VARCHAR},
+      </if>
+      <if test="logisticsCode != null" >
+        logistics_code = #{logisticsCode,jdbcType=VARCHAR},
+      </if>
+      <if test="configuration != null" >
+        configuration = #{configuration,jdbcType=OTHER},
+      </if>
+      <if test="customsCode != null" >
+        customs_code = #{customsCode,jdbcType=VARCHAR},
+      </if>
+      <if test="businessMode != null" >
+        business_mode = #{businessMode,jdbcType=VARCHAR},
+      </if>
+      <if test="forwardSystem != null" >
+        forward_system = #{forwardSystem,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+
+      <if test="storeCode != null" >
+        store_code = #{storeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="tenantId != null" >
+        tenant_id = #{tenantId,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null" >
+        is_deleted = #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="version != null" >
+        version = #{version,jdbcType=INTEGER},
+      </if>
+      <if test="electricName != null" >
+        electric_name = #{electricName,jdbcType=VARCHAR},
+      </if>
+      <if test="platformName != null" >
+        platform_name = #{platformName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id in
+    <foreach collection="ids.split(',')" item="item" open="(" separator="," close=")">
+      #{item,jdbcType=BIGINT}
+    </foreach>
+  </update>
+  <update id="edit" parameterType="com.topideal.supplychain.ocp.config.model.FxConfig" >
+    update cfg_fx_config
+    set electric_code = #{electricCode,jdbcType=VARCHAR},
+      platform_code = #{platformCode,jdbcType=VARCHAR},
+      logistics_code = #{logisticsCode,jdbcType=VARCHAR},
+      configuration = #{configuration,jdbcType=OTHER},
+      customs_code = #{customsCode,jdbcType=VARCHAR},
+      business_mode = #{businessMode,jdbcType=VARCHAR},
+      forward_system = #{forwardSystem,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      update_by = #{updateBy,jdbcType=BIGINT},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      store_code = #{storeCode,jdbcType=VARCHAR},
+      electric_name = #{electricName,jdbcType=VARCHAR},
+      platform_name = #{platformName,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

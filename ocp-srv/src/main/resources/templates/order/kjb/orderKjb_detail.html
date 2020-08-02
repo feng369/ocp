@@ -1,0 +1,361 @@
+<!doctype html>
+<html lang="zh-cmn-Hans" xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+
+<head th:replace="common/layout::header( ~{::title})">
+    <title id="title">跨境宝订单信息详情</title>
+</head>
+
+<body>
+<div class="ui container" style="margin-top:10px;width: 95%">
+
+    <input th:value="${orderKjb.id}" type="hidden" id="orderId" name="orderId">
+    <form class="ui form" method="post">
+        <h4 style="margin-top: 10px">提货单信息</h4>
+        <hr style="margin-bottom: 10px;">
+        <div class="field">
+            <div class="four fields">
+                <div class=" field">
+                    <label>系统业务单号：</label>
+                    <input class="easyui-textbox" name="code" style="width: 150px;height: 24px;" th:value="${orderKjb.code}" readonly>
+                </div>
+                <div class=" field">
+                    <label>店铺编码：</label>
+                    <input class="easyui-textbox" name="storeCode" style="width: 150px;height: 24px;" th:value="${orderKjb.storeCode}" readonly>
+                </div>
+                <div class=" field">
+                    <label>物流公司编码：</label>
+                    <input class="easyui-textbox" name="logisticsCode" style="width: 150px;height: 24px;" th:value="${orderKjb.logisticsCode}" readonly>
+                </div>
+                <div class=" field">
+                    <label>物流运单号：</label>
+                    <input class="easyui-textbox" name="logisticsNo" style="width: 150px;height: 24px;" th:value="${orderKjb.logisticsNo}" readonly>
+                </div>
+            </div>
+            <div class="four fields">
+                <div class=" field">
+                    <label>国际快递单号：</label>
+                    <input class="easyui-textbox" name="interLogisticsNo" style="width: 150px;height: 24px;" th:value="${orderKjb.interLogisticsNo}" readonly>
+                </div>
+                <div class=" field">
+                    <label>菜鸟物流单号：</label>
+                    <input class="easyui-textbox" name="cainiaoLogisticsNo" style="width: 150px;height: 24px;" th:value="${orderKjb.cainiaoLogisticsNo}" readonly>
+                </div>
+                <div class=" field">
+                    <label>淘宝店铺编码：</label>
+                    <input class="easyui-textbox" name="tbStoreCode" style="width: 150px;height: 24px;" th:value="${orderKjb.tbStoreCode}" readonly>
+                </div>
+                <div class=" field">
+                    <label>订单时间：</label>
+                    <input class="easyui-textbox" name="orderCreateTime" style="width: 150px;height: 24px;" th:value="${#calendars.format(orderKjb.orderCreateTime,'yyyy-MM-dd HH:mm:ss')}" readonly>
+                </div>
+            </div>
+            <div class="four fields">
+                <div class=" field">
+                    <label>海外仓编码：</label>
+                    <input class="easyui-textbox" name="overseaHouseCode" style="width: 150px;height: 24px;" th:value="${orderKjb.overseaHouseCode}" readonly>
+                </div>
+                <div class=" field">
+                    <label>卓志速运订单号：</label>
+                    <input class="easyui-textbox" name="esdNo" style="width: 150px;height: 24px;" th:value="${orderKjb.esdNo}" readonly>
+                </div>
+                <div class=" field">
+                    <label>交易订单号：</label>
+                    <input class="easyui-textbox" name="tradeNo" style="width: 150px;height: 24px;" th:value="${orderKjb.tradeNo}" readonly>
+                </div>
+                <div class=" field">
+                    <label>支付企业编码：</label>
+                    <input class="easyui-textbox" name="payMerchantCode" style="width: 150px;height: 24px;" th:value="${orderKjb.payMerchantCode}" readonly>
+                </div>
+            </div>
+            <div class="four fields">
+                <div class=" field">
+                    <label>支付企业名称：</label>
+                    <input class="easyui-textbox" name="payMerchantName" style="width: 150px;height: 24px;" th:value="${orderKjb.payMerchantName}" readonly>
+                </div>
+                <div class=" field">
+                    <label>支付流水号：</label>
+                    <input class="easyui-textbox" name="payNo" style="width: 150px;height: 24px;" th:value="${orderKjb.payNo}" readonly>
+                </div>
+                <div class=" field">
+                    <label>支付信息备注：</label>
+                    <input class="easyui-textbox" name="payRemark" style="width: 150px;height: 24px;" th:value="${orderKjb.payRemark}" readonly>
+                </div>
+                <div class=" field">
+                    <label>面单url：</label>
+                    <input class="easyui-textbox" name="waybillUrl" style="width: 150px;height: 24px;" th:value="${orderKjb.waybillUrl}" readonly>
+                </div>
+            </div>
+            <div class="four fields">
+                <div class=" field">
+                    <label>申报方案编码：</label>
+                    <input class="easyui-textbox" name="declareSchemeSid" style="width: 150px;height: 24px;" th:value="${orderKjb.declareSchemeSid}" readonly>
+                </div>
+                <div class=" field">
+                    <label>产品代码：</label>
+                    <input class="easyui-textbox" name="productCode" style="width: 150px;height: 24px;" th:value="${orderKjb.productCode}" readonly>
+                </div>
+                <div class=" field">
+                    <label>运费(元)：</label>
+                    <input class="easyui-textbox" name="freight" style="width: 150px;height: 24px;" th:value="${orderKjb.freight}" readonly>
+                </div>
+                <div class=" field">
+                    <label>运费币制(元)：</label>
+                    <input class="easyui-textbox" name="freightCurrency" style="width: 150px;height: 24px;" th:value="${orderKjb.freightCurrency}" readonly>
+                </div>
+            </div>
+            <div class="four fields">
+                <div class=" field">
+                    <label>保费(元)：</label>
+                    <input class="easyui-textbox" name="premium" style="width: 150px;height: 24px;" th:value="${orderKjb.premium}" readonly>
+                </div>
+                <div class=" field">
+                    <label>保费币制：</label>
+                    <input class="easyui-textbox" name="premiumCurrency" style="width: 150px;height: 24px;" th:value="${orderKjb.premiumCurrency}" readonly>
+                </div>
+                <div class=" field">
+                    <label>税费(元)：</label>
+                    <input class="easyui-textbox" name="tax" style="width: 150px;height: 24px;" th:value="${orderKjb.tax}" readonly>
+                </div>
+                <div class=" field">
+                    <label>税费币制：</label>
+                    <input class="easyui-textbox" name="taxCurrency" style="width: 150px;height: 24px;" th:value="${orderKjb.taxCurrency}" readonly>
+                </div>
+            </div>
+            <div class="four fields">
+                <div class=" field">
+                    <label>优惠减免金额(元)：</label>
+                    <input class="easyui-textbox" name="discount" style="width: 150px;height: 24px;" th:value="${orderKjb.discount}" readonly>
+                </div>
+                <div class=" field">
+                    <label>优惠减免金额币制：</label>
+                    <input class="easyui-textbox" name="discountCurrency" style="width: 150px;height: 24px;" th:value="${orderKjb.discountCurrency}" readonly>
+                </div>
+                <div class=" field">
+                    <label>包裹净重：</label>
+                    <input class="easyui-textbox" name="netWeight" style="width: 150px;height: 24px;" th:value="${orderKjb.netWeight}" readonly>
+                </div>
+                <div class=" field">
+                    <label>包裹毛重：</label>
+                    <input class="easyui-textbox" name="grossWeight" style="width: 150px;height: 24px;" th:value="${orderKjb.grossWeight}" readonly>
+                </div>
+            </div>
+            <div class="four fields">
+                <div class=" field">
+                    <label>提单号：</label>
+                    <input class="easyui-textbox" name="billNo" style="width: 150px;height: 24px;" th:value="${orderKjb.billNo}" readonly>
+                </div>
+                <div class=" field">
+                    <label>电商平台：</label>
+                    <input class="easyui-textbox" name="platformCode" style="width: 150px;height: 24px;" th:value="${orderKjb.platformCode}" readonly>
+                </div>
+                <div class=" field">
+                    <label>是否溯源：</label>
+                    <input class="easyui-textbox" name="isTraceSource" style="width: 150px;height: 24px;" th:value="${orderKjb.isTraceSource.desc}" readonly>
+                </div>
+                <div class=" field">
+                    <label>溯源码值：</label>
+                    <input class="easyui-textbox" name="zcode" style="width: 150px;height: 24px;" th:value="${orderKjb.zcode}" readonly>
+                </div>
+            </div>
+            <div class="four fields">
+                <div class=" field">
+                    <label>实际支付金额：</label>
+                    <input class="easyui-textbox" name="actualPaid" style="width: 150px;height: 24px;" th:value="${orderKjb.actualPaid}" readonly>
+                </div>
+                <div class=" field">
+                    <label>支付币制：</label>
+                    <input class="easyui-textbox" name="actualPaidCurrency" style="width: 150px;height: 24px;" th:value="${orderKjb.actualPaidCurrency}" readonly>
+                </div>
+                <div class=" field">
+                    <label>换单标识：</label>
+                    <input class="easyui-textbox" name="isTran" style="width: 150px;height: 24px;" th:value="${orderKjb.isTran.desc}" readonly>
+                </div>
+                <div class=" field">
+                    <label>备注：</label>
+                    <input class="easyui-textbox" name="remark" style="width: 150px;height: 24px;" th:value="${orderKjb.remark}" readonly>
+                </div>
+            </div>
+        </div>
+
+        <h4 style="margin-top: 10px">服务类型</h4>
+        <hr style="margin-bottom: 10px;">
+        <div class="field">
+            <div class="four fields">
+                <div class=" field">
+                    <label>服务类型：</label>
+                    <input class="easyui-textbox" name="serviceType" style="width: 150px;height: 24px;" th:value="${orderKjb.serviceType}" readonly>
+                </div>
+            </div>
+        </div>
+
+        <h4 style="margin-top: 10px">发件人信息</h4>
+        <hr style="margin-bottom: 10px;">
+        <div class="field">
+            <div class="four fields">
+                <div class=" field">
+                    <label>姓名：</label>
+                    <input class="easyui-textbox" name="senderName" style="width: 150px;height: 24px;" th:value="${orderKjb.senderName}" readonly>
+                </div>
+                <div class=" field">
+                    <label>发件人电话：</label>
+                    <input class="easyui-textbox" name="senderPhone" style="width: 150px;height: 24px;" th:value="${orderKjb.senderPhone}" readonly>
+                </div>
+                <div class=" field">
+                    <label>发件人手机：</label>
+                    <input class="easyui-textbox" name="senderMobile" style="width: 150px;height: 24px;" th:value="${orderKjb.senderMobile}" readonly>
+                </div>
+                <div class=" field">
+                    <label>发件人国家：</label>
+                    <input class="easyui-textbox" name="senderCountry" style="width: 150px;height: 24px;" th:value="${orderKjb.senderCountry}" readonly>
+                </div>
+            </div>
+            <div class="four fields">
+                <div class=" field">
+                    <label>发件人省：</label>
+                    <input class="easyui-textbox" name="senderProvince" style="width: 150px;height: 24px;" th:value="${orderKjb.senderProvince}" readonly>
+                </div>
+                <div class=" field">
+                    <label>发件人市：</label>
+                    <input class="easyui-textbox" name="senderCity" style="width: 150px;height: 24px;" th:value="${orderKjb.senderCity}" readonly>
+                </div>
+                <div class=" field">
+                    <label>发件人区：</label>
+                    <input class="easyui-textbox" name="senderDistrict" style="width: 150px;height: 24px;" th:value="${orderKjb.senderDistrict}" readonly>
+                </div>
+                <div class=" field">
+                    <label>发件人详细地址：</label>
+                    <input class="easyui-textbox" name="senderAddress" style="width: 150px;height: 24px;" th:value="${orderKjb.senderAddress}" readonly>
+                </div>
+            </div>
+            <div class="four fields">
+                <div class=" field">
+                    <label>发件人邮编：</label>
+                    <input class="easyui-textbox" name="senderZip" style="width: 150px;height: 24px;" th:value="${orderKjb.senderZip}" readonly>
+                </div>
+            </div>
+        </div>
+
+
+        <h4 style="margin-top: 10px">订购人信息</h4>
+        <hr style="margin-bottom: 10px;">
+        <div class="field">
+            <div class="four fields">
+                <div class=" field">
+                    <label>姓名：</label>
+                    <input class="easyui-textbox" name="buyerName" style="width: 150px;height: 24px;" th:value="${orderKjb.buyerName}" readonly>
+                </div>
+                <div class=" field">
+                    <label>联系电话：</label>
+                    <input class="easyui-textbox" name="buyerPhone" style="width: 150px;height: 24px;" th:value="${orderKjb.buyerPhone}" readonly>
+                </div>
+                <div class=" field">
+                    <label>订购人注册号：</label>
+                    <input class="easyui-textbox" name="buyerMobile" style="width: 150px;height: 24px;" th:value="${orderKjb.buyerMobile}" readonly>
+                </div>
+            </div>
+        </div>
+
+
+        <h4 style="margin-top: 10px">收件人信息</h4>
+        <hr style="margin-bottom: 10px;">
+        <div class="field">
+            <div class="four fields">
+                <div class=" field">
+                    <label>收件人姓名：</label>
+                    <input class="easyui-textbox" name="receiverName" style="width: 150px;height: 24px;" th:value="${orderKjb.receiverName}" readonly>
+                </div>
+                <div class=" field">
+                    <label>收件人电话：</label>
+                    <input class="easyui-textbox" name="receiverPhone" style="width: 150px;height: 24px;" th:value="${orderKjb.receiverPhone}" readonly>
+                </div>
+                <div class=" field">
+                    <label>收件人手机：</label>
+                    <input class="easyui-textbox" name="receiverMobile" style="width: 150px;height: 24px;" th:value="${orderKjb.receiverMobile}" readonly>
+                </div>
+                <div class=" field">
+                    <label>收件人国家：</label>
+                    <input class="easyui-textbox" name="receiverCountry" style="width: 150px;height: 24px;" th:value="${orderKjb.receiverCountry}" readonly>
+                </div>
+            </div>
+            <div class="four fields">
+                <div class=" field">
+                    <label>收件人省：</label>
+                    <input class="easyui-textbox" name="receiverProvince" style="width: 150px;height: 24px;" th:value="${orderKjb.receiverProvince}" readonly>
+                </div>
+                <div class=" field">
+                    <label>收件人市：</label>
+                    <input class="easyui-textbox" name="receiverCity" style="width: 150px;height: 24px;" th:value="${orderKjb.receiverCity}" readonly>
+                </div>
+                <div class=" field">
+                    <label>收件人区：</label>
+                    <input class="easyui-textbox" name="receiverDistrict" style="width: 150px;height: 24px;" th:value="${orderKjb.receiverDistrict}" readonly>
+                </div>
+                <div class=" field">
+                    <label>收件人详细地址：</label>
+                    <input class="easyui-textbox" name="receiverAddress" style="width: 150px;height: 24px;" th:value="${orderKjb.receiverAddress}" readonly>
+                </div>
+            </div>
+            <div class="four fields">
+                <div class=" field">
+                    <label>收件人邮编：</label>
+                    <input class="easyui-textbox" name="receiverZip" style="width: 150px;height: 24px;" th:value="${orderKjb.receiverZip}" readonly>
+                </div>
+            </div>
+        </div>
+
+
+        <h4 style="margin-top: 10px">订单明细信息</h4>
+        <hr style="margin-bottom: 10px;">
+        <div class="field">
+            <table id="itemTable" style="width:calc(100% - 10px);height:auto;" striped="true" data-options="rownumbers:true">
+                <thead>
+                <tr>
+                    <th field="itemNo" width="100">序号</th>
+                    <th field="goodsCode" width="150">商品货号</th>
+                    <th field="isPresente" width="150">是否商品备案</th>
+                    <th field="goodsName" width="150">商品名称</th>
+                    <th field="categoryNo" width="150">商品行邮税号</th>
+                    <th field="hscode" width="150">HS海关编码</th>
+                    <th field="custNo" width="150">海关商品备案号</th>
+                    <th field="ciqNo" width="150">国检商品备案号</th>
+                    <th field="qty" width="150">商品数量</th>
+                    <th field="netWeight" width="150">商品净重(克)</th>
+                    <th field="grossWeight" width="150">商品毛重(克)</th>
+                    <th field="price" width="150">商品单价</th>
+                    <th field="priceCurrency" width="150">单价币制</th>
+                    <th field="unit" width="150">计量单位</th>
+                    <th field="unit1" width="150">第一法定计量单位</th>
+                    <th field="qty1" width="150">第一法定计量单位数量</th>
+                    <th field="unit2" width="150">第二法定计量单位</th>
+                    <th field="qty2" width="150">第二法定计量单位数量</th>
+                    <th field="brand" width="150">品牌</th>
+                    <th field="tax" width="150">商品税金</th>
+                    <th field="originCountry" width="150">原产国</th>
+                    <th field="ciqOriginArea" width="150">国检原产地</th>
+                    <th field="spec" width="150">规格型号</th>
+                    <th field="barCode" width="150">商品条形码</th>
+                </tr>
+                </thead>
+            </table>
+        </div>
+    </form>
+</div>
+<script>
+
+    $(function () {
+        var id = $("#orderId").val();
+        $('#itemTable').datagrid({
+            initCount: 1,//开始就加载
+            url: basePath + '/orderKjb/detail/json/' + id,
+            methord: 'post',
+            striped: true, //奇偶行是否区分
+            singleSelect: true,//单选模式
+            rownumbers: true//行号
+        });
+    })
+
+</script>
+
+</body>
+</html>

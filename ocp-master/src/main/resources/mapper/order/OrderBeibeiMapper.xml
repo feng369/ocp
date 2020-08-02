@@ -1,0 +1,493 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.topideal.supplychain.ocp.order.mapper.OrderBeibeiMapper">
+    <resultMap id="BaseResultMap" type="com.topideal.supplychain.ocp.order.model.OrderBeibei">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="code" jdbcType="VARCHAR" property="code"/>
+        <result column="oid" jdbcType="VARCHAR" property="oid"/>
+        <result column="type" jdbcType="VARCHAR" property="type"/>
+        <result column="warehousing_type" jdbcType="VARCHAR" property="warehousingType"/>
+        <result column="user" jdbcType="VARCHAR" property="user"/>
+        <result column="nick" jdbcType="VARCHAR" property="nick"/>
+        <result column="store_code" jdbcType="VARCHAR" property="storeCode"/>
+        <result column="ebp_code" jdbcType="VARCHAR" property="ebpCode"/>
+        <result column="ebc_code" jdbcType="VARCHAR" property="ebcCode"/>
+        <result column="customs_code" jdbcType="VARCHAR" property="customsCode"/>
+        <result column="busi_mode" jdbcType="VARCHAR" property="busiMode"/>
+        <result column="province" jdbcType="VARCHAR" property="province"/>
+        <result column="city" jdbcType="VARCHAR" property="city"/>
+        <result column="county" jdbcType="VARCHAR" property="county"/>
+        <result column="address" jdbcType="VARCHAR" property="address"/>
+        <result column="event_id" jdbcType="VARCHAR" property="eventId"/>
+        <result column="item_num" jdbcType="VARCHAR" property="itemNum"/>
+        <result column="status" jdbcType="VARCHAR" property="status"/>
+        <result column="total_fee" jdbcType="DECIMAL" property="totalFee"/>
+        <result column="shipping_fee" jdbcType="DECIMAL" property="shippingFee"/>
+        <result column="payment" jdbcType="DECIMAL" property="payment"/>
+        <result column="invoice_type" jdbcType="VARCHAR" property="invoiceType"/>
+        <result column="invoice_name" jdbcType="VARCHAR" property="invoiceName"/>
+        <result column="discount" jdbcType="DECIMAL" property="discount"/>
+        <result column="member_card" jdbcType="VARCHAR" property="memberCard"/>
+        <result column="member_card_imgs" jdbcType="VARCHAR" property="memberCardImgs"/>
+        <result column="seller_remark" jdbcType="VARCHAR" property="sellerRemark"/>
+        <result column="remark" jdbcType="VARCHAR" property="remark"/>
+        <result column="receiver_name" jdbcType="VARCHAR" property="receiverName"/>
+        <result column="receiver_phone" jdbcType="VARCHAR" property="receiverPhone"/>
+        <result column="receiver_address" jdbcType="VARCHAR" property="receiverAddress"/>
+        <result column="company" jdbcType="VARCHAR" property="company"/>
+        <result column="out_sid" jdbcType="VARCHAR" property="outSid"/>
+        <result column="channel_name" jdbcType="VARCHAR" property="channelName"/>
+        <result column="channel_info" jdbcType="VARCHAR" property="channelInfo"/>
+        <result column="order_time" jdbcType="TIMESTAMP" property="orderTime"/>
+        <result column="pay_time" jdbcType="TIMESTAMP" property="payTime"/>
+        <result column="ship_time" jdbcType="TIMESTAMP" property="shipTime"/>
+        <result column="end_time" jdbcType="TIMESTAMP" property="endTime"/>
+        <result column="modified_time" jdbcType="TIMESTAMP" property="modifiedTime"/>
+        <result column="tax_fee" jdbcType="DECIMAL" property="taxFee"/>
+        <result column="tariff_fee" jdbcType="DECIMAL" property="tariffFee"/>
+        <result column="addedvalue_fee" jdbcType="DECIMAL" property="addedvalueFee"/>
+        <result column="consump_fee" jdbcType="DECIMAL" property="consumpFee"/>
+        <result column="user_name" jdbcType="VARCHAR" property="userName"/>
+        <result column="user_member_card" jdbcType="VARCHAR" property="userMemberCard"/>
+        <result column="send_system" jdbcType="VARCHAR" property="sendSystem"/>
+        <result column="send_status" jdbcType="VARCHAR" property="sendStatus"/>
+        <result column="send_reason" jdbcType="VARCHAR" property="sendReason"/>
+        <result column="create_by" jdbcType="VARCHAR" property="createBy"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_by" jdbcType="VARCHAR" property="updateBy"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="is_deleted" jdbcType="INTEGER" property="isDeleted"/>
+        <result column="version" jdbcType="INTEGER" property="version"/>
+        <result column="tenant_id" jdbcType="BIGINT" property="tenantId"/>
+    </resultMap>
+
+
+    <resultMap id="DtoResultMap" type="com.topideal.supplychain.ocp.order.dto.OrderBeibeiDto" extends="BaseResultMap">
+
+    </resultMap>
+
+    <sql id="Base_Column_List">
+    id, code, oid, type, warehousing_type, user, nick, store_code, ebp_code, ebc_code,
+    customs_code, busi_mode, province, city, county, address, event_id, item_num, status,
+    total_fee, shipping_fee, payment, invoice_type, invoice_name, discount, member_card,
+    member_card_imgs, seller_remark, remark, receiver_name, receiver_phone, receiver_address,
+    company, out_sid, channel_name, channel_info, order_time, pay_time, ship_time, end_time,
+    modified_time, tax_fee, tariff_fee, addedvalue_fee, consump_fee, user_name, user_member_card,
+    send_system, send_status, send_reason, create_by, create_time, update_by, update_time,
+    is_deleted, version, tenant_id
+    </sql>
+
+    <select id="pageList" resultType="com.topideal.supplychain.ocp.order.dto.OrderBeibeiDto" resultMap="DtoResultMap">
+        select *
+        from doc_order_beibei
+        <where>
+            <if test="code != null">
+                AND code =#{code}
+            </if>
+            <if test="oid !=null">
+                AND oid =#{oid}
+            </if>
+            <if test="ebcCode != null">
+                AND ebc_code =#{ebcCode}
+            </if>
+            <if test="storeCode !=null">
+                AND store_code =#{storeCode}
+            </if>
+            <if test="startDate !=null">
+                AND create_time <![CDATA[>=]]> #{startDate}
+            </if>
+            <if test="endDate != null">
+                AND create_time <![CDATA[<=]]> #{endDate}
+            </if>
+
+        </where>
+    </select>
+
+    <select id="selectById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from doc_order_beibei
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <select id="selectByOId" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from doc_order_beibei
+        where oid = #{oid,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectDtoById" parameterType="java.lang.Long" resultMap="DtoResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from doc_order_beibei
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+
+    <insert id="insert" parameterType="com.topideal.supplychain.ocp.order.model.OrderBeibei" useGeneratedKeys="true"
+            keyProperty="id">
+        insert into doc_order_beibei
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="code != null">
+                code,
+            </if>
+            <if test="oid != null">
+                oid,
+            </if>
+            <if test="type != null">
+                type,
+            </if>
+            <if test="warehousingType != null">
+                warehousing_type,
+            </if>
+            <if test="user != null">
+                user,
+            </if>
+            <if test="nick != null">
+                nick,
+            </if>
+            <if test="storeCode != null">
+                store_code,
+            </if>
+            <if test="ebpCode != null">
+                ebp_code,
+            </if>
+            <if test="ebcCode != null">
+                ebc_code,
+            </if>
+            <if test="customsCode != null">
+                customs_code,
+            </if>
+            <if test="busiMode != null">
+                busi_mode,
+            </if>
+            <if test="province != null">
+                province,
+            </if>
+            <if test="city != null">
+                city,
+            </if>
+            <if test="county != null">
+                county,
+            </if>
+            <if test="address != null">
+                address,
+            </if>
+            <if test="eventId != null">
+                event_id,
+            </if>
+            <if test="itemNum != null">
+                item_num,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="totalFee != null">
+                total_fee,
+            </if>
+            <if test="shippingFee != null">
+                shipping_fee,
+            </if>
+            <if test="payment != null">
+                payment,
+            </if>
+            <if test="invoiceType != null">
+                invoice_type,
+            </if>
+            <if test="invoiceName != null">
+                invoice_name,
+            </if>
+            <if test="discount != null">
+                discount,
+            </if>
+            <if test="memberCard != null">
+                member_card,
+            </if>
+            <if test="memberCardImgs != null">
+                member_card_imgs,
+            </if>
+            <if test="sellerRemark != null">
+                seller_remark,
+            </if>
+            <if test="remark != null">
+                remark,
+            </if>
+            <if test="receiverName != null">
+                receiver_name,
+            </if>
+            <if test="receiverPhone != null">
+                receiver_phone,
+            </if>
+            <if test="receiverAddress != null">
+                receiver_address,
+            </if>
+            <if test="company != null">
+                company,
+            </if>
+            <if test="outSid != null">
+                out_sid,
+            </if>
+            <if test="channelName != null">
+                channel_name,
+            </if>
+            <if test="channelInfo != null">
+                channel_info,
+            </if>
+            <if test="orderTime != null">
+                order_time,
+            </if>
+            <if test="payTime != null">
+                pay_time,
+            </if>
+            <if test="shipTime != null">
+                ship_time,
+            </if>
+            <if test="endTime != null">
+                end_time,
+            </if>
+            <if test="modifiedTime != null">
+                modified_time,
+            </if>
+            <if test="taxFee != null">
+                tax_fee,
+            </if>
+            <if test="tariffFee != null">
+                tariff_fee,
+            </if>
+            <if test="addedvalueFee != null">
+                addedvalue_fee,
+            </if>
+            <if test="consumpFee != null">
+                consump_fee,
+            </if>
+            <if test="userName != null">
+                user_name,
+            </if>
+            <if test="userMemberCard != null">
+                user_member_card,
+            </if>
+            <if test="sendSystem != null">
+                send_system,
+            </if>
+            <if test="sendStatus != null">
+                send_status,
+            </if>
+            <if test="sendReason != null">
+                send_reason,
+            </if>
+            <if test="createBy != null">
+                create_by,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateBy != null">
+                update_by,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="isDeleted != null">
+                is_deleted,
+            </if>
+            <if test="version != null">
+                version,
+            </if>
+            <if test="tenantId != null">
+                tenant_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="code != null">
+                #{code,jdbcType=VARCHAR},
+            </if>
+            <if test="oid != null">
+                #{oid,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=VARCHAR},
+            </if>
+            <if test="warehousingType != null">
+                #{warehousingType,jdbcType=VARCHAR},
+            </if>
+            <if test="user != null">
+                #{user,jdbcType=VARCHAR},
+            </if>
+            <if test="nick != null">
+                #{nick,jdbcType=VARCHAR},
+            </if>
+            <if test="storeCode != null">
+                #{storeCode,jdbcType=VARCHAR},
+            </if>
+            <if test="ebpCode != null">
+                #{ebpCode,jdbcType=VARCHAR},
+            </if>
+            <if test="ebcCode != null">
+                #{ebcCode,jdbcType=VARCHAR},
+            </if>
+            <if test="customsCode != null">
+                #{customsCode,jdbcType=VARCHAR},
+            </if>
+            <if test="busiMode != null">
+                #{busiMode,jdbcType=VARCHAR},
+            </if>
+            <if test="province != null">
+                #{province,jdbcType=VARCHAR},
+            </if>
+            <if test="city != null">
+                #{city,jdbcType=VARCHAR},
+            </if>
+            <if test="county != null">
+                #{county,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null">
+                #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="eventId != null">
+                #{eventId,jdbcType=VARCHAR},
+            </if>
+            <if test="itemNum != null">
+                #{itemNum,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="totalFee != null">
+                #{totalFee,jdbcType=DECIMAL},
+            </if>
+            <if test="shippingFee != null">
+                #{shippingFee,jdbcType=DECIMAL},
+            </if>
+            <if test="payment != null">
+                #{payment,jdbcType=DECIMAL},
+            </if>
+            <if test="invoiceType != null">
+                #{invoiceType,jdbcType=VARCHAR},
+            </if>
+            <if test="invoiceName != null">
+                #{invoiceName,jdbcType=VARCHAR},
+            </if>
+            <if test="discount != null">
+                #{discount,jdbcType=DECIMAL},
+            </if>
+            <if test="memberCard != null">
+                #{memberCard,jdbcType=VARCHAR},
+            </if>
+            <if test="memberCardImgs != null">
+                #{memberCardImgs,jdbcType=VARCHAR},
+            </if>
+            <if test="sellerRemark != null">
+                #{sellerRemark,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null">
+                #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="receiverName != null">
+                #{receiverName,jdbcType=VARCHAR},
+            </if>
+            <if test="receiverPhone != null">
+                #{receiverPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="receiverAddress != null">
+                #{receiverAddress,jdbcType=VARCHAR},
+            </if>
+            <if test="company != null">
+                #{company,jdbcType=VARCHAR},
+            </if>
+            <if test="outSid != null">
+                #{outSid,jdbcType=VARCHAR},
+            </if>
+            <if test="channelName != null">
+                #{channelName,jdbcType=VARCHAR},
+            </if>
+            <if test="channelInfo != null">
+                #{channelInfo,jdbcType=VARCHAR},
+            </if>
+            <if test="orderTime != null">
+                #{orderTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="payTime != null">
+                #{payTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="shipTime != null">
+                #{shipTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="endTime != null">
+                #{endTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifiedTime != null">
+                #{modifiedTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="taxFee != null">
+                #{taxFee,jdbcType=DECIMAL},
+            </if>
+            <if test="tariffFee != null">
+                #{tariffFee,jdbcType=DECIMAL},
+            </if>
+            <if test="addedvalueFee != null">
+                #{addedvalueFee,jdbcType=DECIMAL},
+            </if>
+            <if test="consumpFee != null">
+                #{consumpFee,jdbcType=DECIMAL},
+            </if>
+            <if test="userName != null">
+                #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="userMemberCard != null">
+                #{userMemberCard,jdbcType=VARCHAR},
+            </if>
+            <if test="sendSystem != null">
+                #{sendSystem,jdbcType=VARCHAR},
+            </if>
+            <if test="sendStatus != null">
+                #{sendStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="sendReason != null">
+                #{sendReason,jdbcType=VARCHAR},
+            </if>
+            <if test="createBy != null">
+                #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateBy != null">
+                #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="isDeleted != null">
+                #{isDeleted,jdbcType=INTEGER},
+            </if>
+            <if test="version != null">
+                #{version,jdbcType=INTEGER},
+            </if>
+            <if test="tenantId != null">
+                #{tenantId,jdbcType=BIGINT},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateOrderStatus">
+    update doc_order_beibei set send_status = #{status},send_reason = #{reason} where id = #{id} and send_status != '140'
+  </update>
+
+    <select id="selectByIds" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from doc_order_beibei
+        where id in
+        <foreach collection="list" separator="," item="id" open="(" close=")">
+            #{id,jdbcType=BIGINT}
+        </foreach>
+    </select>
+
+</mapper>

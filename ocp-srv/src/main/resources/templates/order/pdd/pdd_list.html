@@ -1,0 +1,278 @@
+<!doctype html>
+<html lang="zh-cmn-Hans" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="common/layout::header( ~{::title})">
+    <title id="title">拼多多订单管理</title>
+</head>
+<body>
+<div class="contentBox">
+    <div class="ui fluid container box-form">
+        <form class="ui form" id="searchForm">
+            <div class="searchBox">
+                <ul>
+                    <li>
+                        <div class="smallBox">
+                            <label>平台订单号</label>
+                            <input name="orderId" style="width: 150px;height: 24px;">
+                        </div>
+                    </li>
+                    <li>
+                        <div class="smallBox">
+                            <label>内部订单号</label>
+                            <input name="code" style="width: 150px;height: 24px;">
+                        </div>
+                    </li>
+                    <li>
+                        <div class="smallBox">
+                            <label>电商平台</label>
+                            <span class="selectBox">
+                                <input class="form-select" id="cbepcomCode" name="cbepcomCode"
+                                       style="width: 150px;height: 24px;">
+                                <i class="x icon clearBtn" th:title="#{button.clear}"></i>
+                            </span>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="smallBox">
+                            <label>电商企业</label>
+                            <span class="selectBox">
+                                <input class="form-select" id="electricCode" name="electricCode"
+                                       style="width: 150px;height: 24px;">
+                                <i class="x icon clearBtn" th:title="#{button.clear}"></i>
+                            </span>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="smallBox">
+                            <label>状态</label>
+                            <span class="selectBox">
+                                <select class="form-select" name="status" style="width: 150px;height: 24px;">
+                                    <option value=""></option>
+                                    <option th:each="status : ${T(com.topideal.supplychain.ocp.enums.OrderStatusEnum).values()}"
+                                            th:text="${status.desc}" th:value="${status}"></option>
+                                </select>
+                                <i class="x icon clearBtn" th:title="#{button.clear}"></i>
+                            </span>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="smallBox">
+                            <label>订单类型</label>
+                            <span class="selectBox">
+                                <select class="form-select" name="type" style="width: 150px;height: 24px;">
+                                    <option value=""></option>
+                                    <option th:each="type : ${T(com.topideal.supplychain.ocp.enums.OrderTypeEnum).values()}"
+                                            th:text="${type.desc}" th:value="${type}"></option>
+                                </select>
+                                <i class="x icon clearBtn" th:title="#{button.clear}"></i>
+                            </span>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="smallBox">
+                            <label>下发系统</label>
+                            <span class="selectBox">
+                                <select class="form-select" name="sendSystem" style="width: 150px;height: 24px;">
+                                    <option value=""></option>
+                                    <option th:each="system : ${T(com.topideal.supplychain.ocp.enums.ForwardSystemEnum).values()}"
+                                            th:text="${system.desc}" th:value="${system.value}"></option>
+                                </select>
+                                <i class="x icon clearBtn" th:title="#{button.clear}"></i>
+                            </span>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="smallBox">
+                            <label>业务类型</label>
+                            <span class="selectBox">
+                                <select class="form-select" name="busiModeEnum" style="width: 150px;height: 24px;">
+                                    <option value=""></option>
+                                    <option th:each="busiModeEnum : ${T(com.topideal.supplychain.ocp.enums.BusiModeEnum).values()}"
+                                            th:text="${busiModeEnum.memo}" th:value="${busiModeEnum}"></option>
+                                </select>
+                                <i class="x icon clearBtn" th:title="#{button.clear}"></i>
+                            </span>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="smallBox">
+                            <label>创建时间</label>
+                            <input class="easyui-text easyui-validatebox" id="createBeginTime" name="createBeginTime"
+                                   onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss', maxDate:'#F{$dp.$D(\'createEndTime\');}'})"
+                                   style="width: 150px;height: 24px;"
+                                   type="text"/>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="smallBox">
+                            <label>至</label>
+                            <input class="easyui-text" id="createEndTime" name="createEndTime"
+                                   onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss', minDate:'#F{$dp.$D(\'createBeginTime\');}'})"
+                                   style="width: 150px;height: 24px;"
+                                   type="text"/>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="field" style="margin-top: 10px;text-align: center;">
+                <a class="ui mini primary button form-search" href="#"><i class="search icon"></i>查询</a>
+                <a class="ui mini grey button form-reset" href="#"><i class="undo icon"></i>重置</a>
+                <a href="#" id="show_i" onclick="hide()" style="float :right"><i class="angle down icon"></i>显示条件</a>
+            </div>
+        </form>
+
+    </div>
+    <div class="tableBox">
+        <table id="tt" striped="true" style="height: 100%;" toolbar="#tb">
+            <thead>
+            <tr>
+                <th checkbox="true" field="ck"></th>
+                <th field="code" formatter="formatCode" width="180px">内部订单号</th>
+                <th field="status" width="150px">状态</th>
+                <th field="type" width="80px">订单类型</th>
+                <th field="orderId" width="250px">平台订单号</th>
+                <th field="orderSn" width="250px">订单号</th>
+                <th field="platformName" width="150px">电商平台</th>
+                <th field="merchantName" width="150px">电商企业</th>
+                <th field="busiModeEnum" width="80px">贸易类型</th>
+                <th field="sid" width="80px">店铺编码</th>
+                <th field="sendSystem" width="80px">转发系统</th>
+                <th field="createTime" width="150px">创建时间</th>
+            </tr>
+            </thead>
+        </table>
+    </div>
+    <div id="tb" style="display:none;">
+        <a class="easyui-linkbutton" onclick="catchOrder()" plain="true"
+           shiro:hasPermission="order.pdd.catchOrder"><i class="blue cart arrow down icon"></i>单票抓取订单</a>
+        <a class="easyui-linkbutton" onclick="repush()" plain="true"
+           shiro:hasPermission="order.pdd.repush"><i class="red reply icon"></i>重推</a>
+    </div>
+</div>
+<div id="modalDiv"></div>
+<div id="detailDiv"></div>
+
+</body>
+</html>
+<script type="text/javascript">
+    $(function () {
+        initSearchHeight();
+        $('#tt').datagrid({
+            formId: "#searchForm",
+            url: basePath + '/pdd/json',
+            method: 'post',
+            singleSelect: false, //by zhf true会导致复选框也只能选单行
+            pagination: true,
+            rownumbers: true
+        });
+    });
+
+
+    $('#electricCode').combobox({
+        mode: 'remote',
+        url: basePath + '/merchant/autoCompletionMerchant',
+        valueField: 'code',
+        textField: 'name',
+        otherFields: 'code,name'
+    });
+    $('#cbepcomCode').combobox({
+        mode: 'remote',
+        url: basePath + '/platform/autoCompletionPlatform',
+        valueField: 'code',
+        textField: 'name',
+        otherFields: 'code'
+    });
+
+    function repush() {
+        var rowsData = $('#tt').datagrid('getSelections');
+        if (rowsData.length == 0) {
+            tips.alert("请选择需要重推的数据");
+            return;
+        }
+        var ids = [];
+        $(rowsData).each(function (index, data) {
+            ids.push(data.id);
+        });
+        tips.confirm("确认重推选中的数据吗？", function (r) {
+            if (r) {
+                $.ajax({
+                    type: "POST",
+                    url: basePath + "/pdd/repush",
+                    data: {"ids": ids},
+                    async: false,
+                    modalWindow: true,
+                    success: function (response) {
+                        tips.alert(response.message);
+                        if (response.flag == "SUCCESS") {
+                            $('#tt').datagrid('reload');
+                        }
+                    }
+                })
+            }
+        });
+    }
+
+    function formatCode(value, row, index) {
+        var htmlStr = "<a class='hrefCss blue_link' title='详情'  href='javascript:void(0)' "
+            + "onclick=showDetail('" + row.id + "')>"
+            + value + "</a>";
+        return htmlStr;
+    }
+
+    /**
+     * 打开商品详细
+     */
+    function showDetail(id) {
+        $('#detailDiv').dialog({
+            title: '拼多多订单明细',
+            width: '80%',
+            height: '80%',
+            closed: false,
+            cache: false,
+            method: 'post',
+            href: basePath + '/pdd/showDetail/' + id,
+            modal: true
+        });
+    }
+
+    /**
+     * 抓单
+     */
+    function catchOrder() {
+        $('#modalDiv').dialog({
+            title: "单票抓单",
+            width: 700,
+            height: 400,
+            closed: false,
+            cache: false,
+            href: basePath + '/pdd/toCatch',
+            modal: true,
+            buttons: [{
+                text: '确定',
+                handler: function () {
+                    $("#catchForm").form('submit', {
+                        onSubmit: function () {
+                            return $(this).form('validate');
+                        },
+                        success: function (data) {
+                            var response = JSON.parse(data)
+                            tips.alert(response.message);
+                            if (response.flag == "SUCCESS") {
+                                $('#tt').datagrid('reload');
+                                $('#modalDiv').dialog('close');
+                            }
+                        }
+                    });
+                }
+            }, {
+                text: '取消',
+                handler: function () {
+                    $('#modalDiv').dialog('close')
+                }
+            }]
+        });
+    }
+
+</script>
+

@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="zh-cmn-Hans" xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+
+<head th:replace="common/layout::header( ~{::title})">
+    <title id="title">商品登记详情</title>
+</head>
+
+<body>
+<div class="ui container" style="margin-top:10px;width: 95%">
+    <form class="ui form" method="post">
+        <div class="field">
+            <div class="four fields">
+                <div class=" field">
+                    <label>系统业务单号：</label>
+                    <input class="easyui-textbox" name="code" style="width: 150px;height: 24px;" th:value="${goodsInfo.code}" readonly>
+                </div>
+                <div class=" field">
+                    <label>仓库编码：</label>
+                    <input class="easyui-textbox" name="warehouseCode" style="width: 150px;height: 24px;" th:value="${goodsInfo.warehouseCode}" readonly>
+                </div>
+                <div class=" field">
+                    <label>货主编码：</label>
+                    <input class="easyui-textbox" name="ownerCode" style="width: 150px;height: 24px;" th:value="${goodsInfo.ownerCode}" readonly>
+                </div>
+                <div class=" field">
+                    <label>供应商编码：</label>
+                    <input class="easyui-textbox" name="supplierCode" style="width: 150px;height: 24px;" th:value="${goodsInfo.supplierCode}" readonly>
+                </div>
+            </div>
+
+            <div class="four fields">
+                <div class=" field">
+                    <label>供应商名称：</label>
+                    <input class="easyui-textbox" name="supplierName" style="width: 150px;height: 24px;" th:value="${goodsInfo.supplierName}" readonly>
+                </div>
+                <div class=" field">
+                    <label>商品编码：</label>
+                    <input class="easyui-textbox" name="goodsNo" style="width: 150px;height: 24px;" th:value="${goodsInfo.goodsNo}" readonly>
+                </div>
+                <div class=" field">
+                    <label>仓库系统商品编码：</label>
+                    <input class="easyui-textbox" name="wmsGoodsNo" style="width: 150px;height: 24px;" th:value="${goodsInfo.wmsGoodsNo}" readonly>
+                </div>
+                <div class=" field">
+                    <label>货号：</label>
+                    <input class="easyui-textbox" name="goodsCode" style="width: 150px;height: 24px;" th:value="${goodsInfo.goodsCode}" readonly>
+                </div>
+            </div>
+
+            <div class="four fields">
+                <div class=" field">
+                    <label>商品名称：</label>
+                    <input class="easyui-textbox" name="goodsName" style="width: 150px;height: 24px;" th:value="${goodsInfo.goodsName}" readonly>
+                </div>
+                <div class=" field">
+                    <label>商品简称：</label>
+                    <input class="easyui-textbox" name="shortName" style="width: 150px;height: 24px;" th:value="${goodsInfo.shortName}" readonly>
+                </div>
+                <div class=" field">
+                    <label>英文名：</label>
+                    <input class="easyui-textbox" name="englishName" style="width: 150px;height: 24px;" th:value="${goodsInfo.englishName}" readonly>
+                </div>
+                <div class=" field">
+                    <label>条形码：</label>
+                    <input class="easyui-textbox" name="barCode" style="width: 150px;height: 24px;" th:value="${goodsInfo.barCode}" readonly>
+                </div>
+            </div>
+
+            <div class="four fields">
+                <div class=" field">
+                    <label>商品属性：</label>
+                    <input class="easyui-textbox" name="skuProperty" style="width: 150px;height: 24px;" th:value="${goodsInfo.skuProperty}" readonly>
+                </div>
+                <div class=" field">
+                    <label>商品计量单位：</label>
+                    <input class="easyui-textbox" name="unit" style="width: 150px;height: 24px;" th:value="${goodsInfo.unit}" readonly>
+                </div>
+                <div class=" field">
+                    <label>长：</label>
+                    <input class="easyui-textbox" name="length" style="width: 150px;height: 24px;" th:value="${goodsInfo.length}" readonly>
+                </div>
+                <div class=" field">
+                    <label>宽：</label>
+                    <input class="easyui-textbox" name="width" style="width: 150px;height: 24px;" th:value="${goodsInfo.width}" readonly>
+                </div>
+            </div>
+
+            <div class="four fields">
+                <div class=" field">
+                    <label>高：</label>
+                    <input class="easyui-textbox" name="height" style="width: 150px;height: 24px;" th:value="${goodsInfo.height}" readonly>
+                </div>
+                <div class=" field">
+                    <label>体积：</label>
+                    <input class="easyui-textbox" name="volume" style="width: 150px;height: 24px;" th:value="${goodsInfo.volume}" readonly>
+                </div>
+                <div class=" field">
+                    <label>毛重：</label>
+                    <input class="easyui-textbox" name="grossWeight" style="width: 150px;height: 24px;" th:value="${goodsInfo.grossWeight}" readonly>
+                </div>
+                <div class=" field">
+                    <label>净重：</label>
+                    <input class="easyui-textbox" name="netWeight" style="width: 150px;height: 24px;" th:value="${goodsInfo.netWeight}" readonly>
+                </div>
+            </div>
+
+            <div class="four fields">
+                <div class=" field">
+                    <label>颜色：</label>
+                    <input class="easyui-textbox" name="color" style="width: 150px;height: 24px;" th:value="${goodsInfo.color}" readonly>
+                </div>
+                <div class=" field">
+                    <label>尺寸：</label>
+                    <input class="easyui-textbox" name="size" style="width: 150px;height: 24px;" th:value="${goodsInfo.size}" readonly>
+                </div>
+                <div class=" field">
+                    <label>渠道中的商品标题：</label>
+                    <input class="easyui-textbox" name="title" style="width: 150px;height: 24px;" th:value="${goodsInfo.title}" readonly>
+                </div>
+                <div class=" field">
+                    <label>商品类别ID：</label>
+                    <input class="easyui-textbox" name="categoryId" style="width: 150px;height: 24px;" th:value="${goodsInfo.categoryId}" readonly>
+                </div>
+            </div>
+
+            <div class="four fields">
+                <div class=" field">
+                    <label>商品类别名称：</label>
+                    <input class="easyui-textbox" name="categoryName" style="width: 150px;height: 24px;" th:value="${goodsInfo.categoryName}" readonly>
+                </div>
+                <div class=" field">
+                    <label>计价货类：</label>
+                    <input class="easyui-textbox" name="pricingCategory" style="width: 150px;height: 24px;" th:value="${goodsInfo.pricingCategory}" readonly>
+                </div>
+                <div class=" field">
+                    <label>安全库存：</label>
+                    <input class="easyui-textbox" name="safetyStock" style="width: 150px;height: 24px;" th:value="${goodsInfo.safetyStock}" readonly>
+                </div>
+                <div class=" field">
+                    <label>商品类型：</label>
+                    <input class="easyui-textbox" name="goodsType" style="width: 150px;height: 24px;" th:value="${goodsInfo.goodsType}" readonly>
+                </div>
+            </div>
+
+            <div class="four fields">
+                <div class=" field">
+                    <label>吊牌价：</label>
+                    <input class="easyui-textbox" name="tagPrice" style="width: 150px;height: 24px;" th:value="${goodsInfo.tagPrice}" readonly>
+                </div>
+                <div class=" field">
+                    <label>零售价：</label>
+                    <input class="easyui-textbox" name="retailPrice" style="width: 150px;height: 24px;" th:value="${goodsInfo.retailPrice}" readonly>
+                </div>
+                <div class=" field">
+                    <label>成本价：</label>
+                    <input class="easyui-textbox" name="costPrice" style="width: 150px;height: 24px;" th:value="${goodsInfo.costPrice}" readonly>
+                </div>
+                <div class=" field">
+                    <label>采购价：</label>
+                    <input class="easyui-textbox" name="purchasePrice" style="width: 150px;height: 24px;" th:value="${goodsInfo.purchasePrice}" readonly>
+                </div>
+            </div>
+
+            <div class="four fields">
+                <div class=" field">
+                    <label>季节编码：</label>
+                    <input class="easyui-textbox" name="seasonCode" style="width: 150px;height: 24px;" th:value="${goodsInfo.seasonCode}" readonly>
+                </div>
+                <div class=" field">
+                    <label>季节名称：</label>
+                    <input class="easyui-textbox" name="seasonName" style="width: 150px;height: 24px;" th:value="${goodsInfo.seasonName}" readonly>
+                </div>
+                <div class=" field">
+                    <label>品牌代码：</label>
+                    <input class="easyui-textbox" name="brandCode" style="width: 150px;height: 24px;" th:value="${goodsInfo.brandCode}" readonly>
+                </div>
+                <div class=" field">
+                    <label>品牌名称：</label>
+                    <input class="easyui-textbox" name="brandName" style="width: 150px;height: 24px;" th:value="${goodsInfo.brandName}" readonly>
+                </div>
+            </div>
+
+            <div class="four fields">
+                <div class=" field">
+                    <label>生产日期：</label>
+                    <input class="easyui-textbox" name="productDate" style="width: 150px;height: 24px;" th:value="${#calendars.format(goodsInfo.productDate,'yyyy-MM-dd')}" readonly>
+                </div>
+                <div class=" field">
+                    <label>过期日期：</label>
+                    <input class="easyui-textbox" name="expireDate" style="width: 150px;height: 24px;" th:value="${#calendars.format(goodsInfo.expireDate,'yyyy-MM-dd')}" readonly>
+                </div>
+                <div class=" field">
+                    <label>是否需要保质期管理：</label>
+                    <input class="easyui-textbox" name="isShelfLife" style="width: 150px;height: 24px;" th:value="${goodsInfo.isShelfLife == null?'':goodsInfo.isShelfLife.memo}" readonly>
+                </div>
+                <div class=" field">
+                    <label>保质期：</label>
+                    <input class="easyui-textbox" name="shelfLife" style="width: 150px;height: 24px;" th:value="${goodsInfo.shelfLife}" readonly>
+                </div>
+            </div>
+
+            <div class="four fields">
+                <div class=" field">
+                    <label>保质期禁收天数：</label>
+                    <input class="easyui-textbox" name="rejectLifecycle" style="width: 150px;height: 24px;" th:value="${goodsInfo.rejectLifecycle}" readonly>
+                </div>
+                <div class=" field">
+                    <label>保质期禁售天数：</label>
+                    <input class="easyui-textbox" name="lockupLifecycle" style="width: 150px;height: 24px;" th:value="${goodsInfo.lockupLifecycle}" readonly>
+                </div>
+                <div class=" field">
+                    <label>保质期临期预警天数：</label>
+                    <input class="easyui-textbox" name="adventLifecycle" style="width: 150px;height: 24px;" th:value="${goodsInfo.adventLifecycle}" readonly>
+                </div>
+                <div class=" field">
+                    <label>是否需要批次管理：</label>
+                    <input class="easyui-textbox" name="isBatch" style="width: 150px;height: 24px;" th:value="${goodsInfo.isBatch == null?'':goodsInfo.isBatch.memo}" readonly>
+                </div>
+            </div>
+
+            <div class="four fields">
+                <div class=" field">
+                    <label>批次代码：</label>
+                    <input class="easyui-textbox" name="batchCode" style="width: 150px;height: 24px;" th:value="${goodsInfo.batchCode}" readonly>
+                </div>
+                <div class=" field">
+                    <label>批次备注：</label>
+                    <input class="easyui-textbox" name="batchRemark" style="width: 150px;height: 24px;" th:value="${goodsInfo.batchRemark}" readonly>
+                </div>
+                <div class=" field">
+                    <label>包装代码：</label>
+                    <input class="easyui-textbox" name="packCode" style="width: 150px;height: 24px;" th:value="${goodsInfo.packCode}" readonly>
+                </div>
+                <div class=" field">
+                    <label>箱规：</label>
+                    <input class="easyui-textbox" name="pcs" style="width: 150px;height: 24px;" th:value="${goodsInfo.pcs}" readonly>
+                </div>
+            </div>
+
+            <div class="four fields">
+                <div class=" field">
+                    <label>商品原产地：</label>
+                    <input class="easyui-textbox" name="originAddress" style="width: 150px;height: 24px;" th:value="${goodsInfo.originAddress}" readonly>
+                </div>
+                <div class=" field">
+                    <label>批准文号：</label>
+                    <input class="easyui-textbox" name="approvalNo" style="width: 150px;height: 24px;" th:value="${goodsInfo.approvalNo}" readonly>
+                </div>
+                <div class=" field">
+                    <label>是否易碎品：</label>
+                    <input class="easyui-textbox" name="isFragile" style="width: 150px;height: 24px;" th:value="${goodsInfo.isFragile == null ? '' : goodsInfo.isFragile.memo}" readonly>
+                </div>
+                <div class=" field">
+                    <label>是否危险品：</label>
+                    <input class="easyui-textbox" name="isDangerous" style="width: 150px;height: 24px;" th:value="${goodsInfo.isDangerous == null ? '' : goodsInfo.isDangerous.memo}" readonly>
+                </div>
+            </div>
+
+            <div class="four fields">
+                <div class=" field">
+                    <label>备注：</label>
+                    <input class="easyui-textbox" name="remark" style="width: 150px;height: 24px;" th:value="${goodsInfo.remark}" readonly>
+                </div>
+                <div class=" field">
+                    <label>创建时间：</label>
+                    <input class="easyui-textbox" name="createTime" style="width: 150px;height: 24px;" th:value="${#calendars.format(goodsInfo.createTime,'yyyy-MM-dd HH:mm:ss')}" readonly>
+                </div>
+                <div class=" field">
+                    <label>更新时间：</label>
+                    <input class="easyui-textbox" name="updateTime" style="width: 150px;height: 24px;" th:value="${#calendars.format(goodsInfo.updateTime,'yyyy-MM-dd HH:mm:ss')}" readonly>
+                </div>
+                <div class=" field">
+                    <label>是否有效：</label>
+                    <input class="easyui-textbox" name="isValid" style="width: 150px;height: 24px;" th:value="${goodsInfo.isValid == null ? '' : goodsInfo.isValid.memo}" readonly>
+                </div>
+            </div>
+
+            <div class="four fields">
+                <div class=" field">
+                    <label>是否SKU：</label>
+                    <input class="easyui-textbox" name="isSku" style="width: 150px;height: 24px;" th:value="${goodsInfo.isSku == null ? '' : goodsInfo.isSku.memo}" readonly>
+                </div>
+                <div class=" field">
+                    <label>商品包装材料类型：</label>
+                    <input class="easyui-textbox" name="packageMaterial" style="width: 150px;height: 24px;" th:value="${goodsInfo.packageMaterial}" readonly>
+                </div>
+                <div class=" field">
+                    <label>扩展内容：</label>
+                    <input class="easyui-textbox" name="arguments" style="width: 150px;height: 24px;" th:value="${goodsInfo.arguments}" readonly>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>

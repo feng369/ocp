@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="zh-cmn-Hans" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="common/layout::header( ~{::title})">
+    <title id="title">有赞订单明细</title>
+</head>
+<body>
+<style>
+    .subContainer .panel {
+        box-shadow: 0px 1px 4px rgba(0,0,0,0.3), 0px 0px 3px rgba(0,0,0,0.1) inset;
+    }
+
+    .subContainer > .panel.easyui-fluid:not(:last-child) {
+        margin-bottom: 10px;
+    }
+
+    .subContainer .panel-body {
+        border-width: 0;
+        margin-top: 8px;
+        padding-bottom: 8px;
+    }
+
+    .subContainer .tableBox .datagrid .panel-body {
+        box-shadow: none;
+    }
+
+</style>
+<div class="ui fluid subContainer container box-form" style="margin-top:10px;width: 98%">
+    <div id="p1" class="easyui-panel" title="订单信息"
+         style="width:100%;"
+         data-options="collapsible:true">
+        <!--<div class="ui divider hidden"></div>-->
+        <form class="ui form">
+            <div class="searchBox">
+                <ul>
+                    <li class="w-8-4">
+                        <div class="smallBox">
+                            <label>内部订单号:</label>
+                            <span style="width: 150px;height: 24px;" th:text="${orderYouzan.code}"/>
+                        </div>
+                        <div class="smallBox">
+                            <label>平台订单号:</label>
+                            <span style="width: 150px;height: 24px;" th:text="${orderYouzan.subOrderNo}"/>
+                        </div>
+                        <div class="smallBox">
+                            <label>主订单号:</label>
+                            <span style="width: 150px;height: 24px;" th:text="${orderYouzan.tid}"/>
+                        </div>
+                        <div class="smallBox">
+                            <label>商品价格(完税)(元):</label>
+                            <span style="width: 150px;height: 24px;" th:text="${goodsPrice}"/>
+                        </div>
+                    </li>
+                    <li class="w-8-4 notFlex">
+                        <div class="smallBox">
+                            <label>状态:</label>
+                            <span style="width: 150px;height: 24px;" th:text="${status}"/>
+                        </div>
+                        <div class="smallBox">
+                            <label>是否分销:</label>
+                            <span style="width: 150px;height: 24px;" th:text="${fx}"/>
+                        </div>
+                        <div class="smallBox">
+                            <label>优惠金额(元):</label>
+                            <span style="width: 150px;height: 24px;" th:text="${feePrice}"/>
+                        </div>
+                        <div class="smallBox">
+                            <label>支付金额(元):</label>
+                            <span style="width: 150px;height: 24px;" th:text="${payPrice}"/>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </form>
+    </div>
+    <div id="p2" class="easyui-panel" title="明细"
+         style="width:100%;"
+         data-options="collapsible:true">
+        <div class="">
+            <input th:value="${orderId}" type="hidden" id="id">
+            <div class="tableBox">
+
+                <table id="itemTable" striped="true" style="width:99%;">
+                    <thead >
+                    <tr>
+                        <th field="outerSkuId" width="15%">商品货号</th>
+                        <th field="title" width="20%">产品名称</th>
+                        <th field="num" width="10%">购买数量</th>
+                        <th field="discount" width="15%">优惠金额(元)</th>
+                        <th field="discountPrice" width="20%">商品单价(完税)(元)</th>
+                        <th field="totalDiscountPrice" width="20%">商品总价(完税)(元)</th>
+                    </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script >
+    $(function () {
+        var id = $("#id").val();
+        $('#itemTable').datagrid({
+            initCount: 1,//开始就加载
+            url: basePath + '/orderYouzan/detail/' + id,
+            method: 'post',
+            rownumbers :true
+
+        });
+    })
+</script>
+</body>
+</html>

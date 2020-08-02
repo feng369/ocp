@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="zh-cmn-Hans" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="common/layout::header( ~{::title})">
+    <title id="title">新增</title>
+</head>
+<body>
+<div class="ui container" style="margin-top:10px;width: 95%">
+    <form th:action="@{/bigJdChannelConfig/add}" id="addForm" name="addForm" class="ui form" method="post">
+
+        <div class="field" style="margin-left: 20px">
+
+            <div class="two fields">
+                <!--<div class="field required">
+                    <label>编码:</label>
+                    <input type="text" class="easyui-textbox" id="code" name="code"
+                           placeholder="" style="width: 150px;height: 24px;"/>
+                </div>-->
+                <div class="field required">
+                    <label>电商平台:</label>
+                    <span class="selectBox">
+                        <select class="form-select" name="ebpCode"
+                                style="width: 150px;height: 24px;">
+                            <option value=""></option>
+                            <option th:each="platform : ${platformList}" th:otherFields="${platform.code}"
+                                    th:text="${platform.name}" th:value="${platform.code}">
+                            </option>
+                        </select>
+                        <i class="x icon clearBtn" title="清空"></i>
+                    </span>
+                </div>
+                <div class="field required">
+                    <label>电商企业:</label>
+                    <span class="selectBox">
+                    <select id="ebcCode" class="form-select" name="ebcCode"
+                            style="width: 150px;height: 24px;">
+                        <option value=""></option>
+                        <option th:each="merchant : ${merchantList}" th:text="${merchant.name}"
+                                th:value="${merchant.code}" th:otherFields="${merchant.code}">
+                        </option>
+                    </select>
+                    <i class="x icon clearBtn" title="清空"></i>
+                    </span>
+                </div>
+            </div>
+
+            <div class="two fields">
+                <div class="field required">
+                    <label>第三方平台编码:</label>
+                    <input type="text" class="easyui-textbox" id="platformCode" name="platformCode"
+                           placeholder="" style="width: 150px;height: 24px;"/>
+                </div>
+                <div class="field required">
+                    <label>物流企业:</label>
+                    <span class="selectBox">
+                        <select class="form-select" name="logisticsCode"
+                                style="width: 150px;height: 24px;">
+                            <option value=""></option>
+                            <option th:each="logistics : ${logisticsList}" th:otherFields="${logistics.code}"
+                                    th:text="${logistics.name}" th:value="${logistics.code}">
+                            </option>
+                        </select>
+                        <i class="x icon clearBtn" title="清空"></i>
+                    </span>
+                </div>
+            </div>
+
+            <div class="two fields">
+                <div class="field required">
+                    <label>店铺编码:</label>
+                    <span class="selectBox">
+                        <select class="form-select" name="shopCode" id="shopCode"
+                                style="width: 150px;height: 24px;">
+                            <option value=""></option>
+                            <option th:each="store : ${storeList}" th:otherFields="${store.code}"
+                                    th:text="${store.code}" th:value="${store.code}">
+                            </option>
+                        </select>
+                        <i class="x icon clearBtn" title="清空"></i>
+                    </span>
+                </div>
+                <div class="field">
+                    <label>备注:</label>
+                    <input type="text" class="easyui-textbox" id="remark" name="remark"
+                           placeholder="" style="width: 150px;height: 24px;"/>
+                </div>
+            </div>
+
+        </div>
+    </form>
+</div>
+
+<script type="application/javascript" th:inline="javascript">
+    $().ready(function () {
+        cntr.initSelect()
+    });
+</script>
+
+</body>
+
+
+</html>

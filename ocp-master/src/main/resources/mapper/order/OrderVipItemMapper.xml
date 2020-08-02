@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.topideal.supplychain.ocp.order.mapper.OrderVipItemMapper" >
+  <resultMap id="BaseResultMap" type="com.topideal.supplychain.ocp.order.model.OrderVipItem" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="order_id" property="orderId" jdbcType="BIGINT" />
+    <result column="gnum" property="gnum" jdbcType="INTEGER" />
+    <result column="item_record_no" property="itemRecordNo" jdbcType="VARCHAR" />
+    <result column="item_no" property="itemNo" jdbcType="VARCHAR" />
+    <result column="gname" property="gname" jdbcType="VARCHAR" />
+    <result column="good_record_name" property="goodRecordName" jdbcType="VARCHAR" />
+    <result column="gcode" property="gcode" jdbcType="VARCHAR" />
+    <result column="gmodel" property="gmodel" jdbcType="VARCHAR" />
+    <result column="bar_code" property="barCode" jdbcType="VARCHAR" />
+    <result column="origin_country" property="originCountry" jdbcType="VARCHAR" />
+    <result column="currency" property="currency" jdbcType="VARCHAR" />
+    <result column="unit" property="unit" jdbcType="VARCHAR" />
+    <result column="qty" property="qty" jdbcType="DECIMAL" />
+    <result column="unit1" property="unit1" jdbcType="VARCHAR" />
+    <result column="qty1" property="qty1" jdbcType="DECIMAL" />
+    <result column="unit2" property="unit2" jdbcType="VARCHAR" />
+    <result column="qty2" property="qty2" jdbcType="DECIMAL" />
+    <result column="price" property="price" jdbcType="DECIMAL" />
+    <result column="total_price" property="totalPrice" jdbcType="DECIMAL" />
+    <result column="goods_reg_no" property="goodsRegNo" jdbcType="VARCHAR" />
+    <result column="parcel_tax_no" property="parcelTaxNo" jdbcType="VARCHAR" />
+    <result column="brand" property="brand" jdbcType="VARCHAR" />
+    <result column="goods_net_weight" property="goodsNetWeight" jdbcType="DECIMAL" />
+    <result column="goods_gross_weight" property="goodsGrossWeight" jdbcType="DECIMAL" />
+    <result column="note" property="note" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, order_id, gnum, item_record_no, item_no, gname, good_record_name, gcode, gmodel, 
+    bar_code, origin_country, currency, unit, qty, unit1, qty1, unit2, qty2, price, total_price, 
+    goods_reg_no, parcel_tax_no, brand, goods_net_weight, goods_gross_weight, note
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from doc_order_vip_item
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectByOrderId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from doc_order_vip_item
+    where order_id = #{orderId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from doc_order_vip_item
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="batchInsert" parameterType="com.topideal.supplychain.ocp.order.model.OrderVipItem" >
+    insert into doc_order_vip_item (order_id, gnum, item_record_no, 
+      item_no, gname, good_record_name, 
+      gcode, gmodel, bar_code, 
+      origin_country, currency, unit, 
+      qty, unit1, qty1, unit2, 
+      qty2, price, total_price, 
+      goods_reg_no, parcel_tax_no, brand, 
+      goods_net_weight, goods_gross_weight, note
+      )
+    values
+    <foreach collection="goodsList" item="item" separator=",">
+    (#{orderId,jdbcType=BIGINT}, #{item.gnum,jdbcType=INTEGER}, #{item.itemRecordNo,jdbcType=VARCHAR},
+      #{item.itemNo,jdbcType=VARCHAR}, #{item.gname,jdbcType=VARCHAR}, #{item.goodRecordName,jdbcType=VARCHAR},
+      #{item.gcode,jdbcType=VARCHAR}, #{item.gmodel,jdbcType=VARCHAR}, #{item.barCode,jdbcType=VARCHAR},
+      #{item.originCountry,jdbcType=VARCHAR}, #{item.currency,jdbcType=VARCHAR}, #{item.unit,jdbcType=VARCHAR},
+      #{item.qty,jdbcType=DECIMAL}, #{item.unit1,jdbcType=VARCHAR}, #{item.qty1,jdbcType=DECIMAL}, #{item.unit2,jdbcType=VARCHAR},
+      #{item.qty2,jdbcType=DECIMAL}, #{item.price,jdbcType=DECIMAL}, #{item.totalPrice,jdbcType=DECIMAL},
+      #{item.goodsRegNo,jdbcType=VARCHAR}, #{item.parcelTaxNo,jdbcType=VARCHAR}, #{item.brand,jdbcType=VARCHAR},
+      #{item.goodsNetWeight,jdbcType=DECIMAL}, #{item.goodsGrossWeight,jdbcType=DECIMAL}, #{item.note,jdbcType=VARCHAR}
+      )
+    </foreach>
+  </insert>
+  <insert id="insertSelective" parameterType="com.topideal.supplychain.ocp.order.model.OrderVipItem" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into doc_order_vip_item
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="orderId != null" >
+        order_id,
+      </if>
+      <if test="gnum != null" >
+        gnum,
+      </if>
+      <if test="itemRecordNo != null" >
+        item_record_no,
+      </if>
+      <if test="itemNo != null" >
+        item_no,
+      </if>
+      <if test="gname != null" >
+        gname,
+      </if>
+      <if test="goodRecordName != null" >
+        good_record_name,
+      </if>
+      <if test="gcode != null" >
+        gcode,
+      </if>
+      <if test="gmodel != null" >
+        gmodel,
+      </if>
+      <if test="barCode != null" >
+        bar_code,
+      </if>
+      <if test="originCountry != null" >
+        origin_country,
+      </if>
+      <if test="currency != null" >
+        currency,
+      </if>
+      <if test="unit != null" >
+        unit,
+      </if>
+      <if test="qty != null" >
+        qty,
+      </if>
+      <if test="unit1 != null" >
+        unit1,
+      </if>
+      <if test="qty1 != null" >
+        qty1,
+      </if>
+      <if test="unit2 != null" >
+        unit2,
+      </if>
+      <if test="qty2 != null" >
+        qty2,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="totalPrice != null" >
+        total_price,
+      </if>
+      <if test="goodsRegNo != null" >
+        goods_reg_no,
+      </if>
+      <if test="parcelTaxNo != null" >
+        parcel_tax_no,
+      </if>
+      <if test="brand != null" >
+        brand,
+      </if>
+      <if test="goodsNetWeight != null" >
+        goods_net_weight,
+      </if>
+      <if test="goodsGrossWeight != null" >
+        goods_gross_weight,
+      </if>
+      <if test="note != null" >
+        note,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="orderId != null" >
+        #{orderId,jdbcType=BIGINT},
+      </if>
+      <if test="gnum != null" >
+        #{gnum,jdbcType=INTEGER},
+      </if>
+      <if test="itemRecordNo != null" >
+        #{itemRecordNo,jdbcType=VARCHAR},
+      </if>
+      <if test="itemNo != null" >
+        #{itemNo,jdbcType=VARCHAR},
+      </if>
+      <if test="gname != null" >
+        #{gname,jdbcType=VARCHAR},
+      </if>
+      <if test="goodRecordName != null" >
+        #{goodRecordName,jdbcType=VARCHAR},
+      </if>
+      <if test="gcode != null" >
+        #{gcode,jdbcType=VARCHAR},
+      </if>
+      <if test="gmodel != null" >
+        #{gmodel,jdbcType=VARCHAR},
+      </if>
+      <if test="barCode != null" >
+        #{barCode,jdbcType=VARCHAR},
+      </if>
+      <if test="originCountry != null" >
+        #{originCountry,jdbcType=VARCHAR},
+      </if>
+      <if test="currency != null" >
+        #{currency,jdbcType=VARCHAR},
+      </if>
+      <if test="unit != null" >
+        #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="qty != null" >
+        #{qty,jdbcType=DECIMAL},
+      </if>
+      <if test="unit1 != null" >
+        #{unit1,jdbcType=VARCHAR},
+      </if>
+      <if test="qty1 != null" >
+        #{qty1,jdbcType=DECIMAL},
+      </if>
+      <if test="unit2 != null" >
+        #{unit2,jdbcType=VARCHAR},
+      </if>
+      <if test="qty2 != null" >
+        #{qty2,jdbcType=DECIMAL},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="totalPrice != null" >
+        #{totalPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="goodsRegNo != null" >
+        #{goodsRegNo,jdbcType=VARCHAR},
+      </if>
+      <if test="parcelTaxNo != null" >
+        #{parcelTaxNo,jdbcType=VARCHAR},
+      </if>
+      <if test="brand != null" >
+        #{brand,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsNetWeight != null" >
+        #{goodsNetWeight,jdbcType=DECIMAL},
+      </if>
+      <if test="goodsGrossWeight != null" >
+        #{goodsGrossWeight,jdbcType=DECIMAL},
+      </if>
+      <if test="note != null" >
+        #{note,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.topideal.supplychain.ocp.order.model.OrderVipItem" >
+    update doc_order_vip_item
+    <set >
+      <if test="orderId != null" >
+        order_id = #{orderId,jdbcType=BIGINT},
+      </if>
+      <if test="gnum != null" >
+        gnum = #{gnum,jdbcType=INTEGER},
+      </if>
+      <if test="itemRecordNo != null" >
+        item_record_no = #{itemRecordNo,jdbcType=VARCHAR},
+      </if>
+      <if test="itemNo != null" >
+        item_no = #{itemNo,jdbcType=VARCHAR},
+      </if>
+      <if test="gname != null" >
+        gname = #{gname,jdbcType=VARCHAR},
+      </if>
+      <if test="goodRecordName != null" >
+        good_record_name = #{goodRecordName,jdbcType=VARCHAR},
+      </if>
+      <if test="gcode != null" >
+        gcode = #{gcode,jdbcType=VARCHAR},
+      </if>
+      <if test="gmodel != null" >
+        gmodel = #{gmodel,jdbcType=VARCHAR},
+      </if>
+      <if test="barCode != null" >
+        bar_code = #{barCode,jdbcType=VARCHAR},
+      </if>
+      <if test="originCountry != null" >
+        origin_country = #{originCountry,jdbcType=VARCHAR},
+      </if>
+      <if test="currency != null" >
+        currency = #{currency,jdbcType=VARCHAR},
+      </if>
+      <if test="unit != null" >
+        unit = #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="qty != null" >
+        qty = #{qty,jdbcType=DECIMAL},
+      </if>
+      <if test="unit1 != null" >
+        unit1 = #{unit1,jdbcType=VARCHAR},
+      </if>
+      <if test="qty1 != null" >
+        qty1 = #{qty1,jdbcType=DECIMAL},
+      </if>
+      <if test="unit2 != null" >
+        unit2 = #{unit2,jdbcType=VARCHAR},
+      </if>
+      <if test="qty2 != null" >
+        qty2 = #{qty2,jdbcType=DECIMAL},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="totalPrice != null" >
+        total_price = #{totalPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="goodsRegNo != null" >
+        goods_reg_no = #{goodsRegNo,jdbcType=VARCHAR},
+      </if>
+      <if test="parcelTaxNo != null" >
+        parcel_tax_no = #{parcelTaxNo,jdbcType=VARCHAR},
+      </if>
+      <if test="brand != null" >
+        brand = #{brand,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsNetWeight != null" >
+        goods_net_weight = #{goodsNetWeight,jdbcType=DECIMAL},
+      </if>
+      <if test="goodsGrossWeight != null" >
+        goods_gross_weight = #{goodsGrossWeight,jdbcType=DECIMAL},
+      </if>
+      <if test="note != null" >
+        note = #{note,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.topideal.supplychain.ocp.order.model.OrderVipItem" >
+    update doc_order_vip_item
+    set order_id = #{orderId,jdbcType=BIGINT},
+      gnum = #{gnum,jdbcType=INTEGER},
+      item_record_no = #{itemRecordNo,jdbcType=VARCHAR},
+      item_no = #{itemNo,jdbcType=VARCHAR},
+      gname = #{gname,jdbcType=VARCHAR},
+      good_record_name = #{goodRecordName,jdbcType=VARCHAR},
+      gcode = #{gcode,jdbcType=VARCHAR},
+      gmodel = #{gmodel,jdbcType=VARCHAR},
+      bar_code = #{barCode,jdbcType=VARCHAR},
+      origin_country = #{originCountry,jdbcType=VARCHAR},
+      currency = #{currency,jdbcType=VARCHAR},
+      unit = #{unit,jdbcType=VARCHAR},
+      qty = #{qty,jdbcType=DECIMAL},
+      unit1 = #{unit1,jdbcType=VARCHAR},
+      qty1 = #{qty1,jdbcType=DECIMAL},
+      unit2 = #{unit2,jdbcType=VARCHAR},
+      qty2 = #{qty2,jdbcType=DECIMAL},
+      price = #{price,jdbcType=DECIMAL},
+      total_price = #{totalPrice,jdbcType=DECIMAL},
+      goods_reg_no = #{goodsRegNo,jdbcType=VARCHAR},
+      parcel_tax_no = #{parcelTaxNo,jdbcType=VARCHAR},
+      brand = #{brand,jdbcType=VARCHAR},
+      goods_net_weight = #{goodsNetWeight,jdbcType=DECIMAL},
+      goods_gross_weight = #{goodsGrossWeight,jdbcType=DECIMAL},
+      note = #{note,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

@@ -1,0 +1,712 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.topideal.supplychain.ocp.order.mapper.OrderAmwayMapper">
+    <resultMap id="BaseResultMap" type="com.topideal.supplychain.ocp.order.dto.OrderAmwayDto">
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="status" property="status" jdbcType="VARCHAR" />
+        <result column="order_code" property="orderCode" jdbcType="VARCHAR" />
+        <result column="message_id" property="messageId" jdbcType="VARCHAR" />
+        <result column="sign" property="sign" jdbcType="VARCHAR" />
+        <result column="message_type" property="messageType" jdbcType="VARCHAR" />
+        <result column="sender_id" property="senderId" jdbcType="VARCHAR" />
+        <result column="receiver_id" property="receiverId" jdbcType="VARCHAR" />
+        <result column="send_time" property="sendTime" jdbcType="TIMESTAMP" />
+        <result column="version" property="version" jdbcType="INTEGER" />
+        <result column="warehouse_id" property="warehouseId" jdbcType="VARCHAR" />
+        <result column="business_type" property="businessType" jdbcType="VARCHAR" />
+        <result column="version_id" property="versionId" jdbcType="VARCHAR" />
+        <result column="group_order_number" property="groupOrderNumber" jdbcType="VARCHAR" />
+        <result column="is_group_order_flag" property="isGroupOrderFlag" jdbcType="VARCHAR" />
+        <result column="order_number" property="orderNumber" jdbcType="VARCHAR" />
+        <result column="order_type" property="orderType" jdbcType="VARCHAR" />
+        <result column="distributor_number" property="distributorNumber" jdbcType="VARCHAR" />
+        <result column="distributor_name" property="distributorName" jdbcType="VARCHAR" />
+        <result column="distributor_spouse_name" property="distributorSpouseName" jdbcType="VARCHAR" />
+        <result column="service_name" property="serviceName" jdbcType="VARCHAR" />
+        <result column="order_dst_mobile" property="orderDstMobile" jdbcType="VARCHAR" />
+        <result column="order_dst_land_no" property="orderDstLandNo" jdbcType="VARCHAR" />
+        <result column="ship_to_dst" property="shipToDst" jdbcType="VARCHAR" />
+        <result column="consignee_name" property="consigneeName" jdbcType="VARCHAR" />
+        <result column="ship_to_address1" property="shipToAddress1" jdbcType="VARCHAR" />
+        <result column="ship_to_address2" property="shipToAddress2" jdbcType="VARCHAR" />
+        <result column="ship_to_address3" property="shipToAddress3" jdbcType="VARCHAR" />
+        <result column="ship_to_address4" property="shipToAddress4" jdbcType="VARCHAR" />
+        <result column="ship_to_address5" property="shipToAddress5" jdbcType="VARCHAR" />
+        <result column="post_code" property="postCode" jdbcType="VARCHAR" />
+        <result column="consignee_mobile" property="consigneeMobile" jdbcType="VARCHAR" />
+        <result column="consignee_land_no" property="consigneeLandNo" jdbcType="VARCHAR" />
+        <result column="sale_date" property="saleDate" jdbcType="TIMESTAMP" />
+        <result column="expected_delivery_period" property="expectedDeliveryPeriod" jdbcType="VARCHAR" />
+        <result column="delivery_fee" property="deliveryFee" jdbcType="DECIMAL" />
+        <result column="delivery_insurance_fee" property="deliveryInsuranceFee" jdbcType="DECIMAL" />
+        <result column="order_status" property="orderStatus" jdbcType="VARCHAR" />
+        <result column="order_bv" property="orderBv" jdbcType="VARCHAR" />
+        <result column="order_pv" property="orderPv" jdbcType="VARCHAR" />
+        <result column="order_discount" property="orderDiscount" jdbcType="DECIMAL" />
+        <result column="coupon_bv" property="couponBv" jdbcType="VARCHAR" />
+        <result column="voucher_bv" property="voucherBv" jdbcType="VARCHAR" />
+        <result column="promotion_bv" property="promotionBv" jdbcType="VARCHAR" />
+        <result column="gift_point_generated" property="giftPointGenerated" jdbcType="VARCHAR" />
+        <result column="gift_point_used" property="giftPointUsed" jdbcType="VARCHAR" />
+        <result column="gift_point_left" property="giftPointLeft" jdbcType="VARCHAR" />
+        <result column="pos_code" property="posCode" jdbcType="VARCHAR" />
+        <result column="staff_number" property="staffNumber" jdbcType="VARCHAR" />
+        <result column="order_original_price" property="orderOriginalPrice" jdbcType="DECIMAL" />
+        <result column="rsvst1" property="rsvst1" jdbcType="VARCHAR" />
+        <result column="rsvst2" property="rsvst2" jdbcType="VARCHAR" />
+        <result column="rsvst3" property="rsvst3" jdbcType="VARCHAR" />
+        <result column="rsvst4" property="rsvst4" jdbcType="VARCHAR" />
+        <result column="rsvst5" property="rsvst5" jdbcType="VARCHAR" />
+        <result column="rsvdc1" property="rsvdc1" jdbcType="VARCHAR" />
+        <result column="rsvdc2" property="rsvdc2" jdbcType="VARCHAR" />
+        <result column="rsvdc3" property="rsvdc3" jdbcType="VARCHAR" />
+        <result column="rsvdc4" property="rsvdc4" jdbcType="VARCHAR" />
+        <result column="rsvdc5" property="rsvdc5" jdbcType="VARCHAR" />
+        <result column="system_flag" property="systemFlag" jdbcType="VARCHAR" />
+        <result column="ship_to_address3_1" property="shipToAddress31" jdbcType="VARCHAR" />
+        <result column="ship_to_address_type" property="shipToAddressType" jdbcType="VARCHAR" />
+        <result column="ship_to_combined_id" property="shipToCombinedId" jdbcType="VARCHAR" />
+        <result column="code" property="code" jdbcType="VARCHAR" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="create_by" property="createBy" jdbcType="BIGINT" />
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+        <result column="update_by" property="updateBy" jdbcType="BIGINT" />
+        <result column="is_deleted" property="isDeleted" jdbcType="INTEGER" />
+        <result column="tenant_id" property="tenantId" jdbcType="BIGINT" />
+        <result column="import_mode" property="importMode" jdbcType="VARCHAR" />
+        <result column="customs" property="customs" jdbcType="VARCHAR" />
+        <result column="tax_fee" property="taxFee" jdbcType="DECIMAL" />
+        <result column="customer_id" property="customerId" jdbcType="VARCHAR" />
+        <result column="country" property="country" jdbcType="VARCHAR" />
+        <result column="transport_method" property="transportMethod" jdbcType="VARCHAR" />
+        <result column="ship_name" property="shipName" jdbcType="VARCHAR" />
+        <result column="ship_address" property="shipAddress" jdbcType="VARCHAR" />
+        <result column="ship_tel" property="shipTel" jdbcType="VARCHAR" />
+        <result column="ebc_code" property="ebcCode" jdbcType="VARCHAR" />
+        <result column="ebp_code" property="ebpCode" jdbcType="VARCHAR" />
+        <result column="delivery_code" property="deliveryCode" jdbcType="VARCHAR" />
+        <result column="payment_header_amount" property="paymentHeaderAmount" jdbcType="DECIMAL" />
+        <result column="payment_date_time" property="paymentDateTime" jdbcType="TIMESTAMP" />
+        <result column="coupon_pv" property="couponPv" jdbcType="VARCHAR" />
+        <result column="voucher_pv" property="voucherPv" jdbcType="VARCHAR" />
+        <result column="promotion_pv" property="promotionPv" jdbcType="VARCHAR" />
+        <result column="send_system" jdbcType="VARCHAR" property="sendSystem" />
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, status, order_code, message_id, sign, message_type, sender_id, receiver_id,
+    send_time, version, warehouse_id, business_type, version_id, group_order_number, 
+    is_group_order_flag, order_number, order_type, distributor_number, distributor_name, 
+    distributor_spouse_name, service_name, order_dst_mobile, order_dst_land_no, ship_to_dst, 
+    consignee_name, ship_to_address1, ship_to_address2, ship_to_address3, ship_to_address4, 
+    ship_to_address5, post_code, consignee_mobile, consignee_land_no, sale_date, expected_delivery_period, 
+    delivery_fee, delivery_insurance_fee, order_status, order_bv, order_pv, order_discount, 
+    coupon_bv, voucher_bv, promotion_bv, gift_point_generated, gift_point_used, gift_point_left, 
+    pos_code, staff_number, order_original_price, rsvst1, rsvst2, rsvst3, rsvst4, rsvst5, 
+    rsvdc1, rsvdc2, rsvdc3, rsvdc4, rsvdc5, system_flag, ship_to_address3_1, ship_to_address_type, 
+    ship_to_combined_id, code, create_time, create_by, update_time, update_by, is_deleted, 
+    tenant_id, import_mode, customs, tax_fee, customer_id, country, transport_method, 
+    ship_name, ship_address, ship_tel,ebc_code,ebp_code,delivery_code,payment_header_amount,payment_date_time, coupon_pv, voucher_pv, promotion_pv,
+    send_system
+  </sql>
+    <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from doc_order_amway
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <select id="selectByIds" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from doc_order_amway
+        where id in
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id,jdbcType=BIGINT}
+        </foreach>
+    </select>
+    <select id="pageList" resultMap="BaseResultMap"
+            parameterType="com.topideal.supplychain.ocp.order.dto.OrderAmwayDto">
+        select
+        <include refid="Base_Column_List"/>
+        from doc_order_amway
+        <where>
+            <if test="status != null ">
+                AND status = #{status,jdbcType=VARCHAR}
+            </if>
+            <if test="orderNumber!=null and orderNumber!=''">
+                AND order_number = #{orderNumber}
+            </if>
+            <if test="code!=null and code!=''">
+                AND code  = #{code}
+            </if>
+            <if test="messageId!=null and messageId!=''">
+                AND message_id  = #{messageId}
+            </if>
+            <if test="createDateStart!=null">
+                AND sale_date <![CDATA[ >= ]]> #{createDateStart,jdbcType=TIMESTAMP}
+            </if>
+            <if test="createDateEnd!=null">
+                AND sale_date <![CDATA[ < ]]> #{createDateEnd,jdbcType=TIMESTAMP}
+            </if>
+            <if test="createTimeStart!=null">
+                AND create_time <![CDATA[ >= ]]> #{createTimeStart,jdbcType=TIMESTAMP}
+            </if>
+            <if test="createTimeEnd!=null">
+                AND create_time <![CDATA[ < ]]> #{createTimeEnd,jdbcType=TIMESTAMP}
+            </if>
+        </where>
+        order by create_time desc
+    </select>
+
+
+    <insert id="insert" parameterType="com.topideal.supplychain.ocp.order.model.OrderAmway" useGeneratedKeys="true"
+            keyProperty="id">
+        insert into doc_order_amway
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                id,
+            </if>
+            <if test="sendSystem != null" >
+            send_system,
+            </if>
+            <if test="status != null" >
+                status,
+            </if>
+            <if test="orderCode != null" >
+                order_code,
+            </if>
+            <if test="messageId != null" >
+                message_id,
+            </if>
+            <if test="sign != null" >
+                sign,
+            </if>
+            <if test="messageType != null" >
+                message_type,
+            </if>
+            <if test="senderId != null" >
+                sender_id,
+            </if>
+            <if test="receiverId != null" >
+                receiver_id,
+            </if>
+            <if test="sendTime != null" >
+                send_time,
+            </if>
+            <if test="version != null" >
+                version,
+            </if>
+            <if test="warehouseId != null" >
+                warehouse_id,
+            </if>
+            <if test="businessType != null" >
+                business_type,
+            </if>
+            <if test="versionId != null" >
+                version_id,
+            </if>
+            <if test="groupOrderNumber != null" >
+                group_order_number,
+            </if>
+            <if test="isGroupOrderFlag != null" >
+                is_group_order_flag,
+            </if>
+            <if test="orderNumber != null" >
+                order_number,
+            </if>
+            <if test="orderType != null" >
+                order_type,
+            </if>
+            <if test="distributorNumber != null" >
+                distributor_number,
+            </if>
+            <if test="distributorName != null" >
+                distributor_name,
+            </if>
+            <if test="distributorSpouseName != null" >
+                distributor_spouse_name,
+            </if>
+            <if test="serviceName != null" >
+                service_name,
+            </if>
+            <if test="orderDstMobile != null" >
+                order_dst_mobile,
+            </if>
+            <if test="orderDstLandNo != null" >
+                order_dst_land_no,
+            </if>
+            <if test="shipToDst != null" >
+                ship_to_dst,
+            </if>
+            <if test="consigneeName != null" >
+                consignee_name,
+            </if>
+            <if test="shipToAddress1 != null" >
+                ship_to_address1,
+            </if>
+            <if test="shipToAddress2 != null" >
+                ship_to_address2,
+            </if>
+            <if test="shipToAddress3 != null" >
+                ship_to_address3,
+            </if>
+            <if test="shipToAddress4 != null" >
+                ship_to_address4,
+            </if>
+            <if test="shipToAddress5 != null" >
+                ship_to_address5,
+            </if>
+            <if test="postCode != null" >
+                post_code,
+            </if>
+            <if test="consigneeMobile != null" >
+                consignee_mobile,
+            </if>
+            <if test="consigneeLandNo != null" >
+                consignee_land_no,
+            </if>
+            <if test="saleDate != null" >
+                sale_date,
+            </if>
+            <if test="expectedDeliveryPeriod != null" >
+                expected_delivery_period,
+            </if>
+            <if test="deliveryFee != null" >
+                delivery_fee,
+            </if>
+            <if test="deliveryInsuranceFee != null" >
+                delivery_insurance_fee,
+            </if>
+            <if test="orderStatus != null" >
+                order_status,
+            </if>
+            <if test="orderBv != null" >
+                order_bv,
+            </if>
+            <if test="orderPv != null" >
+                order_pv,
+            </if>
+            <if test="orderDiscount != null" >
+                order_discount,
+            </if>
+            <if test="couponBv != null" >
+                coupon_bv,
+            </if>
+            <if test="voucherBv != null" >
+                voucher_bv,
+            </if>
+            <if test="promotionBv != null" >
+                promotion_bv,
+            </if>
+            <if test="giftPointGenerated != null" >
+                gift_point_generated,
+            </if>
+            <if test="giftPointUsed != null" >
+                gift_point_used,
+            </if>
+            <if test="giftPointLeft != null" >
+                gift_point_left,
+            </if>
+            <if test="posCode != null" >
+                pos_code,
+            </if>
+            <if test="staffNumber != null" >
+                staff_number,
+            </if>
+            <if test="orderOriginalPrice != null" >
+                order_original_price,
+            </if>
+            <if test="rsvst1 != null" >
+                rsvst1,
+            </if>
+            <if test="rsvst2 != null" >
+                rsvst2,
+            </if>
+            <if test="rsvst3 != null" >
+                rsvst3,
+            </if>
+            <if test="rsvst4 != null" >
+                rsvst4,
+            </if>
+            <if test="rsvst5 != null" >
+                rsvst5,
+            </if>
+            <if test="rsvdc1 != null" >
+                rsvdc1,
+            </if>
+            <if test="rsvdc2 != null" >
+                rsvdc2,
+            </if>
+            <if test="rsvdc3 != null" >
+                rsvdc3,
+            </if>
+            <if test="rsvdc4 != null" >
+                rsvdc4,
+            </if>
+            <if test="rsvdc5 != null" >
+                rsvdc5,
+            </if>
+            <if test="systemFlag != null" >
+                system_flag,
+            </if>
+            <if test="shipToAddress31 != null" >
+                ship_to_address3_1,
+            </if>
+            <if test="shipToAddressType != null" >
+                ship_to_address_type,
+            </if>
+            <if test="shipToCombinedId != null" >
+                ship_to_combined_id,
+            </if>
+            <if test="code != null" >
+                code,
+            </if>
+            <if test="createTime != null" >
+                create_time,
+            </if>
+            <if test="createBy != null" >
+                create_by,
+            </if>
+            <if test="updateTime != null" >
+                update_time,
+            </if>
+            <if test="updateBy != null" >
+                update_by,
+            </if>
+            <if test="isDeleted != null" >
+                is_deleted,
+            </if>
+            <if test="tenantId != null" >
+                tenant_id,
+            </if>
+            <if test="importMode != null" >
+                import_mode,
+            </if>
+            <if test="customs != null" >
+                customs,
+            </if>
+            <if test="taxFee != null" >
+                tax_fee,
+            </if>
+            <if test="customerId != null" >
+                customer_id,
+            </if>
+            <if test="country != null" >
+                country,
+            </if>
+            <if test="transportMethod != null" >
+                transport_method,
+            </if>
+            <if test="shipName != null" >
+                ship_name,
+            </if>
+            <if test="shipAddress != null" >
+                ship_address,
+            </if>
+            <if test="shipTel != null" >
+                ship_tel,
+            </if>
+            <if test="ebcCode != null" >
+                ebc_code,
+            </if>
+            <if test="ebpCode != null" >
+                ebp_code,
+            </if>
+            <if test="deliveryCode != null" >
+                delivery_code,
+            </if>
+            <if test="paymentHeaderAmount != null" >
+                payment_header_amount,
+            </if>
+            <if test="paymentDateTime != null" >
+                payment_date_time,
+            </if>
+            <if test="couponPv != null" >
+                coupon_pv,
+            </if>
+            <if test="voucherPv != null" >
+                voucher_pv,
+            </if>
+            <if test="promotionPv != null" >
+                promotion_pv,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="sendSystem != null" >
+                #{sendSystem,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null" >
+                #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="orderCode != null" >
+                #{orderCode,jdbcType=VARCHAR},
+            </if>
+            <if test="messageId != null" >
+                #{messageId,jdbcType=VARCHAR},
+            </if>
+            <if test="sign != null" >
+                #{sign,jdbcType=VARCHAR},
+            </if>
+            <if test="messageType != null" >
+                #{messageType,jdbcType=VARCHAR},
+            </if>
+            <if test="senderId != null" >
+                #{senderId,jdbcType=VARCHAR},
+            </if>
+            <if test="receiverId != null" >
+                #{receiverId,jdbcType=VARCHAR},
+            </if>
+            <if test="sendTime != null" >
+                #{sendTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="version != null" >
+                #{version,jdbcType=INTEGER},
+            </if>
+            <if test="warehouseId != null" >
+                #{warehouseId,jdbcType=VARCHAR},
+            </if>
+            <if test="businessType != null" >
+                #{businessType,jdbcType=VARCHAR},
+            </if>
+            <if test="versionId != null" >
+                #{versionId,jdbcType=VARCHAR},
+            </if>
+            <if test="groupOrderNumber != null" >
+                #{groupOrderNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="isGroupOrderFlag != null" >
+                #{isGroupOrderFlag,jdbcType=VARCHAR},
+            </if>
+            <if test="orderNumber != null" >
+                #{orderNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="orderType != null" >
+                #{orderType,jdbcType=VARCHAR},
+            </if>
+            <if test="distributorNumber != null" >
+                #{distributorNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="distributorName != null" >
+                #{distributorName,jdbcType=VARCHAR},
+            </if>
+            <if test="distributorSpouseName != null" >
+                #{distributorSpouseName,jdbcType=VARCHAR},
+            </if>
+            <if test="serviceName != null" >
+                #{serviceName,jdbcType=VARCHAR},
+            </if>
+            <if test="orderDstMobile != null" >
+                #{orderDstMobile,jdbcType=VARCHAR},
+            </if>
+            <if test="orderDstLandNo != null" >
+                #{orderDstLandNo,jdbcType=VARCHAR},
+            </if>
+            <if test="shipToDst != null" >
+                #{shipToDst,jdbcType=VARCHAR},
+            </if>
+            <if test="consigneeName != null" >
+                #{consigneeName,jdbcType=VARCHAR},
+            </if>
+            <if test="shipToAddress1 != null" >
+                #{shipToAddress1,jdbcType=VARCHAR},
+            </if>
+            <if test="shipToAddress2 != null" >
+                #{shipToAddress2,jdbcType=VARCHAR},
+            </if>
+            <if test="shipToAddress3 != null" >
+                #{shipToAddress3,jdbcType=VARCHAR},
+            </if>
+            <if test="shipToAddress4 != null" >
+                #{shipToAddress4,jdbcType=VARCHAR},
+            </if>
+            <if test="shipToAddress5 != null" >
+                #{shipToAddress5,jdbcType=VARCHAR},
+            </if>
+            <if test="postCode != null" >
+                #{postCode,jdbcType=VARCHAR},
+            </if>
+            <if test="consigneeMobile != null" >
+                #{consigneeMobile,jdbcType=VARCHAR},
+            </if>
+            <if test="consigneeLandNo != null" >
+                #{consigneeLandNo,jdbcType=VARCHAR},
+            </if>
+            <if test="saleDate != null" >
+                #{saleDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="expectedDeliveryPeriod != null" >
+                #{expectedDeliveryPeriod,jdbcType=VARCHAR},
+            </if>
+            <if test="deliveryFee != null" >
+                #{deliveryFee,jdbcType=DECIMAL},
+            </if>
+            <if test="deliveryInsuranceFee != null" >
+                #{deliveryInsuranceFee,jdbcType=DECIMAL},
+            </if>
+            <if test="orderStatus != null" >
+                #{orderStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="orderBv != null" >
+                #{orderBv,jdbcType=VARCHAR},
+            </if>
+            <if test="orderPv != null" >
+                #{orderPv,jdbcType=VARCHAR},
+            </if>
+            <if test="orderDiscount != null" >
+                #{orderDiscount,jdbcType=DECIMAL},
+            </if>
+            <if test="couponBv != null" >
+                #{couponBv,jdbcType=VARCHAR},
+            </if>
+            <if test="voucherBv != null" >
+                #{voucherBv,jdbcType=VARCHAR},
+            </if>
+            <if test="promotionBv != null" >
+                #{promotionBv,jdbcType=VARCHAR},
+            </if>
+            <if test="giftPointGenerated != null" >
+                #{giftPointGenerated,jdbcType=VARCHAR},
+            </if>
+            <if test="giftPointUsed != null" >
+                #{giftPointUsed,jdbcType=VARCHAR},
+            </if>
+            <if test="giftPointLeft != null" >
+                #{giftPointLeft,jdbcType=VARCHAR},
+            </if>
+            <if test="posCode != null" >
+                #{posCode,jdbcType=VARCHAR},
+            </if>
+            <if test="staffNumber != null" >
+                #{staffNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="orderOriginalPrice != null" >
+                #{orderOriginalPrice,jdbcType=DECIMAL},
+            </if>
+            <if test="rsvst1 != null" >
+                #{rsvst1,jdbcType=VARCHAR},
+            </if>
+            <if test="rsvst2 != null" >
+                #{rsvst2,jdbcType=VARCHAR},
+            </if>
+            <if test="rsvst3 != null" >
+                #{rsvst3,jdbcType=VARCHAR},
+            </if>
+            <if test="rsvst4 != null" >
+                #{rsvst4,jdbcType=VARCHAR},
+            </if>
+            <if test="rsvst5 != null" >
+                #{rsvst5,jdbcType=VARCHAR},
+            </if>
+            <if test="rsvdc1 != null" >
+                #{rsvdc1,jdbcType=VARCHAR},
+            </if>
+            <if test="rsvdc2 != null" >
+                #{rsvdc2,jdbcType=VARCHAR},
+            </if>
+            <if test="rsvdc3 != null" >
+                #{rsvdc3,jdbcType=VARCHAR},
+            </if>
+            <if test="rsvdc4 != null" >
+                #{rsvdc4,jdbcType=VARCHAR},
+            </if>
+            <if test="rsvdc5 != null" >
+                #{rsvdc5,jdbcType=VARCHAR},
+            </if>
+            <if test="systemFlag != null" >
+                #{systemFlag,jdbcType=VARCHAR},
+            </if>
+            <if test="shipToAddress31 != null" >
+                #{shipToAddress31,jdbcType=VARCHAR},
+            </if>
+            <if test="shipToAddressType != null" >
+                #{shipToAddressType,jdbcType=VARCHAR},
+            </if>
+            <if test="shipToCombinedId != null" >
+                #{shipToCombinedId,jdbcType=VARCHAR},
+            </if>
+            <if test="code != null" >
+                #{code,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null" >
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createBy != null" >
+                #{createBy,jdbcType=BIGINT},
+            </if>
+            <if test="updateTime != null" >
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateBy != null" >
+                #{updateBy,jdbcType=BIGINT},
+            </if>
+            <if test="isDeleted != null" >
+                #{isDeleted,jdbcType=INTEGER},
+            </if>
+            <if test="tenantId != null" >
+                #{tenantId,jdbcType=BIGINT},
+            </if>
+            <if test="importMode != null" >
+                #{importMode,jdbcType=VARCHAR},
+            </if>
+            <if test="customs != null" >
+                #{customs,jdbcType=VARCHAR},
+            </if>
+            <if test="taxFee != null" >
+                #{taxFee,jdbcType=DECIMAL},
+            </if>
+            <if test="customerId != null" >
+                #{customerId,jdbcType=VARCHAR},
+            </if>
+            <if test="country != null" >
+                #{country,jdbcType=VARCHAR},
+            </if>
+            <if test="transportMethod != null" >
+                #{transportMethod,jdbcType=VARCHAR},
+            </if>
+            <if test="shipName != null" >
+                #{shipName,jdbcType=VARCHAR},
+            </if>
+            <if test="shipAddress != null" >
+                #{shipAddress,jdbcType=VARCHAR},
+            </if>
+            <if test="shipTel != null" >
+                #{shipTel,jdbcType=VARCHAR},
+            </if>
+            <if test="ebcCode != null" >
+                #{ebcCode,jdbcType=VARCHAR},
+            </if>
+            <if test="ebpCode != null" >
+                #{ebpCode,jdbcType=VARCHAR},
+            </if>
+            <if test="deliveryCode != null" >
+                #{deliveryCode,jdbcType=VARCHAR},
+            </if>
+            <if test="paymentHeaderAmount != null" >
+                #{paymentHeaderAmount,jdbcType=DECIMAL},
+            </if>
+            <if test="paymentDateTime != null" >
+                #{paymentDateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="couponPv != null" >
+                #{couponPv,jdbcType=VARCHAR},
+            </if>
+            <if test="voucherPv != null" >
+                #{voucherPv,jdbcType=VARCHAR},
+            </if>
+            <if test="promotionPv != null" >
+                #{promotionPv,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateOrderStatus">
+    update doc_order_amway set status = #{status}
+    where id = #{id}
+  </update>
+
+    <update id="updateForwardSystem">
+        update doc_order_amway set send_system = #{forwardSystem}
+        where id = #{id}
+    </update>
+</mapper>

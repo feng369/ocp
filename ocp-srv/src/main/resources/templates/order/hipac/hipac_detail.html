@@ -1,0 +1,317 @@
+<!doctype html>
+<html lang="zh-cmn-Hans" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="common/layout::header( ~{::title})">
+  <title id="title">海拍客订单明细</title>
+</head>
+<body>
+<style>
+  .subContainer .panel {
+    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.3), 0px 0px 3px rgba(0, 0, 0, 0.1) inset;
+  }
+
+  .subContainer > .panel.easyui-fluid:not(:last-child) {
+    margin-bottom: 15px;
+  }
+
+  .subContainer .panel-body {
+    border-width: 0;
+    margin-top: 8px;
+    padding-bottom: 10px;
+  }
+
+  .subContainer .tableBox .datagrid .panel-body {
+    box-shadow: none;
+  }
+
+</style>
+
+<div class="ui fluid subContainer container box-form" style="margin-top:10px;width: 98%">
+  <div id="basicInfo" class="easyui-panel" title="订单基本信息"
+       style="width:100%;"
+       data-options="collapsible:true">
+    <form class="ui form">
+      <div class="searchBox">
+        <ul>
+          <li class="w-8-4">
+            <div class="smallBox">
+              <label>企业订单编号：</label>
+              <span style="width: 150px;height: 24px;" th:text="${order.orderNum}"/>
+            </div>
+            <div class="smallBox">
+              <label>订购人姓名：</label>
+              <span style="width: 150px;height: 24px;" th:text="${order.custName}"/>
+            </div>
+            <div class="smallBox">
+              <label>支付类型：</label>
+              <span style="width: 150px;height: 24px;" th:text="${order.payType}"/>
+            </div>
+            <div class="smallBox">
+              <label>第三方物流商编码：</label>
+              <span style="width: 150px;height: 24px;" th:text="${order.supplierSenderID}"/>
+            </div>
+          </li>
+
+          <li class="w-8-4 notFlex">
+            <div class="smallBox">
+              <label>订单生成时间：</label>
+              <span style="width: 150px;height: 24px;"
+                    th:text="${#dates.format(order.orderDate,'yyyy-MM-dd HH:mm:ss')}"/>
+            </div>
+            <div class="smallBox">
+              <label>订购人证件类别：</label>
+              <span style="width: 150px;height: 24px;" th:text="身份证"/>
+            </div>
+            <div class="smallBox">
+              <label>支付流水号：</label>
+              <span style="width: 150px;height: 24px;" th:text="${order.payNo}"/>
+            </div>
+            <div class="smallBox">
+              <label>申报关区：</label>
+              <span style="width: 150px;height: 24px;" th:text="${order.customsCode.desc}"/>
+            </div>
+          </li>
+
+          <li class="w-8-4 notFlex">
+            <div class="smallBox">
+              <label>电商企业编码：</label>
+              <span style="width: 150px;height: 24px;" th:text="${order.supplierSenderID}"/>
+            </div>
+            <div class="smallBox">
+              <label>订购人证件号码：</label>
+              <span style="width: 150px;height: 24px;" th:text="${order.custIdNum}" id="cust_id_num" />
+              <button style="padding: 5px;" class="ui blue button" id="cust_id_num_btn"
+                      type="button"
+                      th:onclick="showSensitiveData('cust_id_num')">显示</button>
+            </div>
+            <div class="smallBox">
+              <label>支付企业名称：</label>
+              <span style="width: 150px;height: 24px;" th:text="${order.payCompanyName}"/>
+            </div>
+          </li>
+
+          <li class="w-8-4" notFlex>
+            <div class="smallBox">
+              <label>电商平台编码：</label>
+              <span style="width: 150px;height: 24px;" th:text="${order.cbePcomCode}"/>
+            </div>
+            <div class="smallBox">
+              <label>订购人电话：</label>
+              <span style="width: 150px;height: 24px;" th:text="${order.custPhone}" id="cust_phone"
+                    name="custPhone"/>
+              <button style="padding: 5px;" class="ui blue button" id="cust_phone_btn"
+                      type="button"
+                      th:onclick="showSensitiveData('cust_phone')">显示</button>
+            </div>
+            <div class="smallBox">
+              <label>订单状态：</label>
+              <span style="width: 150px;height: 24px;" th:text="${order.status.desc}"/>
+            </div>
+
+          </li>
+
+        </ul>
+      </div>
+    </form>
+  </div>
+
+  <div id="feeInfo" class="easyui-panel" title="费用信息"
+       style="width:100%;"
+       data-options="collapsible:true">
+    <form class="ui form">
+      <div class="searchBox">
+        <ul>
+          <li class="w-8-2">
+            <div class="smallBox">
+              <label>运费(元)：</label>
+              <span style="width: 150px;height: 24px;" th:text="${order.logisticsAmount}"/>
+            </div>
+          </li>
+          <li class="w-8-2" notFlex>
+            <div class="smallBox">
+              <label>运费币值：</label>
+              <span style="width: 150px;height: 24px;" th:text="CNY"/>
+            </div>
+          </li>
+          <li class="w-8-2" notFlex>
+            <div class="smallBox">
+              <label>税费(元)：</label>
+              <span style="width: 150px;height: 24px;" th:text="${order.totalTaxAmount}"/>
+            </div>
+          </li>
+          <li class="w-8-2" notFlex>
+            <div class="smallBox">
+              <label>货值(元)：</label>
+              <span style="width: 150px;height: 24px;" th:text="${order.totalOrderAmount}"/>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </form>
+  </div>
+
+  <div id="custInfo" class="easyui-panel" title="订单收货信息"
+       style="width:100%;"
+       data-options="collapsible:true">
+    <form class="ui form">
+      <div class="searchBox">
+        <ul>
+          <li class="w-12-4">
+            <div class="smallBox">
+              <label>收货人姓名：</label>
+              <span style="width: 150px;height: 24px;" th:text="${order.custName}"/>
+            </div>
+            <div class="smallBox">
+              <label>手机号码：</label>
+              <span style="width: 150px;height: 24px;" th:text="${order.custPhone}" id="cust_phone1"
+                    name="custPhone"/>
+              <button style="padding: 5px;" class="ui blue button" id="cust_phone_btn1"
+                      type="button"
+                      th:onclick="showSensitiveData1('cust_phone')">显示</button>
+            </div>
+
+            <div class="smallBox">
+              <label>区/县：</label>
+              <span style="width: 150px;height: 24px;" th:text="${order.custArea}"/>
+            </div>
+
+
+          </li>
+
+          <li class="w-12-4" notFlex>
+            <div class="smallBox">
+              <label>证件类别：</label>
+              <span style="width: 150px;height: 24px;" th:text="身份证"/>
+            </div>
+
+            <div class="smallBox">
+              <label>省份：</label>
+              <span style="width: 150px;height: 24px;" th:text="${order.custProvice}"/>
+            </div>
+
+
+            <div class="smallBox">
+              <label>地址：</label>
+              <span style="width: 150px;height: 24px;" th:text="${order.custAddress}"/>
+            </div>
+          </li>
+
+          <li class="w-12-4" notFlex>
+            <div class="smallBox">
+              <label>收件人证件号：</label>
+              <span style="width: 150px;height: 24px;" th:text="${order.custIdNum}" id="cust_id_num1" />
+              <button style="padding: 5px;" class="ui blue button" id="cust_id_num_btn1"
+                      type="button"
+                      th:onclick="showSensitiveData1('cust_id_num')">显示</button>
+            </div>
+            <div class="smallBox">
+              <label>市：</label>
+              <span style="width: 150px;height: 24px;" th:text="${order.custCity}"/>
+            </div>
+
+            <div class="smallBox">
+              <label>订单优惠金额(元)：</label>
+              <span style="width: 150px;height: 24px;" th:text="${order.discount}"/>
+            </div>
+          </li>
+
+        </ul>
+      </div>
+    </form>
+  </div>
+
+  <div id="goodsInfo" class="easyui-panel" title="商品信息"
+       style="width:100%;margin-bottom: 40px;"
+       data-options="collapsible:true">
+    <div class="">
+      <input th:value="${orderId}" type="hidden" id="orderId" name="orderId">
+      <div class="tableBox">
+        <table id="itemTable" striped="true" style="width:99%;" data-options="rownumbers:true">
+          <thead >
+          <tr>
+            <th field="itemSupplyNo" width="15%">供应商商品编码</th>
+            <th field="itemQuantity" width="5%">数量</th>
+            <th field="itemPrice" width="10%">商品单价(元)</th>
+            <th field="itemTotal" width="10%">商品总价(元)</th>
+            <th field="itemName" width="9%">商品名称</th>
+            <th field="specNme" width="10%">规格名称</th>
+            <th field="specNum" width="8%">规格数</th>
+            <th field="addTaxRate" width="8%">增值税(元)</th>
+            <th field="tariffRate" width="8%">关税(元)</th>
+            <th field="exciseRate" width="8%">消费税(元)</th>
+            <th field="itemTotalTax" width="9%">总税款(元)</th>
+          </tr>
+          </thead>
+        </table>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  function showSensitiveData(propertyName) {
+    var span = document.getElementById(propertyName);
+    var inputBtn = $("#" + propertyName + "_btn");
+    if (span.innerText == "**********") {
+      $.ajax({
+        type: "POST",
+        url: basePath + '/orderHipac/sensitiveData',
+        data: {"propertyName": propertyName, "orderId": $("#orderId").val()},
+        traditional: true,
+        cache: false,
+        timeout: 600000,
+        success: function (data) {
+          span.innerText = data;
+          inputBtn.html("隐藏");
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+          layer.alert("error", {icon: "layui-icon-face-cry"});
+          layer.alert(jqXHR.responseText);
+        }
+      });
+    } else {
+      span.innerText = '**********';
+      inputBtn.html("显示");
+    }
+  }
+
+  function showSensitiveData1(propertyName) {
+    var span = document.getElementById(propertyName + "1");
+    var inputBtn = $("#" + propertyName + "_btn1");
+    if (span.innerText == "**********") {
+      $.ajax({
+        type: "POST",
+        url: basePath + '/orderHipac/sensitiveData',
+        data: {"propertyName": propertyName, "orderId": $("#orderId").val()},
+        traditional: true,
+        cache: false,
+        timeout: 600000,
+        success: function (data) {
+          span.innerText = data;
+          inputBtn.html("隐藏");
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+          layer.alert("error", {icon: "layui-icon-face-cry"});
+          layer.alert(jqXHR.responseText);
+        }
+      });
+    } else {
+      span.innerText = '**********';
+      inputBtn.html("显示");
+    }
+  }
+
+  $(function () {
+    var id = $("#orderId").val();
+    $('#itemTable').datagrid({
+      initCount: 1,//开始就加载
+      url: basePath + '/orderHipac/detail/json/' + id,
+      method: 'post'
+    });
+    $(window).resize();
+  })
+
+</script>
+</body>
+</html>

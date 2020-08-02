@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="zh-cmn-Hans" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="common/layout::header( ~{::title})">
+    <title id="title">小米订单明细</title>
+</head>
+<body>
+<div class="ui fluid container box-form">
+    <div class="contentDetail">
+        <div id="tb" class="easyui-tabs" >
+            <div title="小米订单明细" class="tableBox">
+                <input th:value="${orderId}" type="hidden" id="id">
+                <table id="itemTable" striped="true">
+                    <thead >
+                    <tr>
+                        <th field="name" width="100">名称</th>
+                        <th field="pid" width="100">产品ID</th>
+                        <th field="gid" width="100">商品ID</th>
+                        <th field="uid" width="100">用户ID</th>
+                        <th field="count" width="100">商品数量</th>
+                        <th field="salePrice" width="100">售卖价格</th>
+                        <th field="price" width="100">产品支付价格</th>
+                    </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        var id = $("#id").val();
+        $('#itemTable').datagrid({
+            initCount: 1,//开始就加载
+            url: basePath + '/orderXiaomi/detail/json/' + id,
+            method: 'post',
+            rownumbers: true,
+            pagination: false
+        });
+        $(window).resize();
+    })
+
+
+</script>
+</body>
+</html>

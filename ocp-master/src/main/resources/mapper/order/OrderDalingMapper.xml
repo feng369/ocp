@@ -1,0 +1,373 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.topideal.supplychain.ocp.order.mapper.OrderDalingMapper">
+    <resultMap id="BaseResultMap" type="com.topideal.supplychain.ocp.order.dto.OrderDalingDto">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="code" property="code" jdbcType="VARCHAR"/>
+        <result column="order_no" property="orderNo" jdbcType="VARCHAR"/>
+        <result column="logistics_number" property="logisticsNumber" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="VARCHAR"/>
+        <result column="order_status" property="orderStatus" jdbcType="VARCHAR"/>
+        <result column="created_date" property="createdDate" jdbcType="TIMESTAMP"/>
+        <result column="info_status" property="infoStatus" jdbcType="INTEGER"/>
+        <result column="task_id" property="taskId" jdbcType="VARCHAR"/>
+        <result column="tpl" property="tpl" jdbcType="VARCHAR"/>
+        <result column="electric_code" property="electricCode" jdbcType="VARCHAR"/>
+        <result column="cbe_pcom_code" property="cbePcomCode" jdbcType="VARCHAR"/>
+        <result column="busi_mode" property="busiMode" jdbcType="INTEGER"/>
+        <result column="customs_code" property="customsCode" jdbcType="VARCHAR"/>
+        <result column="ciqb_code" property="ciqbCode" jdbcType="VARCHAR"/>
+        <result column="op_reason" property="opReason" jdbcType="VARCHAR"/>
+        <result column="info_data" property="infoData" jdbcType="OTHER"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+        <result column="create_by" property="createBy" jdbcType="BIGINT"/>
+        <result column="update_by" property="updateBy" jdbcType="BIGINT"/>
+        <result column="is_deleted" property="isDeleted" jdbcType="INTEGER"/>
+        <result column="tenant_id" property="tenantId" jdbcType="BIGINT"/>
+        <result column="version" property="version" jdbcType="INTEGER"/>
+        <result column="send_system" jdbcType="VARCHAR" property="sendSystem" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+    id, code, order_no, logistics_number, status, order_status, created_date, info_status,
+    task_id, tpl, electric_code, cbe_pcom_code, busi_mode, customs_code, ciqb_code, op_reason,
+    create_time, update_time, create_by, update_by, is_deleted, tenant_id, version, info_data,send_system
+  </sql>
+
+    <sql id="queryCondition">
+        <where>
+            <if test="code != null and code != ''">
+                and code = #{code,jdbcType=VARCHAR}
+            </if>
+            <if test="orderNo != null and orderNo != ''">
+                and order_no = #{orderNo,jdbcType=VARCHAR}
+            </if>
+            <if test="electricCode != null and electricCode != ''">
+                and electric_code = #{electricCode,jdbcType=VARCHAR}
+            </if>
+            <if test="createTimeStart != null">
+                and create_time <![CDATA[>=]]>
+                #{createTimeStart}
+            </if>
+            <if test="createTimeEnd != null">
+                and create_time <![CDATA[<=]]>
+                #{createTimeEnd}
+            </if>
+            <if test="logisticsNumber != null and logisticsNumber != ''">
+                and logistics_number = #{logisticsNumber,jdbcType=VARCHAR}
+            </if>
+            <if test="cbePcomCode != null and cbePcomCode != ''">
+                and cbe_pcom_code = #{cbePcomCode,jdbcType=VARCHAR}
+            </if>
+            <if test="createDateStart != null">
+                and created_date <![CDATA[>=]]>
+                #{createDateStart}
+            </if>
+            <if test="createDateEnd != null">
+                and created_date <![CDATA[<=]]>
+                #{createDateEnd}
+            </if>
+            <if test="tpl != null and tpl != ''">
+                and tpl = #{tpl,jdbcType=VARCHAR}
+            </if>
+            <if test="customsCode != null">
+                and customs_code = #{customsCode,jdbcType=VARCHAR}
+            </if>
+            <if test="orderStatus != null">
+                and order_status = #{orderStatus,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </sql>
+
+    <insert id="insert" parameterType="com.topideal.supplychain.ocp.order.model.OrderDaling" keyProperty="id" useGeneratedKeys="true">
+        insert into doc_order_daling
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="code != null">
+                code,
+            </if>
+            <if test="orderNo != null">
+                order_no,
+            </if>
+            <if test="logisticsNumber != null">
+                logistics_number,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="orderStatus != null">
+                order_status,
+            </if>
+            <if test="createdDate != null">
+                created_date,
+            </if>
+            <if test="infoStatus != null">
+                info_status,
+            </if>
+            <if test="taskId != null">
+                task_id,
+            </if>
+            <if test="tpl != null">
+                tpl,
+            </if>
+            <if test="electricCode != null">
+                electric_code,
+            </if>
+            <if test="cbePcomCode != null">
+                cbe_pcom_code,
+            </if>
+            <if test="busiMode != null">
+                busi_mode,
+            </if>
+            <if test="customsCode != null">
+                customs_code,
+            </if>
+            <if test="ciqbCode != null">
+                ciqb_code,
+            </if>
+            <if test="opReason != null">
+                op_reason,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="createBy != null">
+                create_by,
+            </if>
+            <if test="updateBy != null">
+                update_by,
+            </if>
+            <if test="isDeleted != null">
+                is_deleted,
+            </if>
+            <if test="tenantId != null">
+                tenant_id,
+            </if>
+            <if test="version != null">
+                version,
+            </if>
+            <if test="infoData != null">
+                info_data,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="code != null">
+                #{code,jdbcType=VARCHAR},
+            </if>
+            <if test="orderNo != null">
+                #{orderNo,jdbcType=VARCHAR},
+            </if>
+            <if test="logisticsNumber != null">
+                #{logisticsNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="orderStatus != null">
+                #{orderStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="createdDate != null">
+                #{createdDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="infoStatus != null">
+                #{infoStatus,jdbcType=INTEGER},
+            </if>
+            <if test="taskId != null">
+                #{taskId,jdbcType=VARCHAR},
+            </if>
+            <if test="tpl != null">
+                #{tpl,jdbcType=VARCHAR},
+            </if>
+            <if test="electricCode != null">
+                #{electricCode,jdbcType=VARCHAR},
+            </if>
+            <if test="cbePcomCode != null">
+                #{cbePcomCode,jdbcType=VARCHAR},
+            </if>
+            <if test="busiMode != null">
+                #{busiMode,jdbcType=INTEGER},
+            </if>
+            <if test="customsCode != null">
+                #{customsCode,jdbcType=VARCHAR},
+            </if>
+            <if test="ciqbCode != null">
+                #{ciqbCode,jdbcType=VARCHAR},
+            </if>
+            <if test="opReason != null">
+                #{opReason,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createBy != null">
+                #{createBy,jdbcType=BIGINT},
+            </if>
+            <if test="updateBy != null">
+                #{updateBy,jdbcType=BIGINT},
+            </if>
+            <if test="isDeleted != null">
+                #{isDeleted,jdbcType=INTEGER},
+            </if>
+            <if test="tenantId != null">
+                #{tenantId,jdbcType=BIGINT},
+            </if>
+            <if test="version != null">
+                #{version,jdbcType=INTEGER},
+            </if>
+            <if test="infoData != null">
+                #{infoData,jdbcType=OTHER},
+            </if>
+        </trim>
+    </insert>
+
+    <insert id="insertOrderNoWithDefaultValue" useGeneratedKeys="true" keyProperty="id">
+
+    INSERT INTO doc_order_daling
+        (order_no,code,logistics_number,created_date,status,order_status,
+				task_id,tpl,electric_code,cbe_pcom_code,
+				busi_mode,customs_code,ciqb_code,create_time,send_system)VALUES
+        <foreach collection="list" separator="," item="order">
+            (#{order.orderNo},#{order.code},#{order.logisticsNumber},#{order.createdDate},#{order.status},#{order.orderStatus},
+            #{order.taskId},#{order.tpl},#{order.electricCode},#{order.cbePcomCode},#{order.busiMode},
+            #{order.customsCode},#{order.ciqbCode},#{order.createTime},#{order.sendSystem})
+        </foreach>
+
+
+  </insert>
+
+    <update id="update" parameterType="com.topideal.supplychain.ocp.order.model.OrderDaling">
+        update doc_order_daling
+        <set>
+            <if test="code != null">
+                code = #{code,jdbcType=VARCHAR},
+            </if>
+            <if test="orderNo != null">
+                order_no = #{orderNo,jdbcType=VARCHAR},
+            </if>
+            <if test="logisticsNumber != null">
+                logistics_number = #{logisticsNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="orderStatus != null">
+                order_status = #{orderStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="createdDate != null">
+                created_date = #{createdDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="infoStatus != null">
+                info_status = #{infoStatus,jdbcType=INTEGER},
+            </if>
+            <if test="taskId != null">
+                task_id = #{taskId,jdbcType=VARCHAR},
+            </if>
+            <if test="tpl != null">
+                tpl = #{tpl,jdbcType=VARCHAR},
+            </if>
+            <if test="electricCode != null">
+                electric_code = #{electricCode,jdbcType=VARCHAR},
+            </if>
+            <if test="cbePcomCode != null">
+                cbe_pcom_code = #{cbePcomCode,jdbcType=VARCHAR},
+            </if>
+            <if test="busiMode != null">
+                busi_mode = #{busiMode,jdbcType=INTEGER},
+            </if>
+            <if test="customsCode != null">
+                customs_code = #{customsCode,jdbcType=VARCHAR},
+            </if>
+            <if test="ciqbCode != null">
+                ciqb_code = #{ciqbCode,jdbcType=VARCHAR},
+            </if>
+            <if test="opReason != null">
+                op_reason = #{opReason,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createBy != null">
+                create_by = #{createBy,jdbcType=BIGINT},
+            </if>
+            <if test="updateBy != null">
+                update_by = #{updateBy,jdbcType=BIGINT},
+            </if>
+            <if test="isDeleted != null">
+                is_deleted = #{isDeleted,jdbcType=INTEGER},
+            </if>
+            <if test="tenantId != null">
+                tenant_id = #{tenantId,jdbcType=BIGINT},
+            </if>
+            <if test="version != null">
+                version = #{version,jdbcType=INTEGER},
+            </if>
+            <if test="infoData != null">
+                info_data = #{infoData,jdbcType=OTHER},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <select id="pageList" resultMap="BaseResultMap"
+            parameterType="com.topideal.supplychain.ocp.order.dto.OrderDalingDto">
+        select
+        <include refid="Base_Column_List"/>
+        from doc_order_daling
+        <include refid="queryCondition"/>
+        order by create_time desc
+    </select>
+
+    <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from doc_order_daling
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <select id="selectInfoDataWithId" resultType="java.lang.String" parameterType="java.lang.Long">
+    select
+    info_data
+    from doc_order_daling
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+    <select id="selectByIds" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from doc_order_daling
+        where id in
+        <foreach collection="ids" separator="," item="id" open="(" close=")">
+            #{id,jdbcType=BIGINT}
+        </foreach>
+    </select>
+
+    <select id="selectExistOrderNo" resultType="java.lang.String">
+        SELECT order_no FROM doc_order_daling
+        WHERE order_no IN
+        <foreach collection="orderNoList" separator="," item="orderNo" open="(" close=")">
+            #{orderNo,jdbcType=VARCHAR}
+        </foreach>
+    </select>
+
+    <update id="updateOrderStatus">
+    update doc_order_daling set order_status = #{status},op_reason = #{reason}
+    where id = #{id} and order_status != '140'
+  </update>
+
+    <update id="updateInfoData">
+    update doc_order_daling set order_status = #{status},info_data = #{infoData},logistics_number = #{logisticsNumber},send_system=#{sendSystem}
+    where id = #{id}
+  </update>
+
+
+</mapper>

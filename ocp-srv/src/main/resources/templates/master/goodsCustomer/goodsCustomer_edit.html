@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="zh-cmn-Hans" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="common/layout::header( ~{::title})">
+  <title id="title">编辑业主商品信息</title>
+</head>
+<body>
+
+<div class="ui container" style="margin-top:10px;width: 95%">
+  <form th:action="@{/goodsCustomer/edit}" id="updateForm" name="updateForm" class="ui form" method="post">
+    <div class="field">
+      <div class="four fields">
+        <div class="required field">
+          <label>企业编码：</label>
+          <span class="selectBox">
+                            <select class="easyui-combobox" name="enterpriseCode"
+                                    style="width: 150px;height: 24px;" required="true" id="merchantId">
+                                    <option value=""></option>
+                                    <option th:each="merchant : ${merchantList}"
+                                            th:text="${merchant.name}"
+                                            th:value="${merchant.code}"
+                                            th:otherFields="${merchant.code}"
+                                            th:selected="${merchant.code} == ${goodsCustomerConfig.enterpriseCode}">
+                                                                        </option>
+                            </select>
+            <i class="x icon clearBtn" title="清空"></i>
+                            </span>
+        </div>
+
+        <div class="required field">
+          <label>关区：</label>
+          <span class="selectBox">
+                            <select class="easyui-combobox" name="customerCode"
+                                    style="width: 150px;height: 24px;" required="true">
+                                <option value=""></option>
+                                <option
+                                    th:each="enum : ${T(com.topideal.supplychain.ocp.enums.CustomsCodeEnum).values()}"
+                                    th:text="${enum.desc}" th:value="${enum}"
+                                    th:selected="${enum} == ${goodsCustomerConfig.customerCode}">
+                                </option>
+                            </select>
+            <i class="x icon clearBtn" title="清空"></i>
+                            </span>
+        </div>
+
+        <div class="required field">
+          <label>贸易模式：</label>
+          <span class="selectBox">
+                                <select
+                                    style='width: 150px;height: 24px;'
+                                    class="easyui-combobox"
+                                    id="busiMode" name="busiMode" required="true">
+                                    <option value=""></option>
+                                    <option
+                                        th:each="enum : ${T(com.topideal.supplychain.ocp.enums.BusiModeEnum).values()}"
+                                        th:text="${enum.memo}" th:value="${enum}"
+                                        th:selected="${enum} == ${goodsCustomerConfig.busiMode}">
+                                </option>
+                                </select>
+            <i class="x icon clearBtn" title="清空"></i>
+                            </span>
+        </div>
+
+
+        <div class="required field">
+          <label>商品货号：</label>
+          <input type="text" id="goodsCode" name="goodsCode"
+                 class="easyui-validatebox" th:value="${goodsCustomerConfig.goodsCode}"
+                 placeholder="" required="true"/>
+        </div>
+      </div>
+
+    </div>
+    <div class="required field">
+      <label>商品名称：</label> <input name="goodsName" required="true" th:value="${goodsCustomerConfig.goodsName}"
+                                  id="goodsName" class="easyui-textbox"
+                                  data-options="multiline:true"
+                                  style="width: 400px; height: 100px;"/>
+    </div>
+
+    <input type="hidden" name="id" th:value="${goodsCustomerConfig.id}">
+
+  </form>
+</div>
+</body>
+
+</html>

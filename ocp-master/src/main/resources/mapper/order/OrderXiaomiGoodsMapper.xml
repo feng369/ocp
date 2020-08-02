@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.topideal.supplychain.ocp.order.mapper.OrderXiaomiGoodsMapper">
+  <resultMap id="BaseResultMap" type="com.topideal.supplychain.ocp.order.model.OrderXiaomiGoods">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <id column="order_id" jdbcType="BIGINT" property="orderId" />
+    <result column="gnum" jdbcType="BIGINT" property="gnum" />
+    <result column="gid" jdbcType="BIGINT" property="gid" />
+    <result column="pid" jdbcType="BIGINT" property="pid" />
+    <result column="uid" jdbcType="BIGINT" property="uid" />
+    <result column="count" jdbcType="BIGINT" property="count" />
+    <result column="sale_price" jdbcType="DECIMAL" property="salePrice" />
+    <result column="price" jdbcType="DECIMAL" property="price" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, order_id,gnum, gid, pid, count, sale_price, name,uid,price
+  </sql>
+  <select id="selectById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from doc_order_xiaomi_goods
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <select id="selectAllByOrderId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from doc_order_xiaomi_goods
+    where order_id = #{orderId,jdbcType=BIGINT}
+  </select>
+
+  <insert id="insert" parameterType="com.topideal.supplychain.ocp.order.model.OrderXiaomiGoods" useGeneratedKeys="true" keyProperty="id">
+    insert into doc_order_xiaomi_goods
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="orderId != null">
+        order_id,
+      </if>
+      <if test="gnum != null">
+        gnum,
+      </if>
+      <if test="gid != null">
+        gid,
+      </if>
+      <if test="pid != null">
+        pid,
+      </if>
+      <if test="count != null">
+        count,
+      </if>
+      <if test="salePrice != null">
+        sale_price,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="price != null">
+        price,
+      </if>
+      <if test="uid != null">
+        uid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="orderId != null">
+        #{orderId,jdbcType=BIGINT},
+      </if>
+      <if test="gnum != null">
+        #{gnum,jdbcType=BIGINT},
+      </if>
+      <if test="gid != null">
+        #{gid,jdbcType=BIGINT},
+      </if>
+      <if test="pid != null">
+        #{pid,jdbcType=BIGINT},
+      </if>
+      <if test="count != null">
+        #{count,jdbcType=BIGINT},
+      </if>
+      <if test="salePrice != null">
+        #{salePrice,jdbcType=DECIMAL},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="uid != null">
+        #{uid,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+</mapper>

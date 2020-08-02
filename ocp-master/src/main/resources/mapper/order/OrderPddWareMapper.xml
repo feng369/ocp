@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.topideal.supplychain.ocp.order.mapper.OrderPddWareMapper" >
+  <resultMap id="BaseResultMap" type="com.topideal.supplychain.ocp.order.model.OrderPddWare" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="order_id" property="orderId" jdbcType="BIGINT" />
+    <result column="ware_sn" property="wareSn" jdbcType="VARCHAR" />
+    <result column="ware_quantity" property="wareQuantity" jdbcType="BIGINT" />
+    <result column="ware_name" property="wareName" jdbcType="VARCHAR" />
+    <result column="ware_id" property="wareId" jdbcType="BIGINT" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="create_by" property="createBy" jdbcType="BIGINT" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="BIGINT" />
+    <result column="version" property="version" jdbcType="INTEGER" />
+    <result column="is_deleted" property="isDeleted" jdbcType="INTEGER" />
+    <result column="tenant_id" property="tenantId" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, order_id, ware_sn, ware_quantity, ware_name, ware_id, create_time, create_by, 
+    update_time, update_by, version, is_deleted, tenant_id
+  </sql>
+  <select id="selectByOrderId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from doc_order_pdd_ware
+    where order_id = #{orderId,jdbcType=BIGINT}
+  </select>
+  <insert id="insertBatch">
+    insert into doc_order_pdd_ware (order_id, ware_sn, ware_quantity,
+      ware_name, ware_id, create_time)
+    values
+    <foreach collection="list" separator="," item="item">
+    (#{orderId,jdbcType=BIGINT}, #{item.wareSn,jdbcType=VARCHAR},
+      #{item.wareQuantity,jdbcType=BIGINT}, #{item.wareName,jdbcType=VARCHAR}, #{item.wareId,jdbcType=BIGINT},
+      #{createTime,jdbcType=TIMESTAMP})
+    </foreach>
+  </insert>
+</mapper>

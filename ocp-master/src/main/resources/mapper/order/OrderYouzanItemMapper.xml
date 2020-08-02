@@ -1,0 +1,545 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.topideal.supplychain.ocp.order.mapper.OrderYouzanItemMapper" >
+  <resultMap id="BaseResultMap" type="com.topideal.supplychain.ocp.order.model.OrderYouzanItem" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="order_id" property="orderId" jdbcType="BIGINT" />
+    <result column="oid" property="oid" jdbcType="VARCHAR" />
+    <result column="item_type" property="itemType" jdbcType="INTEGER" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="num" property="num" jdbcType="INTEGER" />
+    <result column="outer_sku_id" property="outerSkuId" jdbcType="VARCHAR" />
+    <result column="buyer_messages" property="buyerMessages" jdbcType="VARCHAR" />
+    <result column="price" property="price" jdbcType="DECIMAL" />
+    <result column="total_fee" property="totalFee" jdbcType="DECIMAL" />
+    <result column="payment" property="payment" jdbcType="DECIMAL" />
+    <result column="item_id" property="itemId" jdbcType="INTEGER" />
+    <result column="sku_id" property="skuId" jdbcType="INTEGER" />
+    <result column="sku_properties_name" property="skuPropertiesName" jdbcType="VARCHAR" />
+    <result column="outer_item_id" property="outerItemId" jdbcType="VARCHAR" />
+    <result column="points_price" property="pointsPrice" jdbcType="DECIMAL" />
+    <result column="pic_path" property="picPath" jdbcType="VARCHAR" />
+    <result column="goods_url" property="goodsUrl" jdbcType="VARCHAR" />
+    <result column="alias" property="alias" jdbcType="VARCHAR" />
+    <result column="is_present" property="isPresent" jdbcType="BIT" />
+    <result column="discount_price" property="discountPrice" jdbcType="DECIMAL" />
+    <result column="sku_unique_code" property="skuUniqueCode" jdbcType="VARCHAR" />
+    <result column="pre_sale_type" property="preSaleType" jdbcType="VARCHAR" />
+    <result column="is_pre_sale" property="isPreSale" jdbcType="VARCHAR" />
+    <result column="is_cross_border" property="isCrossBorder" jdbcType="VARCHAR" />
+    <result column="customs_code" property="customsCode" jdbcType="VARCHAR" />
+    <result column="cross_border_trade_mode" property="crossBorderTradeMode" jdbcType="VARCHAR" />
+    <result column="sub_order_no" property="subOrderNo" jdbcType="VARCHAR" />
+    <result column="fenxiao_price" property="fenxiaoPrice" jdbcType="DECIMAL" />
+    <result column="fenxiao_payment" property="fenxiaoPayment" jdbcType="DECIMAL" />
+    <result column="re_price" property="rePrice" jdbcType="DECIMAL" />
+    <result column="re_total_price" property="reTotalPrice" jdbcType="DECIMAL" />
+    <result column="goods_unit" property="goodsUnit" jdbcType="VARCHAR" />
+    <result column="send_kjb_flag" property="sendKjbFlag" jdbcType="VARCHAR" />
+    <result column="tax_total" property="taxTotal" jdbcType="DECIMAL" />
+    <result column="freight" property="freight" jdbcType="DECIMAL" />
+    <result column="discount" property="discount" jdbcType="DECIMAL" />
+    <result column="fenxiao_tax_total" property="fenxiaoTaxTotal" jdbcType="DECIMAL" />
+    <result column="fenxiao_freight" property="fenxiaoFreight" jdbcType="DECIMAL" />
+    <result column="fenxiao_discount" property="fenxiaoDiscount" jdbcType="DECIMAL" />
+    <result column="fenxiao_discount_price" property="fenxiaoDiscountPrice" jdbcType="DECIMAL" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="create_by" property="createBy" jdbcType="BIGINT" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="BIGINT" />
+    <result column="is_deleted" property="isDeleted" jdbcType="INTEGER" />
+    <result column="version" property="version" jdbcType="INTEGER" />
+    <result column="tenant_id" property="tenantId" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, order_id, oid, item_type, title, num, outer_sku_id, buyer_messages, price, total_fee, 
+    payment, item_id, sku_id, sku_properties_name, outer_item_id, points_price, pic_path, 
+    goods_url, alias, is_present, discount_price, sku_unique_code, pre_sale_type, is_pre_sale, 
+    is_cross_border, customs_code, cross_border_trade_mode, sub_order_no, fenxiao_price, 
+    fenxiao_payment, re_price, re_total_price, goods_unit, send_kjb_flag, tax_total, 
+    freight, discount, fenxiao_tax_total, fenxiao_freight, fenxiao_discount, fenxiao_discount_price, 
+    create_time, create_by, update_time, update_by, is_deleted, version, tenant_id
+  </sql>
+  <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from doc_order_youzan_item
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <select id="selectByOrderId" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from doc_order_youzan_item
+    where order_id = #{orderId} and send_kjb_flag = #{orderNewEnum}
+  </select>
+
+
+  <delete id="deleteById" parameterType="java.lang.Long" >
+    delete from doc_order_youzan_item
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.topideal.supplychain.ocp.order.model.OrderYouzanItem" >
+    insert into doc_order_youzan_item
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="orderId != null" >
+        order_id,
+      </if>
+      <if test="oid != null" >
+        oid,
+      </if>
+      <if test="itemType != null" >
+        item_type,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="num != null" >
+        num,
+      </if>
+      <if test="outerSkuId != null" >
+        outer_sku_id,
+      </if>
+      <if test="buyerMessages != null" >
+        buyer_messages,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="totalFee != null" >
+        total_fee,
+      </if>
+      <if test="payment != null" >
+        payment,
+      </if>
+      <if test="itemId != null" >
+        item_id,
+      </if>
+      <if test="skuId != null" >
+        sku_id,
+      </if>
+      <if test="skuPropertiesName != null" >
+        sku_properties_name,
+      </if>
+      <if test="outerItemId != null" >
+        outer_item_id,
+      </if>
+      <if test="pointsPrice != null" >
+        points_price,
+      </if>
+      <if test="picPath != null" >
+        pic_path,
+      </if>
+      <if test="goodsUrl != null" >
+        goods_url,
+      </if>
+      <if test="alias != null" >
+        alias,
+      </if>
+      <if test="isPresent != null" >
+        is_present,
+      </if>
+      <if test="discountPrice != null" >
+        discount_price,
+      </if>
+      <if test="skuUniqueCode != null" >
+        sku_unique_code,
+      </if>
+      <if test="preSaleType != null" >
+        pre_sale_type,
+      </if>
+      <if test="isPreSale != null" >
+        is_pre_sale,
+      </if>
+      <if test="isCrossBorder != null" >
+        is_cross_border,
+      </if>
+      <if test="customsCode != null" >
+        customs_code,
+      </if>
+      <if test="crossBorderTradeMode != null" >
+        cross_border_trade_mode,
+      </if>
+      <if test="subOrderNo != null" >
+        sub_order_no,
+      </if>
+      <if test="fenxiaoPrice != null" >
+        fenxiao_price,
+      </if>
+      <if test="fenxiaoPayment != null" >
+        fenxiao_payment,
+      </if>
+      <if test="rePrice != null" >
+        re_price,
+      </if>
+      <if test="reTotalPrice != null" >
+        re_total_price,
+      </if>
+      <if test="goodsUnit != null" >
+        goods_unit,
+      </if>
+      <if test="sendKjbFlag != null" >
+        send_kjb_flag,
+      </if>
+      <if test="taxTotal != null" >
+        tax_total,
+      </if>
+      <if test="freight != null" >
+        freight,
+      </if>
+      <if test="discount != null" >
+        discount,
+      </if>
+      <if test="fenxiaoTaxTotal != null" >
+        fenxiao_tax_total,
+      </if>
+      <if test="fenxiaoFreight != null" >
+        fenxiao_freight,
+      </if>
+      <if test="fenxiaoDiscount != null" >
+        fenxiao_discount,
+      </if>
+      <if test="fenxiaoDiscountPrice != null" >
+        fenxiao_discount_price,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="isDeleted != null" >
+        is_deleted,
+      </if>
+      <if test="version != null" >
+        version,
+      </if>
+      <if test="tenantId != null" >
+        tenant_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="orderId != null" >
+        #{orderId,jdbcType=BIGINT},
+      </if>
+      <if test="oid != null" >
+        #{oid,jdbcType=VARCHAR},
+      </if>
+      <if test="itemType != null" >
+        #{itemType,jdbcType=INTEGER},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="num != null" >
+        #{num,jdbcType=INTEGER},
+      </if>
+      <if test="outerSkuId != null" >
+        #{outerSkuId,jdbcType=VARCHAR},
+      </if>
+      <if test="buyerMessages != null" >
+        #{buyerMessages,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=VARCHAR},
+      </if>
+      <if test="totalFee != null" >
+        #{totalFee,jdbcType=VARCHAR},
+      </if>
+      <if test="payment != null" >
+        #{payment,jdbcType=VARCHAR},
+      </if>
+      <if test="itemId != null" >
+        #{itemId,jdbcType=INTEGER},
+      </if>
+      <if test="skuId != null" >
+        #{skuId,jdbcType=INTEGER},
+      </if>
+      <if test="skuPropertiesName != null" >
+        #{skuPropertiesName,jdbcType=VARCHAR},
+      </if>
+      <if test="outerItemId != null" >
+        #{outerItemId,jdbcType=VARCHAR},
+      </if>
+      <if test="pointsPrice != null" >
+        #{pointsPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="picPath != null" >
+        #{picPath,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsUrl != null" >
+        #{goodsUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="alias != null" >
+        #{alias,jdbcType=VARCHAR},
+      </if>
+      <if test="isPresent != null" >
+        #{isPresent,jdbcType=BIT},
+      </if>
+      <if test="discountPrice != null" >
+        #{discountPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="skuUniqueCode != null" >
+        #{skuUniqueCode,jdbcType=VARCHAR},
+      </if>
+      <if test="preSaleType != null" >
+        #{preSaleType,jdbcType=VARCHAR},
+      </if>
+      <if test="isPreSale != null" >
+        #{isPreSale,jdbcType=VARCHAR},
+      </if>
+      <if test="isCrossBorder != null" >
+        #{isCrossBorder,jdbcType=VARCHAR},
+      </if>
+      <if test="customsCode != null" >
+        #{customsCode,jdbcType=VARCHAR},
+      </if>
+      <if test="crossBorderTradeMode != null" >
+        #{crossBorderTradeMode,jdbcType=VARCHAR},
+      </if>
+      <if test="subOrderNo != null" >
+        #{subOrderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="fenxiaoPrice != null" >
+        #{fenxiaoPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="fenxiaoPayment != null" >
+        #{fenxiaoPayment,jdbcType=VARCHAR},
+      </if>
+      <if test="rePrice != null" >
+        #{rePrice,jdbcType=VARCHAR},
+      </if>
+      <if test="reTotalPrice != null" >
+        #{reTotalPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsUnit != null" >
+        #{goodsUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="sendKjbFlag != null" >
+        #{sendKjbFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="taxTotal != null" >
+        #{taxTotal,jdbcType=VARCHAR},
+      </if>
+      <if test="freight != null" >
+        #{freight,jdbcType=VARCHAR},
+      </if>
+      <if test="discount != null" >
+        #{discount,jdbcType=VARCHAR},
+      </if>
+      <if test="fenxiaoTaxTotal != null" >
+        #{fenxiaoTaxTotal,jdbcType=VARCHAR},
+      </if>
+      <if test="fenxiaoFreight != null" >
+        #{fenxiaoFreight,jdbcType=VARCHAR},
+      </if>
+      <if test="fenxiaoDiscount != null" >
+        #{fenxiaoDiscount,jdbcType=VARCHAR},
+      </if>
+      <if test="fenxiaoDiscountPrice != null" >
+        #{fenxiaoDiscountPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null" >
+        #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="version != null" >
+        #{version,jdbcType=INTEGER},
+      </if>
+      <if test="tenantId != null" >
+        #{tenantId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateById" parameterType="com.topideal.supplychain.ocp.order.model.OrderYouzanItem" >
+    update doc_order_youzan_item
+    <set >
+      <if test="orderId != null" >
+        order_id = #{orderId,jdbcType=BIGINT},
+      </if>
+      <if test="oid != null" >
+        oid = #{oid,jdbcType=VARCHAR},
+      </if>
+      <if test="itemType != null" >
+        item_type = #{itemType,jdbcType=INTEGER},
+      </if>
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="num != null" >
+        num = #{num,jdbcType=INTEGER},
+      </if>
+      <if test="outerSkuId != null" >
+        outer_sku_id = #{outerSkuId,jdbcType=VARCHAR},
+      </if>
+      <if test="buyerMessages != null" >
+        buyer_messages = #{buyerMessages,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=VARCHAR},
+      </if>
+      <if test="totalFee != null" >
+        total_fee = #{totalFee,jdbcType=VARCHAR},
+      </if>
+      <if test="payment != null" >
+        payment = #{payment,jdbcType=VARCHAR},
+      </if>
+      <if test="itemId != null" >
+        item_id = #{itemId,jdbcType=INTEGER},
+      </if>
+      <if test="skuId != null" >
+        sku_id = #{skuId,jdbcType=INTEGER},
+      </if>
+      <if test="skuPropertiesName != null" >
+        sku_properties_name = #{skuPropertiesName,jdbcType=VARCHAR},
+      </if>
+      <if test="outerItemId != null" >
+        outer_item_id = #{outerItemId,jdbcType=VARCHAR},
+      </if>
+      <if test="pointsPrice != null" >
+        points_price = #{pointsPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="picPath != null" >
+        pic_path = #{picPath,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsUrl != null" >
+        goods_url = #{goodsUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="alias != null" >
+        alias = #{alias,jdbcType=VARCHAR},
+      </if>
+      <if test="isPresent != null" >
+        is_present = #{isPresent,jdbcType=BIT},
+      </if>
+      <if test="discountPrice != null" >
+        discount_price = #{discountPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="skuUniqueCode != null" >
+        sku_unique_code = #{skuUniqueCode,jdbcType=VARCHAR},
+      </if>
+      <if test="preSaleType != null" >
+        pre_sale_type = #{preSaleType,jdbcType=VARCHAR},
+      </if>
+      <if test="isPreSale != null" >
+        is_pre_sale = #{isPreSale,jdbcType=VARCHAR},
+      </if>
+      <if test="isCrossBorder != null" >
+        is_cross_border = #{isCrossBorder,jdbcType=VARCHAR},
+      </if>
+      <if test="customsCode != null" >
+        customs_code = #{customsCode,jdbcType=VARCHAR},
+      </if>
+      <if test="crossBorderTradeMode != null" >
+        cross_border_trade_mode = #{crossBorderTradeMode,jdbcType=VARCHAR},
+      </if>
+      <if test="subOrderNo != null" >
+        sub_order_no = #{subOrderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="fenxiaoPrice != null" >
+        fenxiao_price = #{fenxiaoPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="fenxiaoPayment != null" >
+        fenxiao_payment = #{fenxiaoPayment,jdbcType=VARCHAR},
+      </if>
+      <if test="rePrice != null" >
+        re_price = #{rePrice,jdbcType=VARCHAR},
+      </if>
+      <if test="reTotalPrice != null" >
+        re_total_price = #{reTotalPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsUnit != null" >
+        goods_unit = #{goodsUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="sendKjbFlag != null" >
+        send_kjb_flag = #{sendKjbFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="taxTotal != null" >
+        tax_total = #{taxTotal,jdbcType=VARCHAR},
+      </if>
+      <if test="freight != null" >
+        freight = #{freight,jdbcType=VARCHAR},
+      </if>
+      <if test="discount != null" >
+        discount = #{discount,jdbcType=VARCHAR},
+      </if>
+      <if test="fenxiaoTaxTotal != null" >
+        fenxiao_tax_total = #{fenxiaoTaxTotal,jdbcType=VARCHAR},
+      </if>
+      <if test="fenxiaoFreight != null" >
+        fenxiao_freight = #{fenxiaoFreight,jdbcType=VARCHAR},
+      </if>
+      <if test="fenxiaoDiscount != null" >
+        fenxiao_discount = #{fenxiaoDiscount,jdbcType=VARCHAR},
+      </if>
+      <if test="fenxiaoDiscountPrice != null" >
+        fenxiao_discount_price = #{fenxiaoDiscountPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null" >
+        is_deleted = #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="version != null" >
+        version = #{version,jdbcType=INTEGER},
+      </if>
+      <if test="tenantId != null" >
+        tenant_id = #{tenantId,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <insert id="batchInsert" >
+      INSERT INTO doc_order_youzan_item (order_id,oid,item_type,title,num,outer_sku_id,buyer_messages,
+      price,total_fee,payment,item_id,sku_id,sku_properties_name,outer_item_id,points_price,pic_path,
+      goods_url,alias,is_present,discount_price,sku_unique_code,pre_sale_type,is_pre_sale,is_cross_border,
+      customs_code,cross_border_trade_mode,sub_order_no,fenxiao_price,fenxiao_payment,
+      goods_unit,send_kjb_flag,tax_total,freight,discount,fenxiao_tax_total,fenxiao_freight,fenxiao_discount,fenxiao_discount_price,
+      create_time, create_by, update_time,update_by,tenant_id)VALUES
+      <foreach collection="list" item="item" separator=",">
+      (#{item.orderId},#{item.oid},#{item.itemType},#{item.title},#{item.num},#{item.outerSkuId},#{item.buyerMessages},
+      #{item.price},#{item.totalFee},#{item.payment},#{item.itemId},#{item.skuId},#{item.skuPropertiesName},
+      #{item.outerItemId},#{item.pointsPrice},#{item.picPath},#{item.goodsUrl},#{item.alias},#{item.isPresent},
+      #{item.discountPrice},#{item.skuUniqueCode},#{item.preSaleType},#{item.isPreSale},#{item.isCrossBorder},
+      #{item.customsCode},#{item.crossBorderTradeMode},#{item.subOrderNo},#{item.fenxiaoPrice},#{item.fenxiaoPayment},
+      #{item.goodsUnit},#{item.sendKjbFlag},
+      #{item.taxTotal},#{item.freight},#{item.discount},#{item.fenxiaoTaxTotal},#{item.fenxiaoFreight},
+      #{item.fenxiaoDiscount},#{item.fenxiaoDiscountPrice},
+      #{item.createTime}, #{item.createBy}, #{item.updateTime},#{item.updateBy},#{item.tenantId})
+      </foreach>
+  </insert>
+
+</mapper>

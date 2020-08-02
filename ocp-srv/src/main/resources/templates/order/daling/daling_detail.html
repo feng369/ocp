@@ -1,0 +1,376 @@
+<!doctype html>
+<html lang="zh-cmn-Hans" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="common/layout::header( ~{::title})">
+  <title id="title">达令家订单明细</title>
+</head>
+<body>
+<div th:if="${order.orderDetail}" class="ui fluid container box-form" style="margin-top:10px;">
+  <input type="hidden" name="orderId" id="orderId" th:value="${order.id}"/>
+  <!-- 订单信息 -->
+
+  <div id="p1" class="easyui-panel" title="订单基本信息"
+       style="height:280px;width:98%;padding: 5px 10px;"
+       data-options="collapsible:true">
+    <form class="ui form">
+        <hr style="margin-bottom: 10px;">
+      <div class="inline fields">
+        <div class="three wide field">
+          <label>企业订单编号：</label>
+        </div>
+        <div class="five wide field">
+          <input type="text" th:value="${order.orderNo}"
+                 th:readonly="true"/>
+        </div>
+
+        <div class="three wide field">
+          <label>订单生成时间：</label>
+        </div>
+        <div class="five wide field">
+          <input type="text" th:value="${#calendars.format(order.createdDate,'yyyy-MM-dd HH:mm:ss')}"
+                 th:readonly="true"/>
+        </div>
+
+        <div class="three wide field">
+          <label>平台订单状态：</label>
+        </div>
+        <div class="five wide field">
+          <input type="text" th:value="${order.status.desc}"
+                 th:readonly="true"/>
+        </div>
+
+        <div class="three wide field">
+          <label>订单状态：</label>
+        </div>
+        <div class="five wide field">
+          <input type="text" th:value="${order.orderStatus.desc}"
+                 th:readonly="true"/>
+        </div>
+
+      </div>
+
+      <div class="inline fields">
+        <div class="three wide field">
+          <label>电商企业编码：</label>
+        </div>
+        <div class="five wide field">
+          <input type="text" th:value="${order.electricCode}"
+                 th:readonly="true"/>
+        </div>
+
+        <div class="three wide field">
+          <label>第三方物流商编码：</label>
+        </div>
+        <div class="five wide field">
+          <input type="text" th:value="${order.tpl}"
+                 th:readonly="true"/>
+        </div>
+
+        <div class="three wide field">
+          <label>电商平台编码：</label>
+        </div>
+        <div class="five wide field">
+          <input type="text" th:value="${order.cbePcomCode}"
+                 th:readonly="true"/>
+        </div>
+
+        <div class="three wide field">
+          <label>平台订单类别：</label>
+        </div>
+        <div class="five wide field" style="width: 200px">
+          <input type="text" th:value="${order.orderDetail.transportType}"
+                 th:readonly="true"/>
+        </div>
+      </div>
+
+      <div class="inline fields">
+        <div class="three wide field">
+          <label>支付人姓名：</label>
+        </div>
+        <div class="five wide field">
+          <input type="text" th:value="${order.orderDetail.buyerName}"
+                 th:readonly="true"/>
+        </div>
+
+        <div class="three wide field">
+          <label>支付人证件号码：</label>
+        </div>
+        <div class="four wide field">
+          <input type="text" id="buyer_id_number" name="buyer_id_number" value="**********" th:name="${order.orderDetail.buyerIdNumber}"
+                 th:readonly="true"/>
+        </div>
+        <div class="one wide field">
+          <button style="padding: 5px;" class="ui blue button" id="buyer_id_number_btn"
+                  type="button"
+                  th:onclick="showSensitiveData('buyer_id_number')">显示
+          </button>
+        </div>
+
+        <div class="three wide field">
+          <label>运单号：</label>
+        </div>
+        <div class="five wide field">
+          <input type="text" th:value="${order.logisticsNumber}"
+                 th:readonly="true"/>
+        </div>
+
+        <div class="three wide field">
+          <label>支付方式：</label>
+        </div>
+        <div class="five wide field">
+          <input type="text" th:value="${order.orderDetail.modeOfPayment}"
+                 th:readonly="true"/>
+        </div>
+      </div>
+
+      <div class="inline fields">
+        <div class="three wide field">
+          <label>支付流水号：</label>
+        </div>
+        <div class="five wide field">
+          <input type="text" th:value="${order.orderDetail.paymentTransaction}"
+                 th:readonly="true"/>
+        </div>
+
+        <div class="three wide field">
+          <label>平台物流企业编码：</label>
+        </div>
+        <div class="five wide field">
+          <input type="text" th:value="${order.orderDetail.logisticsCompany}"
+                 th:readonly="true"/>
+        </div>
+
+        <div class="eight wide field">
+
+        </div>
+        <div class="eight wide field">
+
+        </div>
+
+      </div>
+    </form>
+  </div>
+
+    <div id="p2" class="easyui-panel" title="费用信息"
+         style="height:100px;width:98%;padding: 5px 10px;"
+         data-options="collapsible:true">
+        <form class="ui form">
+            <hr style="margin-bottom: 10px;">
+            <div class="inline fields">
+                <div class="three wide field">
+                    <label>运费：</label>
+                </div>
+                <div class="five wide field">
+                    <input type="text" th:value="${order.orderDetail.freightPrice}"
+                           th:readonly="true"/>
+                </div>
+                <div class="three wide field">
+                    <label>税费：</label>
+                </div>
+                <div class="five wide field">
+                    <input type="text" th:value="${order.orderDetail.taxAmount}"
+                           th:readonly="true"/>
+                </div>
+
+                <div class="three wide field">
+                    <label>实际支付金额：</label>
+                </div>
+                <div class="five wide field">
+                    <input type="text" th:value="${order.orderDetail.paymentAmount}"
+                           th:readonly="true"/>
+                </div>
+                <div class="three wide field">
+                    <label>货值：</label>
+                </div>
+                <div class="five wide field">
+                    <input type="text" th:value="${order.orderDetail.orderAmount}"
+                           th:readonly="true"/>
+                </div>
+
+            </div>
+
+        </form>
+    </div>
+
+    <div id="p3" class="easyui-panel" title="订单收货信息"
+         style="height:200px;width:98%;padding: 5px 10px;"
+         data-options="collapsible:true">
+        <form class="ui form">
+            <hr style="margin-bottom: 10px;">
+            <div class="inline fields">
+                <div class="three wide field">
+                    <label>顾客姓名：</label>
+                </div>
+                <div class="five wide field">
+                    <input type="text" th:value="${order.orderDetail.customerName}"
+                           th:readonly="true"/>
+                </div>
+                <div class="three wide field">
+                    <label>顾客证件号：</label>
+                </div>
+                <div class="four wide field">
+                    <input type="text" id="id_card" name="id_card" value="**********"  th:name="${order.orderDetail.idCard}" th:readonly="true"/>
+                </div>
+
+                <div class="one wide field">
+                    <button style="padding: 5px;" class="ui blue button" id="id_card_btn"
+                            type="button"
+                            th:onclick="showSensitiveData('id_card')">显示
+                    </button>
+                </div>
+
+                <div class="three wide field">
+                    <label>顾客手机号：</label>
+                </div>
+                <div class="four wide field">
+                    <input type="text" id="contact_phone" value="**********" th:name="${order.orderDetail.contactPhone}"
+                           th:readonly="true"/>
+                </div>
+
+                <div class="one wide field">
+                    <button style="padding: 5px;" class="ui blue button" id="contact_phone_btn"
+                            type="button"
+                            th:onclick="showSensitiveData('contact_phone')">显示
+                    </button>
+                </div>
+
+                <div class="three wide field">
+                    <label>地址：</label>
+                </div>
+                <div class="five wide field" style="width: 200px">
+                    <input type="text" th:value="${order.orderDetail.address}"
+                           th:readonly="true"/>
+                </div>
+            </div>
+
+            <div class="inline fields">
+                <div class="three wide field">
+                    <label>申报关区：</label>
+                </div>
+                <div class="five wide field">
+                    <input type="text" th:value="${order.customsCode.desc}"
+                           th:readonly="true"/>
+                </div>
+                <div class="three wide field">
+                    <label>申报检区：</label>
+                </div>
+                <div class="five wide field">
+                    <input type="text" th:value="${order.ciqbCode}"
+                           th:readonly="true"/>
+                </div>
+                <div class="three wide field">
+                    <label>进口模式：</label>
+                </div>
+                <div class="five wide field">
+                    <input type="text" th:value="${order.busiMode}"
+                           th:readonly="true"/>
+                </div>
+                <div class="three wide field">
+                    <label>供应商编码：</label>
+                </div>
+                <div class="five wide field">
+                    <input type="text" th:value="${order.orderDetail.vendorCode}"
+                           th:readonly="true"/>
+                </div>
+
+            </div>
+
+            <div class="inline fields">
+                <div class="three wide field">
+                    <label>抓单ID：</label>
+                </div>
+                <div class="five wide field">
+                    <input type="text" th:value="${order.taskId}"
+                           th:readonly="true"/>
+                </div>
+                <div class="three wide field">
+                    <label>邮编：</label>
+                </div>
+                <div class="five wide field">
+                    <input type="text" th:value="${order.orderDetail.postCode}"
+                           th:readonly="true"/>
+                </div>
+                <div class="three wide field">
+                    <label>订单优惠金额：</label>
+                </div>
+                <div class="five wide field">
+                    <input type="text" th:value="${order.orderDetail.discountTotalPrice}"
+                           th:readonly="true"/>
+                </div>
+
+                <div class="eight wide field">
+
+                </div>
+            </div>
+
+        </form>
+    </div>
+
+    <div id="p4" class="easyui-panel" title="商品信息"
+         style="height:300px;width:98%;padding: 5px 10px;"
+         data-options="collapsible:true">
+      <hr style="margin-bottom: 10px;">
+      <table id="itemTable" style="width:calc(100% - 10px);height:auto;" striped="true"
+             data-options="rownumbers:true">
+        <thead>
+        <tr>
+          <th field="sku" width="180">达令规格编码</th>
+          <th field="vendor_sku" width="180">供应商产品编码</th>
+          <th field="qty" width="180">购买数量</th>
+          <th field="unit_price" width="180">商品售价(单价)</th>
+          <th field="payment_unit_price" width="180">商品支付金额(支付行小计)</th>
+          <th field="upc" width="180">厂商条码</th>
+          <th field="product_name" width="180">产品名称</th>
+          <th field="unit_tax_price" width="180">商品税额(税额行小计)</th>
+          <th field="discount_price" width="180">商品优惠金额(优惠行小计)</th>
+        </tr>
+        </thead>
+      </table>
+    </div>
+</div>
+
+<script>
+
+    function showSensitiveData(propertyName) {
+        var input = $("#" + propertyName);
+        var value = input.attr("name");
+        var inputBtn = $("#" + propertyName + "_btn");
+        if (input.val() == "**********") {
+            $.ajax({
+                type: "POST",
+                url: basePath + '/orderDaling/sensitiveData',
+                data: {"value": value},
+                traditional: true,
+                cache: false,
+                timeout: 600000,
+                success: function (data) {
+                    input.val(data);
+                    inputBtn.html("隐藏");
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    layer.alert("error", {icon: "layui-icon-face-cry"});
+                    layer.alert(jqXHR.responseText);
+                }
+            });
+        } else {
+            input.val("**********");
+            inputBtn.html("显示");
+        }
+    }
+
+  $(function () {
+    var id = $("#orderId").val();
+    $('#itemTable').datagrid({
+      initCount: 1,//开始就加载
+      url: basePath + '/orderDaling/detail/json/' + id,
+      methord: 'post',
+      striped: true, //奇偶行是否区分
+      singleSelect: true,//单选模式
+      rownumbers: true//行号
+    });
+  })
+
+
+</script>
+</body>
+</html>

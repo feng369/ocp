@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.topideal.supplychain.ocp.order.mapper.OrderPddGoodsMapper" >
+  <resultMap id="BaseResultMap" type="com.topideal.supplychain.ocp.order.model.OrderPddGoods" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="order_id" property="orderId" jdbcType="BIGINT" />
+    <result column="goods_id" property="goodsId" jdbcType="BIGINT" />
+    <result column="sku_id" property="skuId" jdbcType="BIGINT" />
+    <result column="outer_id" property="outerId" jdbcType="VARCHAR" />
+    <result column="outer_goods_id" property="outerGoodsId" jdbcType="VARCHAR" />
+    <result column="goods_name" property="goodsName" jdbcType="VARCHAR" />
+    <result column="goods_price" property="goodsPrice" jdbcType="DECIMAL" />
+    <result column="goods_spec" property="goodsSpec" jdbcType="VARCHAR" />
+    <result column="goods_count" property="goodsCount" jdbcType="BIGINT" />
+    <result column="goods_img" property="goodsImg" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="create_by" property="createBy" jdbcType="BIGINT" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="BIGINT" />
+    <result column="version" property="version" jdbcType="INTEGER" />
+    <result column="is_deleted" property="isDeleted" jdbcType="INTEGER" />
+    <result column="tenant_id" property="tenantId" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, order_id, goods_id, sku_id, outer_id, outer_goods_id, goods_name, goods_price, 
+    goods_spec, goods_count, goods_img, create_time, create_by, update_time, update_by, version,
+    is_deleted, tenant_id
+  </sql>
+  <select id="selectByOrderId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select * from doc_order_pdd_goods
+    where order_id = #{orderId,jdbcType=BIGINT}
+  </select>
+  <insert id="insertBatch">
+    insert into doc_order_pdd_goods (order_id, goods_id, sku_id, outer_id, outer_goods_id,
+      goods_name, goods_price, goods_spec, goods_count, goods_img, create_time
+      )
+    values
+    <foreach collection="list" separator="," item="item">
+      (#{orderId,jdbcType=BIGINT}, #{item.goodsId,jdbcType=BIGINT},
+      #{item.skuId,jdbcType=BIGINT}, #{item.outerId,jdbcType=VARCHAR}, #{item.outerGoodsId,jdbcType=VARCHAR},
+      #{item.goodsName,jdbcType=VARCHAR}, #{item.goodsPrice,jdbcType=DECIMAL}, #{item.goodsSpec,jdbcType=VARCHAR},
+      #{item.goodsCount,jdbcType=BIGINT},#{item.goodsImg,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}
+      )
+    </foreach>
+  </insert>
+</mapper>

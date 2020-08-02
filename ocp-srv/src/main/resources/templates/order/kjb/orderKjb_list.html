@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="zh-cmn-Hans" xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+
+<head th:replace="common/layout::header( ~{::title})">
+    <title id="title">跨境宝订单</title>
+</head>
+
+<body>
+<div class="contentBox">
+    <div class="ui fluid container box-form">
+        <form class="ui form" id="searchForm">
+            <div class="searchBox">
+                <ul>
+                    <li>
+                        <div class="smallBox">
+                            <label>交易订单号：</label>
+                            <input class="easyui-textbox" name="tradeNo" style="width: 150px;height: 24px;">
+                        </div>
+                    </li>
+                    <li>
+                        <div class="smallBox">
+                            <label>店铺编码：</label>
+                            <input class="easyui-textbox" name="storeCode" style="width: 150px;height: 24px;">
+                        </div>
+                    </li>
+                    <li>
+                        <div class="smallBox">
+                            <label>电商平台编码：</label>
+                            <input class="easyui-textbox" name="platformCode" style="width: 150px;height: 24px;">
+                        </div>
+                    </li>
+                    <li>
+                        <div class="smallBox">
+                            <label>系统业务编码：</label>
+                            <input class="easyui-textbox" name="code" style="width: 150px;height: 24px;">
+                        </div>
+                    </li>
+                    <li>
+                        <div class="smallBox">
+                            <label>状态：</label>
+                            <span class="selectBox">
+                                <select id="status" class="form-select" name="status"
+                                        style="width: 150px;height: 24px;">
+                                    <option value=""></option>
+                                    <option th:each="status : ${T(com.topideal.supplychain.ocp.enums.SyncStatusEnum).values()}"
+                                            th:text="${status.desc}" th:value="${status}"></option>
+                                </select>
+                                <i class="x icon clearBtn" title="清空"></i>
+                            </span>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="smallBox">
+                            <label>系统创建时间从</label>
+                            <input type="text" class="form-input-border" id="createBeginTime" name="createBeginTime"
+                                   onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',maxDate:'#F{$dp.$D(\'createEndTime\');}'})"
+                                   style="width: 150px;height: 24px;"/>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="smallBox">
+                            <label>至</label>
+                            <input type="text" class="form-input-border" id="createEndTime" name="createEndTime"
+                                   onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',minDate:'#F{$dp.$D(\'createBeginTime\')}'})"
+                                   style="width: 150px;height: 24px;"/>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="field" style="margin-top: 10px;text-align: center;">
+                <a href="#" class="ui mini primary button form-search"><i class="search icon"></i>查询</a>
+                <a href="#" class="ui mini primar grey button form-reset"><i class="undo icon"></i>重置</a>
+                <a href="#" id="show_i" onclick="hide()" style="float :right"><i class="angle down icon"></i>显示条件</a>
+            </div>
+        </form>
+    </div>
+
+    <div class="tableBox">
+        <table id="tt" striped="true" toolbar="#tb" style="height: 100%;">
+            <thead>
+            <tr>
+                <th field="ck" checkBox="true" align="center" halign="center"></th>
+                <!--<th field="id" formatter="btnFomatter">操作</th>-->
+                <th field="status" width="80px">状态</th>
+                <th field="createTime" width="150px">系统创建时间</th>
+                <th field="code" width="150px" formatter="formatCode">系统业务单号</th>
+                <th field="storeCode" width="120px" >店铺编码</th>
+                <th field="orderCreateTime" width="120px">订单时间</th>
+                <th field="overseaHouseCode" width="120px">海外仓编码</th>
+                <th field="tradeNo" width="130px">交易订单号</th>
+                <th field="productCode" width="150px">产品代码</th>
+                <th field="platformCode" width="150px">电商平台编码</th>
+                <th field="isTraceSource" width="150px">是否溯源</th>
+                <th field="actualPaidCurrency" width="120px">支付币制</th>
+                <th field="isTran" width="120px">换单标识</th>
+                <th field="senderName" width="120px">发件人姓名</th>
+                <th field="senderCountry" width="120px">发件人国家</th>
+                <th field="senderCity" width="120px">发件人市</th>
+                <th field="senderAddress" width="150px">发件人详细地址</th>
+                <th field="receiverName" width="120px">收件人姓名</th>
+                <th field="receiverCountry" width="120px">收件人国家</th>
+                <th field="receiverProvince" width="120px">收件人省</th>
+                <th field="receiverCity" width="120px">收件人市</th>
+                <th field="receiverAddress" width="150px">收件人详细地址</th>
+            </tr>
+            </thead>
+        </table>
+    </div>
+
+    <div id="tb" style="display:none;">
+        <a class="easyui-linkbutton" shiro:hasPermission="order.kjb.repushEsd" plain="true" onclick="repushEsd()"><i class="green plus square icon"></i>重推ESD</a>
+    </div>
+
+    <div id="tv" style="display: none">
+    </div>
+
+</div>
+
+<div id="detailDiv"></div>
+<div id="modalDiv"></div>
+
+</body>
+<script type="text/javascript" th:inline="none">
+    $(function () {
+        $('#tt').datagrid({
+            formId: "#searchForm",
+
+            url: basePath + '/orderKjb/json',
+            method: 'post',
+            pagination: true,
+            // initCount: 1,//开始就加载
+        });
+    });
+
+    /**
+     * 订单的点击链接
+     */
+    function formatCode(value, row, index) {
+        var htmlStr = "<a class='hrefCss blue_link' id='showDetail' title='点击查看详情'  href='javascript:void(0)' "
+            + "onclick=showDetail('" + row.id + "')>"
+            + value + "</a>";
+        htmlStr = htmlStr + "</br>";
+        return htmlStr;
+    }
+
+    /**
+     * 打开商品详细
+     */
+    function showDetail(id) {
+        $('#detailDiv').dialog({
+            title: '跨境宝订单详情',
+            width: "70%",
+            height: "60%",
+            closed: false,
+            cache: false,
+            method: 'post',
+            href: basePath + '/orderKjb/showDetail/' + id,
+            modal: true
+        });
+    }
+
+    /**
+     * 重推至esd
+     */
+    function repushEsd() {
+        var checkedItems = $('#tt').datagrid('getChecked');
+        if (checkedItems.length < 1) {
+            tips.alert("请至少选择一行记录操作");
+            return;
+        }
+        var ids = [];
+        $.each(checkedItems, function (index, item) {
+            ids.push(item.id);
+        });
+        $.ajax({
+            url: basePath + "/orderKjb/repushEsd",
+            type: 'POST',
+            data: {ids: ids},
+            success: function (response) {
+                tips.alert(response.message);
+                if (response.flag == 'SUCCESS') {
+                    $('#tt').datagrid('reload');
+                }
+            }
+        });
+    }
+
+</script>
+</html>

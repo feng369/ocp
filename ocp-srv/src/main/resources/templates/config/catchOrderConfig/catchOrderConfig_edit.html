@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="zh-cmn-Hans" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="common/layout::header( ~{::title})">
+    <title id="title">编辑</title>
+</head>
+<body>
+<div class="ui container" style="margin-top:10px;width: 95%">
+    <form th:action="@{/catchOrderConfig/edit}" id="editForm" name="editForm" class="ui form" method="post">
+
+        <div class="field">
+            <div class="four fields">
+                <div class="field">
+                    <input name="id" id="id" type="hidden" th:value="${catchOrderConfig.id}">
+                    <input name="merchantName" id="merchantName" type="hidden" th:value="${catchOrderConfig.merchantName}">
+                    <input name="platformName" id="platformName" type="hidden" th:value="${catchOrderConfig.platformName}">
+                    <input name="storeCode" id="storeCode" type="hidden" th:value="${catchOrderConfig.storeCode}">
+                    <label class="form-require-after">抓单名称:</label>
+                    <input class="easyui-textbox" type="text" name="name" th:value="${catchOrderConfig.name}" style="width: 150px;height: 24px;" data-options="required:true"/>
+                </div>
+                <div class="field">
+                    <label class="form-require-after">电商平台：</label>
+                    <span class="selectBox">
+                        <select id="platformCode" class="form-select" name="platformCode"
+                                style="width: 150px;height: 24px;"  data-options="required:true">
+                            <option value=""></option>
+                            <option th:each="platform : ${platformList}" th:text="${platform.name}"
+                                    th:selected="${catchOrderConfig.platformCode == platform.code}"
+                                    th:value="${platform.code}" th:otherFields="${platform.code}">
+                            </option>
+                        </select>
+                        <i class="x icon clearBtn" title="清空"></i>
+                    </span>
+                </div>
+                <div class="field">
+                    <label class="form-require-after">电商企业：</label>
+                    <span class="selectBox">
+                        <select id="merchantCode" class="form-select" name="merchantCode"
+                                style="width: 150px;height: 24px;"  data-options="required:true">
+                            <option value=""></option>
+                            <option th:each="merchant : ${merchantList}" th:text="${merchant.name}"
+                                    th:selected="${catchOrderConfig.merchantCode == merchant.code}"
+                                    th:value="${merchant.code}" th:otherFields="${merchant.code}">
+                            </option>
+                        </select>
+                        <i class="x icon clearBtn" title="清空"></i>
+                    </span>
+                </div>
+                <div class="field">
+                    <label>店铺：</label>
+                    <span class="selectBox">
+                        <select id="storeId" class="form-select" name="storeId"
+                                style="width: 150px;height: 24px;">
+                            <option value=""></option>
+                            <option th:each="store : ${storeList}" th:text="${store.code}"
+                                    th:selected="${catchOrderConfig.storeId == store.id}"
+                                    th:value="${store.id}" th:otherFields="${store.id}">
+                            </option>
+                        </select>
+                        <i class="x icon clearBtn" title="清空"></i>
+                    </span>
+                </div>
+            </div>
+            <div class="four fields">
+                <div class="field">
+                    <label class="form-require-after">每页查询条数:</label>
+                    <input class="easyui-numberbox" type="text" name="pageSize" th:value="${catchOrderConfig.pageSize}" data-options="required:true" style="width: 150px;height: 24px;"/>
+                </div>
+                <div class="field">
+                    <label class="form-require-after">抓取间隔:</label>
+                    <input class="easyui-numberbox" name="intervalCount" th:value="${catchOrderConfig.intervalCount}" style="width: 150px;height: 24px;"  data-options="required:true"/>
+                </div>
+                <div class="field">
+                    <label>抓单ID</label>
+                    <span class="selectBox">
+                        <select id="grabId" class="form-select" name="grabId"
+                                style="width: 150px;height: 24px;">
+                            <option value=""></option>
+                            <option
+                                th:each="item : ${T(com.topideal.supplychain.ocp.enums.GrabIdEnum).values()}"
+                                th:text="${item.desc}" th:value="${item.value}"
+                                th:selected="${item.value == catchOrderConfig.grabId}" th:otherFields="${item.value}"></option>
+                            </option>
+                        </select>
+                        <i class="x icon clearBtn" title="清空"></i>
+                    </span>
+                </div>
+                <div class="field">
+                    <label>查询起始时间:</label>
+                    <input  name="lastQueryTime" type="text" class="Wdate"
+                            onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})"
+                            style="width: 150px;height: 24px;" th:value="${#dates.format(catchOrderConfig.lastQueryTime, 'yyyy-MM-dd HH:mm:ss')}"/>
+                </div>
+            </div>
+            <div class="field" >
+                <label>默认值配置：</label>
+                <div id="editorDefaultArguments"></div>
+            </div>
+            <div class="field" >
+                <label>平台参数配置：</label>
+                <div id="editorPlatformArguments"></div>
+            </div>
+        </div>
+
+    </form>
+</div>
+
+<script th:inline="javascript">
+    $().ready(function () {
+        cntr.initSelect()
+    });
+    /**
+     * 组合框联动
+     */
+    $("#merchantCode").combobox({
+        onSelect: function (rec) {
+            $("#merchantName").val(rec.text);
+        }
+    });
+    $("#platformCode").combobox({
+        onSelect: function (rec) {
+            $("#platformName").val(rec.text);
+        }
+    });
+    $("#storeId").combobox({
+        onSelect: function (rec) {
+            $("#storeCode").val(rec.text);
+        }
+    });
+    var defaultArguments = [[${catchOrderConfig.defaultArguments}]];
+    $("#editorDefaultArguments").jsoneditor({
+        inputName: "defaultArguments",
+        json: defaultArguments
+    });
+    var platformArguments = [[${catchOrderConfig.platformArguments}]];
+    $("#editorPlatformArguments").jsoneditor({
+        inputName: "platformArguments",
+        json: platformArguments
+    });
+</script>
+
+</body>
+
+
+
+</html>

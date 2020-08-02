@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.topideal.supplychain</groupId>
+    <artifactId>ocp-parent</artifactId>
+    <packaging>pom</packaging>
+    <version>${project.version}</version>
+
+    <parent>
+        <groupId>com.topideal.supplychain</groupId>
+        <artifactId>framework2</artifactId>
+        <version>2.1.4.4</version>
+    </parent>
+
+    <modules>
+        <module>ocp-core</module>
+        <module>ocp-platform</module>
+        <module>ocp-srv</module>
+        <module>ocp-interface</module>
+        <module>ocp-master</module>
+        <module>ocp-job</module>
+    </modules>
+
+    <properties>
+        <java.version>1.8</java.version>
+        <project.version>2.1.4</project.version>
+    </properties>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>com.topideal.supplychain</groupId>
+            <artifactId>framework2-job</artifactId>
+            <version>2.1.4.4</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.thoughtworks.xstream</groupId>
+            <artifactId>xstream</artifactId>
+            <version>1.4.8</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.codehaus.groovy</groupId>
+            <artifactId>groovy</artifactId>
+            <version>2.4.12</version>
+        </dependency>
+
+        <!--<dependency>
+          <groupId>com.github.core-lib</groupId>
+          <artifactId>xjar</artifactId>
+          <version>v2.0.5</version>
+        </dependency>-->
+        <!--拼多多依赖包-->
+        <dependency>
+            <groupId>com.pdd.sdk</groupId>
+            <artifactId>pop-sdk</artifactId>
+            <version>0.0.1</version>
+        </dependency>
+
+        <!--XML-->
+        <dependency>
+            <groupId>org.dom4j</groupId>
+            <artifactId>dom4j</artifactId>
+            <version>2.1.3</version>
+        </dependency>
+
+    </dependencies>
+
+    <!--<repositories>
+      <repository>
+        <id>jitpack.io</id>
+        <url>https://jitpack.io</url>
+      </repository>
+    </repositories>-->
+
+</project>

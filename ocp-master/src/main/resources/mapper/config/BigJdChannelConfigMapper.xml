@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.topideal.supplychain.ocp.config.mapper.BigJdChannelConfigMapper">
+
+    <resultMap id="BaseResultMap" type="com.topideal.supplychain.ocp.config.model.BigJdChannelConfig">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="code" property="code" jdbcType="VARCHAR"/>
+        <result column="ebc_code" property="ebcCode" jdbcType="VARCHAR"/>
+        <result column="ebp_code" property="ebpCode" jdbcType="VARCHAR"/>
+        <result column="logistics_code" property="logisticsCode" jdbcType="VARCHAR"/>
+        <result column="platform_code" property="platformCode" jdbcType="VARCHAR"/>
+        <result column="shop_code" property="shopCode" jdbcType="VARCHAR"/>
+        <result column="start_flag" property="startFlag" jdbcType="INTEGER"/>
+        <result column="remark" property="remark" jdbcType="VARCHAR"/>
+        <result column="create_by" property="createBy" jdbcType="BIGINT"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="update_by" property="updateBy" jdbcType="BIGINT"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+        <result column="version" property="version" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, code, ebc_code, ebp_code, logistics_code, platform_code, shop_code, start_flag,
+        remark, create_by, create_time, update_by, update_time, version
+    </sql>
+
+    <select id="pageList" resultMap="BaseResultMap" parameterType="com.topideal.supplychain.ocp.config.dto.BigJdChannelConfigPageRequestDto">
+        select
+        <include refid="Base_Column_List"/>
+        from cfg_big_jd_channel_config
+        <where>
+            <if test="startFlag != null ">
+                AND start_flag = #{startFlag,jdbcType=INTEGER}
+            </if>
+            <if test="ebcCode!=null and ebcCode!=''">
+                AND ebc_code = #{ebcCode,jdbcType=VARCHAR}
+            </if>
+            <if test="ebpCode!=null and ebpCode!=''">
+                AND ebp_code = #{ebpCode,jdbcType=VARCHAR}
+            </if>
+            <if test="logisticsCode!=null and logisticsCode!=''">
+                AND logistics_code = #{logisticsCode,jdbcType=VARCHAR}
+            </if>
+            <if test="platformCode!=null and platformCode!=''">
+                AND platform_code = #{platformCode,jdbcType=VARCHAR}
+            </if>
+            <if test="shopCode!=null and shopCode!=''">
+                AND shop_code = #{shopCode,jdbcType=VARCHAR}
+            </if>
+            <if test="createTimeStart!=null">
+                AND create_time <![CDATA[ >= ]]> #{createTimeStart,jdbcType=TIMESTAMP}
+            </if>
+            <if test="createTimeEnd!=null">
+                AND create_time <![CDATA[ < ]]> #{createTimeEnd,jdbcType=TIMESTAMP}
+            </if>
+        </where>
+        order by create_time desc
+    </select>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from cfg_big_jd_channel_config
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <select id="selectEnabled" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from cfg_big_jd_channel_config
+        where start_flag = 0
+    </select>
+
+    <delete id="delete" parameterType="java.lang.Long">
+        delete from cfg_big_jd_channel_config
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+
+    <delete id="deleteByIds">
+        delete from cfg_big_jd_channel_config
+        where id in
+        <foreach collection="ids" item="item" open="(" separator="," close=")">
+            #{item,jdbcType=BIGINT}
+        </foreach>
+    </delete>
+
+    <insert id="insert" parameterType="com.topideal.supplychain.ocp.config.model.BigJdChannelConfig">
+        insert into cfg_big_jd_channel_config (code, ebc_code,
+          ebp_code, logistics_code, platform_code,
+          shop_code, start_flag, remark,
+          create_by, create_time,
+          update_by, update_time)
+        values (#{code,jdbcType=VARCHAR}, #{ebcCode,jdbcType=VARCHAR},
+          #{ebpCode,jdbcType=VARCHAR}, #{logisticsCode,jdbcType=VARCHAR}, #{platformCode,jdbcType=VARCHAR},
+          #{shopCode,jdbcType=VARCHAR}, #{startFlag,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR},
+          #{createBy,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP},
+          #{updateBy,jdbcType=BIGINT}, #{updateTime,jdbcType=TIMESTAMP})
+    </insert>
+
+    <update id="update" parameterType="com.topideal.supplychain.ocp.config.model.BigJdChannelConfig">
+        update cfg_big_jd_channel_config
+        <set>
+            <if test="code != null">
+                code = #{code,jdbcType=VARCHAR},
+            </if>
+            <if test="ebcCode != null">
+                ebc_code = #{ebcCode,jdbcType=VARCHAR},
+            </if>
+            <if test="ebpCode != null">
+                ebp_code = #{ebpCode,jdbcType=VARCHAR},
+            </if>
+            <if test="logisticsCode != null">
+                logistics_code = #{logisticsCode,jdbcType=VARCHAR},
+            </if>
+            <if test="platformCode != null">
+                platform_code = #{platformCode,jdbcType=VARCHAR},
+            </if>
+            <if test="shopCode != null">
+                shop_code = #{shopCode,jdbcType=VARCHAR},
+            </if>
+            <if test="startFlag != null">
+                start_flag = #{startFlag,jdbcType=INTEGER},
+            </if>
+            <if test="remark != null">
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="createBy != null">
+                create_by = #{createBy,jdbcType=BIGINT},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateBy != null">
+                update_by = #{updateBy,jdbcType=BIGINT},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="version != null">
+                version = #{version,jdbcType=INTEGER},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <update id="updateByIds" parameterType="com.topideal.supplychain.ocp.config.model.BigJdChannelConfig">
+        update cfg_big_jd_channel_config
+        <set>
+            <if test="code != null">
+                code = #{code,jdbcType=VARCHAR},
+            </if>
+            <if test="ebcCode != null">
+                ebc_code = #{ebcCode,jdbcType=VARCHAR},
+            </if>
+            <if test="ebpCode != null">
+                ebp_code = #{ebpCode,jdbcType=VARCHAR},
+            </if>
+            <if test="logisticsCode != null">
+                logistics_code = #{logisticsCode,jdbcType=VARCHAR},
+            </if>
+            <if test="platformCode != null">
+                platform_code = #{platformCode,jdbcType=VARCHAR},
+            </if>
+            <if test="shopCode != null">
+                shop_code = #{shopCode,jdbcType=VARCHAR},
+            </if>
+            <if test="startFlag != null">
+                start_flag = #{startFlag,jdbcType=INTEGER},
+            </if>
+            <if test="remark != null">
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="createBy != null">
+                create_by = #{createBy,jdbcType=BIGINT},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateBy != null">
+                update_by = #{updateBy,jdbcType=BIGINT},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="version != null">
+                version = #{version,jdbcType=INTEGER},
+            </if>
+        </set>
+        where id in
+        <foreach collection="ids" item="item" open="(" separator="," close=")">
+            #{item,jdbcType=BIGINT}
+        </foreach>
+    </update>
+
+</mapper>

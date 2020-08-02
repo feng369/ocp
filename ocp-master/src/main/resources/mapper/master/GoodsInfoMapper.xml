@@ -1,0 +1,741 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.topideal.supplychain.ocp.master.mapper.GoodsInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.topideal.supplychain.ocp.master.model.GoodsInfo" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="opg_code" property="opgCode" jdbcType="VARCHAR" />
+    <result column="action_type" property="actionType" jdbcType="VARCHAR" />
+    <result column="warehouse_code" property="warehouseCode" jdbcType="VARCHAR" />
+    <result column="owner_code" property="ownerCode" jdbcType="VARCHAR" />
+    <result column="supplier_code" property="supplierCode" jdbcType="VARCHAR" />
+    <result column="supplier_name" property="supplierName" jdbcType="VARCHAR" />
+    <result column="goods_no" property="goodsNo" jdbcType="VARCHAR" />
+    <result column="wms_goods_no" property="wmsGoodsNo" jdbcType="VARCHAR" />
+    <result column="goods_code" property="goodsCode" jdbcType="VARCHAR" />
+    <result column="goods_name" property="goodsName" jdbcType="VARCHAR" />
+    <result column="short_name" property="shortName" jdbcType="VARCHAR" />
+    <result column="english_name" property="englishName" jdbcType="VARCHAR" />
+    <result column="bar_code" property="barCode" jdbcType="VARCHAR" />
+    <result column="sku_property" property="skuProperty" jdbcType="VARCHAR" />
+    <result column="unit" property="unit" jdbcType="VARCHAR" />
+    <result column="length" property="length" jdbcType="DECIMAL" />
+    <result column="width" property="width" jdbcType="DECIMAL" />
+    <result column="height" property="height" jdbcType="DECIMAL" />
+    <result column="volume" property="volume" jdbcType="DECIMAL" />
+    <result column="gross_weight" property="grossWeight" jdbcType="DECIMAL" />
+    <result column="net_weight" property="netWeight" jdbcType="DECIMAL" />
+    <result column="color" property="color" jdbcType="VARCHAR" />
+    <result column="size" property="size" jdbcType="VARCHAR" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="category_id" property="categoryId" jdbcType="VARCHAR" />
+    <result column="category_name" property="categoryName" jdbcType="VARCHAR" />
+    <result column="pricing_category" property="pricingCategory" jdbcType="VARCHAR" />
+    <result column="safety_stock" property="safetyStock" jdbcType="INTEGER" />
+    <result column="goods_type" property="goodsType" jdbcType="VARCHAR" />
+    <result column="tag_price" property="tagPrice" jdbcType="DECIMAL" />
+    <result column="retail_price" property="retailPrice" jdbcType="DECIMAL" />
+    <result column="cost_price" property="costPrice" jdbcType="DECIMAL" />
+    <result column="purchase_price" property="purchasePrice" jdbcType="DECIMAL" />
+    <result column="season_code" property="seasonCode" jdbcType="VARCHAR" />
+    <result column="season_name" property="seasonName" jdbcType="VARCHAR" />
+    <result column="brand_code" property="brandCode" jdbcType="VARCHAR" />
+    <result column="brand_name" property="brandName" jdbcType="VARCHAR" />
+    <result column="is_serial_number" property="isSerialNumber" jdbcType="BIT" />
+    <result column="product_date" property="productDate" jdbcType="TIMESTAMP" />
+    <result column="expire_date" property="expireDate" jdbcType="TIMESTAMP" />
+    <result column="is_shelf_life" property="isShelfLife" jdbcType="BIT" />
+    <result column="shelf_life" property="shelfLife" jdbcType="INTEGER" />
+    <result column="reject_lifecycle" property="rejectLifecycle" jdbcType="INTEGER" />
+    <result column="lockup_lifecycle" property="lockupLifecycle" jdbcType="INTEGER" />
+    <result column="advent_lifecycle" property="adventLifecycle" jdbcType="INTEGER" />
+    <result column="is_batch" property="isBatch" jdbcType="BIT" />
+    <result column="batch_code" property="batchCode" jdbcType="VARCHAR" />
+    <result column="batch_remark" property="batchRemark" jdbcType="VARCHAR" />
+    <result column="pack_code" property="packCode" jdbcType="VARCHAR" />
+    <result column="pcs" property="pcs" jdbcType="VARCHAR" />
+    <result column="origin_address" property="originAddress" jdbcType="VARCHAR" />
+    <result column="approval_no" property="approvalNo" jdbcType="VARCHAR" />
+    <result column="is_fragile" property="isFragile" jdbcType="BIT" />
+    <result column="is_dangerous" property="isDangerous" jdbcType="BIT" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="is_valid" property="isValid" jdbcType="BIT" />
+    <result column="is_sku" property="isSku" jdbcType="BIT" />
+    <result column="package_material" property="packageMaterial" jdbcType="VARCHAR" />
+    <result column="arguments" property="arguments" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="request_timestamp" property="requestTimestamp" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, code, opg_code, action_type, warehouse_code, owner_code, supplier_code, supplier_name,
+    goods_no, wms_goods_no, goods_code, goods_name, short_name, english_name, bar_code,
+    sku_property, unit, length, width, height, volume, gross_weight, net_weight, color,
+    size, title, category_id, category_name, pricing_category, safety_stock, goods_type,
+    tag_price, retail_price, cost_price, purchase_price, season_code, season_name, brand_code,
+    brand_name, is_serial_number, product_date, expire_date, is_shelf_life, shelf_life,
+    reject_lifecycle, lockup_lifecycle, advent_lifecycle, is_batch, batch_code, batch_remark,
+    pack_code, pcs, origin_address, approval_no, is_fragile, is_dangerous, remark, create_time,
+    update_time, is_valid, is_sku, package_material, arguments, status,
+    request_timestamp
+  </sql>
+  <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from md_goods_info
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteById" parameterType="java.lang.Long" >
+    delete from md_goods_info
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.topideal.supplychain.ocp.master.model.GoodsInfo" >
+    insert into md_goods_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="opgCode != null" >
+        opg_code,
+      </if>
+      <if test="actionType != null" >
+        action_type,
+      </if>
+      <if test="warehouseCode != null" >
+        warehouse_code,
+      </if>
+      <if test="ownerCode != null" >
+        owner_code,
+      </if>
+      <if test="supplierCode != null" >
+        supplier_code,
+      </if>
+      <if test="supplierName != null" >
+        supplier_name,
+      </if>
+      <if test="goodsNo != null" >
+        goods_no,
+      </if>
+      <if test="wmsGoodsNo != null" >
+        wms_goods_no,
+      </if>
+      <if test="goodsCode != null" >
+        goods_code,
+      </if>
+      <if test="goodsName != null" >
+        goods_name,
+      </if>
+      <if test="shortName != null" >
+        short_name,
+      </if>
+      <if test="englishName != null" >
+        english_name,
+      </if>
+      <if test="barCode != null" >
+        bar_code,
+      </if>
+      <if test="skuProperty != null" >
+        sku_property,
+      </if>
+      <if test="unit != null" >
+        unit,
+      </if>
+      <if test="length != null" >
+        length,
+      </if>
+      <if test="width != null" >
+        width,
+      </if>
+      <if test="height != null" >
+        height,
+      </if>
+      <if test="volume != null" >
+        volume,
+      </if>
+      <if test="grossWeight != null" >
+        gross_weight,
+      </if>
+      <if test="netWeight != null" >
+        net_weight,
+      </if>
+      <if test="color != null" >
+        color,
+      </if>
+      <if test="size != null" >
+        size,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="categoryId != null" >
+        category_id,
+      </if>
+      <if test="categoryName != null" >
+        category_name,
+      </if>
+      <if test="pricingCategory != null" >
+        pricing_category,
+      </if>
+      <if test="safetyStock != null" >
+        safety_stock,
+      </if>
+      <if test="goodsType != null" >
+        goods_type,
+      </if>
+      <if test="tagPrice != null" >
+        tag_price,
+      </if>
+      <if test="retailPrice != null" >
+        retail_price,
+      </if>
+      <if test="costPrice != null" >
+        cost_price,
+      </if>
+      <if test="purchasePrice != null" >
+        purchase_price,
+      </if>
+      <if test="seasonCode != null" >
+        season_code,
+      </if>
+      <if test="seasonName != null" >
+        season_name,
+      </if>
+      <if test="brandCode != null" >
+        brand_code,
+      </if>
+      <if test="brandName != null" >
+        brand_name,
+      </if>
+      <if test="isSerialNumber != null" >
+        is_serial_number,
+      </if>
+      <if test="productDate != null" >
+        product_date,
+      </if>
+      <if test="expireDate != null" >
+        expire_date,
+      </if>
+      <if test="isShelfLife != null" >
+        is_shelf_life,
+      </if>
+      <if test="shelfLife != null" >
+        shelf_life,
+      </if>
+      <if test="rejectLifecycle != null" >
+        reject_lifecycle,
+      </if>
+      <if test="lockupLifecycle != null" >
+        lockup_lifecycle,
+      </if>
+      <if test="adventLifecycle != null" >
+        advent_lifecycle,
+      </if>
+      <if test="isBatch != null" >
+        is_batch,
+      </if>
+      <if test="batchCode != null" >
+        batch_code,
+      </if>
+      <if test="batchRemark != null" >
+        batch_remark,
+      </if>
+      <if test="packCode != null" >
+        pack_code,
+      </if>
+      <if test="pcs != null" >
+        pcs,
+      </if>
+      <if test="originAddress != null" >
+        origin_address,
+      </if>
+      <if test="approvalNo != null" >
+        approval_no,
+      </if>
+      <if test="isFragile != null" >
+        is_fragile,
+      </if>
+      <if test="isDangerous != null" >
+        is_dangerous,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="isValid != null" >
+        is_valid,
+      </if>
+      <if test="isSku != null" >
+        is_sku,
+      </if>
+      <if test="packageMaterial != null" >
+        package_material,
+      </if>
+      <if test="arguments != null" >
+        arguments,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="requestTimestamp != null" >
+        request_timestamp,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="opgCode != null" >
+        #{opgCode,jdbcType=VARCHAR},
+      </if>
+      <if test="actionType != null" >
+        #{actionType,jdbcType=VARCHAR},
+      </if>
+      <if test="warehouseCode != null" >
+        #{warehouseCode,jdbcType=VARCHAR},
+      </if>
+      <if test="ownerCode != null" >
+        #{ownerCode,jdbcType=VARCHAR},
+      </if>
+      <if test="supplierCode != null" >
+        #{supplierCode,jdbcType=VARCHAR},
+      </if>
+      <if test="supplierName != null" >
+        #{supplierName,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsNo != null" >
+        #{goodsNo,jdbcType=VARCHAR},
+      </if>
+      <if test="wmsGoodsNo != null" >
+        #{wmsGoodsNo,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsCode != null" >
+        #{goodsCode,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsName != null" >
+        #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="shortName != null" >
+        #{shortName,jdbcType=VARCHAR},
+      </if>
+      <if test="englishName != null" >
+        #{englishName,jdbcType=VARCHAR},
+      </if>
+      <if test="barCode != null" >
+        #{barCode,jdbcType=VARCHAR},
+      </if>
+      <if test="skuProperty != null" >
+        #{skuProperty,jdbcType=VARCHAR},
+      </if>
+      <if test="unit != null" >
+        #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="length != null" >
+        #{length,jdbcType=DECIMAL},
+      </if>
+      <if test="width != null" >
+        #{width,jdbcType=DECIMAL},
+      </if>
+      <if test="height != null" >
+        #{height,jdbcType=DECIMAL},
+      </if>
+      <if test="volume != null" >
+        #{volume,jdbcType=DECIMAL},
+      </if>
+      <if test="grossWeight != null" >
+        #{grossWeight,jdbcType=DECIMAL},
+      </if>
+      <if test="netWeight != null" >
+        #{netWeight,jdbcType=DECIMAL},
+      </if>
+      <if test="color != null" >
+        #{color,jdbcType=VARCHAR},
+      </if>
+      <if test="size != null" >
+        #{size,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryId != null" >
+        #{categoryId,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryName != null" >
+        #{categoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="pricingCategory != null" >
+        #{pricingCategory,jdbcType=VARCHAR},
+      </if>
+      <if test="safetyStock != null" >
+        #{safetyStock,jdbcType=INTEGER},
+      </if>
+      <if test="goodsType != null" >
+        #{goodsType,jdbcType=VARCHAR},
+      </if>
+      <if test="tagPrice != null" >
+        #{tagPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="retailPrice != null" >
+        #{retailPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="costPrice != null" >
+        #{costPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="purchasePrice != null" >
+        #{purchasePrice,jdbcType=DECIMAL},
+      </if>
+      <if test="seasonCode != null" >
+        #{seasonCode,jdbcType=VARCHAR},
+      </if>
+      <if test="seasonName != null" >
+        #{seasonName,jdbcType=VARCHAR},
+      </if>
+      <if test="brandCode != null" >
+        #{brandCode,jdbcType=VARCHAR},
+      </if>
+      <if test="brandName != null" >
+        #{brandName,jdbcType=VARCHAR},
+      </if>
+      <if test="isSerialNumber != null" >
+        #{isSerialNumber,jdbcType=BIT},
+      </if>
+      <if test="productDate != null" >
+        #{productDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expireDate != null" >
+        #{expireDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isShelfLife != null" >
+        #{isShelfLife,jdbcType=BIT},
+      </if>
+      <if test="shelfLife != null" >
+        #{shelfLife,jdbcType=INTEGER},
+      </if>
+      <if test="rejectLifecycle != null" >
+        #{rejectLifecycle,jdbcType=INTEGER},
+      </if>
+      <if test="lockupLifecycle != null" >
+        #{lockupLifecycle,jdbcType=INTEGER},
+      </if>
+      <if test="adventLifecycle != null" >
+        #{adventLifecycle,jdbcType=INTEGER},
+      </if>
+      <if test="isBatch != null" >
+        #{isBatch,jdbcType=BIT},
+      </if>
+      <if test="batchCode != null" >
+        #{batchCode,jdbcType=VARCHAR},
+      </if>
+      <if test="batchRemark != null" >
+        #{batchRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="packCode != null" >
+        #{packCode,jdbcType=VARCHAR},
+      </if>
+      <if test="pcs != null" >
+        #{pcs,jdbcType=VARCHAR},
+      </if>
+      <if test="originAddress != null" >
+        #{originAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="approvalNo != null" >
+        #{approvalNo,jdbcType=VARCHAR},
+      </if>
+      <if test="isFragile != null" >
+        #{isFragile,jdbcType=BIT},
+      </if>
+      <if test="isDangerous != null" >
+        #{isDangerous,jdbcType=BIT},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isValid != null" >
+        #{isValid,jdbcType=BIT},
+      </if>
+      <if test="isSku != null" >
+        #{isSku,jdbcType=BIT},
+      </if>
+      <if test="packageMaterial != null" >
+        #{packageMaterial,jdbcType=VARCHAR},
+      </if>
+      <if test="arguments != null" >
+        #{arguments,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="requestTimestamp != null" >
+        #{requestTimestamp,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="update" parameterType="com.topideal.supplychain.ocp.master.model.GoodsInfo" >
+    update md_goods_info
+    <set >
+      <if test="code != null" >
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="opgCode != null" >
+        opg_code = #{opgCode,jdbcType=VARCHAR},
+      </if>
+      <if test="actionType != null" >
+        action_type = #{actionType,jdbcType=VARCHAR},
+      </if>
+      <if test="warehouseCode != null" >
+        warehouse_code = #{warehouseCode,jdbcType=VARCHAR},
+      </if>
+      <if test="ownerCode != null" >
+        owner_code = #{ownerCode,jdbcType=VARCHAR},
+      </if>
+      <if test="supplierCode != null" >
+        supplier_code = #{supplierCode,jdbcType=VARCHAR},
+      </if>
+      <if test="supplierName != null" >
+        supplier_name = #{supplierName,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsNo != null" >
+        goods_no = #{goodsNo,jdbcType=VARCHAR},
+      </if>
+      <if test="wmsGoodsNo != null" >
+        wms_goods_no = #{wmsGoodsNo,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsCode != null" >
+        goods_code = #{goodsCode,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsName != null" >
+        goods_name = #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="shortName != null" >
+        short_name = #{shortName,jdbcType=VARCHAR},
+      </if>
+      <if test="englishName != null" >
+        english_name = #{englishName,jdbcType=VARCHAR},
+      </if>
+      <if test="barCode != null" >
+        bar_code = #{barCode,jdbcType=VARCHAR},
+      </if>
+      <if test="skuProperty != null" >
+        sku_property = #{skuProperty,jdbcType=VARCHAR},
+      </if>
+      <if test="unit != null" >
+        unit = #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="length != null" >
+        length = #{length,jdbcType=DECIMAL},
+      </if>
+      <if test="width != null" >
+        width = #{width,jdbcType=DECIMAL},
+      </if>
+      <if test="height != null" >
+        height = #{height,jdbcType=DECIMAL},
+      </if>
+      <if test="volume != null" >
+        volume = #{volume,jdbcType=DECIMAL},
+      </if>
+      <if test="grossWeight != null" >
+        gross_weight = #{grossWeight,jdbcType=DECIMAL},
+      </if>
+      <if test="netWeight != null" >
+        net_weight = #{netWeight,jdbcType=DECIMAL},
+      </if>
+      <if test="color != null" >
+        color = #{color,jdbcType=VARCHAR},
+      </if>
+      <if test="size != null" >
+        size = #{size,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryId != null" >
+        category_id = #{categoryId,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryName != null" >
+        category_name = #{categoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="pricingCategory != null" >
+        pricing_category = #{pricingCategory,jdbcType=VARCHAR},
+      </if>
+      <if test="safetyStock != null" >
+        safety_stock = #{safetyStock,jdbcType=INTEGER},
+      </if>
+      <if test="goodsType != null" >
+        goods_type = #{goodsType,jdbcType=VARCHAR},
+      </if>
+      <if test="tagPrice != null" >
+        tag_price = #{tagPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="retailPrice != null" >
+        retail_price = #{retailPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="costPrice != null" >
+        cost_price = #{costPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="purchasePrice != null" >
+        purchase_price = #{purchasePrice,jdbcType=DECIMAL},
+      </if>
+      <if test="seasonCode != null" >
+        season_code = #{seasonCode,jdbcType=VARCHAR},
+      </if>
+      <if test="seasonName != null" >
+        season_name = #{seasonName,jdbcType=VARCHAR},
+      </if>
+      <if test="brandCode != null" >
+        brand_code = #{brandCode,jdbcType=VARCHAR},
+      </if>
+      <if test="brandName != null" >
+        brand_name = #{brandName,jdbcType=VARCHAR},
+      </if>
+      <if test="isSerialNumber != null" >
+        is_serial_number = #{isSerialNumber,jdbcType=BIT},
+      </if>
+      <if test="productDate != null" >
+        product_date = #{productDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expireDate != null" >
+        expire_date = #{expireDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isShelfLife != null" >
+        is_shelf_life = #{isShelfLife,jdbcType=BIT},
+      </if>
+      <if test="shelfLife != null" >
+        shelf_life = #{shelfLife,jdbcType=INTEGER},
+      </if>
+      <if test="rejectLifecycle != null" >
+        reject_lifecycle = #{rejectLifecycle,jdbcType=INTEGER},
+      </if>
+      <if test="lockupLifecycle != null" >
+        lockup_lifecycle = #{lockupLifecycle,jdbcType=INTEGER},
+      </if>
+      <if test="adventLifecycle != null" >
+        advent_lifecycle = #{adventLifecycle,jdbcType=INTEGER},
+      </if>
+      <if test="isBatch != null" >
+        is_batch = #{isBatch,jdbcType=BIT},
+      </if>
+      <if test="batchCode != null" >
+        batch_code = #{batchCode,jdbcType=VARCHAR},
+      </if>
+      <if test="batchRemark != null" >
+        batch_remark = #{batchRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="packCode != null" >
+        pack_code = #{packCode,jdbcType=VARCHAR},
+      </if>
+      <if test="pcs != null" >
+        pcs = #{pcs,jdbcType=VARCHAR},
+      </if>
+      <if test="originAddress != null" >
+        origin_address = #{originAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="approvalNo != null" >
+        approval_no = #{approvalNo,jdbcType=VARCHAR},
+      </if>
+      <if test="isFragile != null" >
+        is_fragile = #{isFragile,jdbcType=BIT},
+      </if>
+      <if test="isDangerous != null" >
+        is_dangerous = #{isDangerous,jdbcType=BIT},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isValid != null" >
+        is_valid = #{isValid,jdbcType=BIT},
+      </if>
+      <if test="isSku != null" >
+        is_sku = #{isSku,jdbcType=BIT},
+      </if>
+      <if test="packageMaterial != null" >
+        package_material = #{packageMaterial,jdbcType=VARCHAR},
+      </if>
+      <if test="arguments != null" >
+        arguments = #{arguments,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="requestTimestamp != null" >
+        request_timestamp = #{requestTimestamp,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="pageList" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from md_goods_info
+    <include refid="queryCondition"/>
+  </select>
+
+  <sql id="queryCondition">
+    <where>
+      <if test="goodsName != null and goodsName != '' ">
+        and goods_name like "%"#{goodsName,jdbcType=VARCHAR}"%"
+      </if>
+      <if test="goodsType != null and goodsType != ''">
+        and goods_type = #{goodsType,jdbcType=VARCHAR}
+      </if>
+      <if test="goodsNo != null and goodsNo != ''">
+        and goods_no = #{goodsNo,jdbcType=VARCHAR}
+      </if>
+      <if test="barCode != null and barCode != ''">
+        and bar_code = #{barCode,jdbcType=VARCHAR}
+      </if>
+      <if test="code != null and code != ''">
+        and code = #{code,jdbcType=VARCHAR}
+      </if>
+      <if test="status != null">
+        and status = #{status,jdbcType=INTEGER}
+      </if>
+      <if test="createBeginTime != null">
+        and create_time <![CDATA[>=]]>
+        #{createBeginTime}
+      </if>
+      <if test="createEndTime != null">
+        and create_time <![CDATA[<=]]>
+        #{createEndTime}
+      </if>
+    </where>
+  </sql>
+
+  <select id="selectGoodsInfo" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from md_goods_info
+    where owner_code = #{ownerCode,jdbcType=VARCHAR} and goods_no = #{goodsNo,jdbcType=VARCHAR} and
+    bar_code = #{barCode,jdbcType=VARCHAR} and  action_type = #{actionType,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectByOwnerAndGoodsCode" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from md_goods_info
+    where owner_code = #{ownerCode,jdbcType=VARCHAR} and goods_no = #{goodsNo,jdbcType=VARCHAR}
+  </select>
+</mapper>

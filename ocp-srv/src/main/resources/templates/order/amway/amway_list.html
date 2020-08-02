@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="zh-cmn-Hans" xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+
+<head th:replace="common/layout::header( ~{::title})">
+    <title id="title">安利订单主页面</title>
+</head>
+
+
+<body>
+<div class="contentBox">
+    <div class="ui fluid container box-form">
+        <form class="ui form" id="searchForm" method="post">
+            <div class="searchBox">
+                <ul>
+                    <li>
+                        <div class="smallBox">
+                            <label>内部订单编号</label>
+                            <input class="easyui-textbox" name="code" id="code"
+                                   style="width:150px;height:24px;">
+                        </div>
+                    </li>
+
+                    <li>
+                        <div class="smallBox">
+                            <label>企业订单编号</label>
+                            <input class="easyui-textbox" name="orderNumber" id="orderNumber"
+                                   style="width:150px;height:24px;">
+                        </div>
+                    </li>
+
+                    <li>
+
+                        <div class="smallBox">
+                            <label>制单时间</label>
+                            <input type="text" id="createTimeStart" name="createTimeStart"
+                                   onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',maxDate:'#F{$dp.$D(\'createTimeEnd\');}'})"
+                                   style="width: 150px;height: 24px;"/>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="smallBox">
+                            <label>下单时间</label>
+                            <input type="text" id="createDateStart" name="createDateStart"
+                                   onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',maxDate:'#F{$dp.$D(\'createDateEnd\');}'})"
+                                   style="width: 150px;height: 24px;"/>
+                        </div>
+                    </li>
+
+
+                    <li>
+                        <div class="smallBox">
+                            <label>报文唯一ID</label>
+                            <input class="easyui-textbox" name="messageId" id="messageId"
+                                   style="width:150px;height:24px;">
+                        </div>
+                    </li>
+                    <li>
+                        <div class="smallBox">
+                            <label>订单状态</label>
+                            <span class="selectBox">
+                                <select id="status" class="form-select" name="status"
+                                        style="width: 150px;height: 24px;">
+                                    <option value=""></option>
+                                    <option th:each="status : ${T(com.topideal.supplychain.ocp.enums.OrderStatusEnum).values()}"
+                                            th:text="${status.desc}" th:value="${status}"></option>
+                                </select>
+                                <i class="x icon clearBtn" title="清空"></i>
+                            </span>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="smallBox">
+                            <label>至</label>
+                            <input type="text" id="createTimeEnd" name="createTimeEnd"
+                                   onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',minDate:'#F{$dp.$D(\'createTimeStart\');}'})"
+                                   style="width: 150px;height: 24px;"/>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="smallBox">
+                            <label>至</label>
+                            <input type="text" id="createDateEnd" name="createDateEnd"
+                                   onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',minDate:'#F{$dp.$D(\'createDateStart\');}'})"
+                                   style="width: 150px;height: 24px;"/>
+                        </div>
+                    </li>
+
+                </ul>
+            </div>
+            <div class="field" style="margin-top: 10px;text-align: center;">
+                <a href="#" class="ui mini primary button form-search"><i class="search icon"></i>查询</a>
+                <a href="#" class="ui mini primar grey button form-reset"><i class="undo icon"></i>重置</a>
+                <a href="#" id="show_i" onclick="hide()" style="float :right"><i class="angle down icon"></i>显示条件</a>
+            </div>
+
+        </form>
+    </div>
+    <div class="tableBox">
+
+        <div id="tb">
+            <a shiro:hasPermission="order.amway.repush" class="easyui-linkbutton" plain="true"
+               onclick="rePush()"><i class="red reply icon"></i>重推订单</a>
+        </div>
+
+        <table id="amwayTable" striped="true" toolbar="#tb" style="height: 100%;"
+               data-options="rownumbers:true">
+            <thead>
+            <tr>
+                <th field="ck" checkbox="true"></th>
+                <th field="code" style="width: 190px" formatter="formatCode">内部订单号</th>
+                <th field="orderNumber" style="width: 150px">安利订单编号</th>
+                <th field="status" style="width: 80px">订单状态</th>
+                <th field="warehouseId" style="width: 100px">出库仓库代码</th>
+                <th field="importMode" style="width: 80px">进口模式</th>
+                <th field="customs" style="width: 80px">海关关区</th>
+                <th field="ebcCode" style="width: 100px">电商企业</th>
+                <th field="ebpCode" style="width: 100px">电商平台</th>
+                <th field="messageId" style="width: 300px">报文唯一ID</th>
+                <th field="taxFee" style="width: 80px">税费(元)</th>
+                <th field="deliveryFee" style="width: 80px">运费(元)</th>
+                <th field="deliveryInsuranceFee" style="width: 80px">保价费(元)</th>
+                <th field="saleDate" style="width: 150px">下单时间</th>
+                <th field="expectedDeliveryPeriod" style="width: 100px">期望送货时间</th>
+                <th field="deliveryCode" style="width: 100px">配送商编码</th>
+                <th field="customerId" style="width: 180px">订购人身份证</th>
+                <th field="shipToDst" style="width: 100px">收货人编号</th>
+                <th field="consigneeName" style="width: 80px">收货人姓名</th>
+                <th field="shipToAddress1" style="width: 100px">收货地址省份</th>
+                <th field="shipToAddress2" style="width: 100px">收货地址城市</th>
+                <th field="shipToAddress3" style="width: 100px">收货地址区域</th>
+                <th field="shipToAddress31" style="width: 100px">收货地址乡镇</th>
+                <th field="shipToAddress4" style="width: 300px">收货地址街道</th>
+                <th field="consigneeMobile" style="width: 120px">收货人手机号码</th>
+                <th field="consigneeLandNo" style="width: 120px">收货人座机号码</th>
+                <th field="postCode" style="width: 100px">收货地址邮编</th>
+                <th field="shipToAddress5" style="width: 150px">地址备用字段</th>
+                <th field="createTime" style="width: 150px">制单时间</th>
+            </tr>
+            </thead>
+        </table>
+    </div>
+</div>
+<div id="detailDiv"></div>
+
+</body>
+</html>
+<script type="text/javascript">
+    /**
+     * 查询加载页面
+     */
+    $(function () {
+        var params = getFormJson("#searchForm");
+        initSearchHeight();
+        $('#amwayTable').datagrid({
+            formId: "#searchForm",
+            url: basePath + '/orderAmway/json',
+            method: 'post',
+            queryParams: params,
+            pagination: true
+        });
+        $(window).resize();
+    });
+
+    /**
+     * 重新推送订单
+     */
+    function rePush() {
+        var checkedItems = $('#amwayTable').datagrid('getChecked');
+        if (checkedItems.length < 1) {
+            tips.alert("请至少选择一行记录操作");
+            return;
+        }
+        var ids = [];
+        $.each(checkedItems, function (index, item) {
+            ids.push(item.id);
+        });
+        $.ajax({
+            url: basePath + "/orderAmway/rePush",
+            type: 'POST',
+            data: {ids: ids},
+            success: function (response) {
+                tips.alert(response.message);
+                if (response.flag == 'SUCCESS') {
+                    $('#amwayTable').datagrid('reload');
+                }
+            }
+        });
+    }
+
+    /**
+     * 订单的点击链接
+     */
+    function formatCode(value, row, index) {
+        var htmlStr = "<a class='hrefCss blue_link' id='showDetail' title='点击查看详情'  href='javascript:void(0)' "
+            + "onclick=showDetail('" + row.id + "')>"
+            + value + "</a>";
+        htmlStr = htmlStr + "</br>";
+        return htmlStr;
+    }
+
+    /**
+     * 打开商品详细
+     */
+    function showDetail(id) {
+        $('#detailDiv').dialog({
+            title: '【安利】订单明细',
+            width: "85%",
+            height: "80%",
+            closed: false,
+            cache: false,
+            method: 'post',
+            href: basePath + '/orderAmway/showDetail/' + id,
+            modal: true
+        });
+    }
+
+</script>

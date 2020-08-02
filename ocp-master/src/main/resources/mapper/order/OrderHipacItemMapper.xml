@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.topideal.supplychain.ocp.order.mapper.OrderHipacItemMapper" >
+  <resultMap id="BaseResultMap" type="com.topideal.supplychain.ocp.order.model.OrderHipacItem" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="order_id" property="orderId" jdbcType="BIGINT" />
+    <result column="order_num" property="orderNum" jdbcType="VARCHAR" />
+    <result column="item_name" property="itemName" jdbcType="VARCHAR" />
+    <result column="item_supply_no" property="itemSupplyNo" jdbcType="VARCHAR" />
+    <result column="item_quantity" property="itemQuantity" jdbcType="DECIMAL" />
+    <result column="add_tax_rate" property="addTaxRate" jdbcType="DECIMAL" />
+    <result column="excise_rate" property="exciseRate" jdbcType="DECIMAL" />
+    <result column="tariff_rate" property="tariffRate" jdbcType="DECIMAL" />
+    <result column="spec_nme" property="specNme" jdbcType="VARCHAR" />
+    <result column="spec_num" property="specNum" jdbcType="INTEGER" />
+    <result column="item_price" property="itemPrice" jdbcType="DECIMAL" />
+    <result column="item_total" property="itemTotal" jdbcType="DECIMAL" />
+    <result column="item_total_tax" property="itemTotalTax" jdbcType="DECIMAL" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, order_id, order_num, item_name, item_supply_no, item_quantity, add_tax_rate,
+    excise_rate, tariff_rate, spec_nme, spec_num, item_price, item_total, item_total_tax
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from doc_order_hipac_item
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from doc_order_hipac_item
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+  <insert id="insert" parameterType="com.topideal.supplychain.ocp.order.model.OrderHipacItem" >
+    insert into doc_order_hipac_item
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="orderId != null" >
+        order_id,
+      </if>
+      <if test="orderNum != null" >
+        order_num,
+      </if>
+      <if test="itemName != null" >
+        item_name,
+      </if>
+      <if test="itemSupplyNo != null" >
+        item_supply_no,
+      </if>
+      <if test="itemQuantity != null" >
+        item_quantity,
+      </if>
+      <if test="addTaxRate != null" >
+        add_tax_rate,
+      </if>
+      <if test="exciseRate != null" >
+        excise_rate,
+      </if>
+      <if test="tariffRate != null" >
+        tariff_rate,
+      </if>
+      <if test="specNme != null" >
+        spec_nme,
+      </if>
+      <if test="specNum != null" >
+        spec_num,
+      </if>
+      <if test="itemPrice != null" >
+        item_price,
+      </if>
+      <if test="itemTotal != null" >
+        item_total,
+      </if>
+      <if test="itemTotalTax != null" >
+        item_total_tax,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="orderId != null" >
+        #{orderId,jdbcType=BIGINT},
+      </if>
+      <if test="orderNum != null" >
+        #{orderNum,jdbcType=VARCHAR},
+      </if>
+      <if test="itemName != null" >
+        #{itemName,jdbcType=VARCHAR},
+      </if>
+      <if test="itemSupplyNo != null" >
+        #{itemSupplyNo,jdbcType=VARCHAR},
+      </if>
+      <if test="itemQuantity != null" >
+        #{itemQuantity,jdbcType=DECIMAL},
+      </if>
+      <if test="addTaxRate != null" >
+        #{addTaxRate,jdbcType=DECIMAL},
+      </if>
+      <if test="exciseRate != null" >
+        #{exciseRate,jdbcType=DECIMAL},
+      </if>
+      <if test="tariffRate != null" >
+        #{tariffRate,jdbcType=DECIMAL},
+      </if>
+      <if test="specNme != null" >
+        #{specNme,jdbcType=VARCHAR},
+      </if>
+      <if test="specNum != null" >
+        #{specNum,jdbcType=INTEGER},
+      </if>
+      <if test="itemPrice != null" >
+        #{itemPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="itemTotal != null" >
+        #{itemTotal,jdbcType=DECIMAL},
+      </if>
+      <if test="itemTotalTax != null" >
+        #{itemTotalTax,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="update" parameterType="com.topideal.supplychain.ocp.order.model.OrderHipacItem" >
+    update doc_order_hipac_item
+    <set >
+      <if test="orderId != null" >
+        order_id = #{orderId,jdbcType=BIGINT},
+      </if>
+      <if test="orderNum != null" >
+        order_num = #{orderNum,jdbcType=VARCHAR},
+      </if>
+      <if test="itemName != null" >
+        item_name = #{itemName,jdbcType=VARCHAR},
+      </if>
+      <if test="itemSupplyNo != null" >
+        item_supply_no = #{itemSupplyNo,jdbcType=VARCHAR},
+      </if>
+      <if test="itemQuantity != null" >
+        item_quantity = #{itemQuantity,jdbcType=DECIMAL},
+      </if>
+      <if test="addTaxRate != null" >
+        add_tax_rate = #{addTaxRate,jdbcType=DECIMAL},
+      </if>
+      <if test="exciseRate != null" >
+        excise_rate = #{exciseRate,jdbcType=DECIMAL},
+      </if>
+      <if test="tariffRate != null" >
+        tariff_rate = #{tariffRate,jdbcType=DECIMAL},
+      </if>
+      <if test="specNme != null" >
+        spec_nme = #{specNme,jdbcType=VARCHAR},
+      </if>
+      <if test="specNum != null" >
+        spec_num = #{specNum,jdbcType=INTEGER},
+      </if>
+      <if test="itemPrice != null" >
+        item_price = #{itemPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="itemTotal != null" >
+        item_total = #{itemTotal,jdbcType=DECIMAL},
+      </if>
+      <if test="itemTotalTax != null" >
+        item_total_tax = #{itemTotalTax,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="selectByOrderId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from doc_order_hipac_item
+    where order_id = #{orderId,jdbcType=BIGINT}
+  </select>
+
+  <insert id="insertList" >
+    INSERT INTO doc_order_hipac_item (order_id, order_num, item_name, item_supply_no, item_quantity, add_tax_rate,
+    excise_rate, tariff_rate, spec_nme, spec_num, item_price, item_total, item_total_tax)VALUES
+    <foreach collection="itemList" item="item" separator=",">
+      (#{item.orderId},#{item.orderNum},#{item.itemName},#{item.itemSupplyNo},#{item.itemQuantity},#{item.addTaxRate},#{item.exciseRate},
+      #{item.tariffRate},#{item.specNme},#{item.specNum},#{item.itemPrice},#{item.itemTotal},#{item.itemTotalTax})
+    </foreach>
+  </insert>
+
+</mapper>

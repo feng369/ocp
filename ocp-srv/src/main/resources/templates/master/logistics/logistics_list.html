@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="zh-cmn-Hans" xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+
+<head th:replace="common/layout::header( ~{::title})">
+  <title id="title">物流企业</title>
+</head>
+<body>
+<div class="contentBox">
+  <div class="ui fluid container box-form">
+    <form class="ui form" id="searchForm" method="post">
+      <div class="field">
+        <div class="inline fields">
+          <div class="field">
+            <label>物流企业编码：</label>
+            <input type="text" name="code" class="easyui-textbox"
+                   placeholder="" style="width: 150px;height: 24px;"
+            />
+          </div>
+          <div class="field">
+            <label>物流企业名称：</label>
+            <input type="text" name="name" class="easyui-textbox"
+                   placeholder="" style="width: 150px;height: 24px;"/>
+          </div>
+          <div class="field">
+            <a href="#" class="ui mini primary button form-search"><i class="search icon"></i>查询</a>
+            <a href="#" class="ui mini primar grey button form-reset"><i class="undo icon"></i>重置</a>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="tableBox">
+    <table id="tt" toolbar="#tb" style="height: 100%;" striped="true" data-options="rownumbers:true">
+      <thead>
+      <tr>
+        <th field="id" align="center" halign="center" checkbox="true"></th>
+        <th field="isDeleted" width="150px">是否启用</th>
+        <th field="code" width="300px">物流企业编码</th>
+        <th field="name" width="300px">物流企业名称</th>
+      </tr>
+      </thead>
+    </table>
+  </div>
+
+  <div id="tb" style="display:none;">
+    <a shiro:hasPermission="master.logistics.enable" class="easyui-linkbutton" plain="true"
+       id="enableLogistics"
+       onclick="enableLogistics()"><i class="green check circle icon"></i>启用</a>
+    <a shiro:hasPermission="master.logistics.disable" class="easyui-linkbutton" plain="true"
+       id="disableLogistics"
+       onclick="disableLogistics()"><i class="red ban icon"></i>禁用</a>
+  </div>
+
+</div>
+<div id="modalDiv"></div>
+</body>
+</html>
+<script type="text/javascript">
+  $(function () {
+    $('#tt').datagrid({
+      formId:"#searchForm",
+      url: basePath + '/logistics/json',
+      method: 'post',
+      singleSelect: false, //by zhf true会导致复选框也只能选单行
+      pagination: true
+    });
+  });
+
+  // 启用
+  function enableLogistics() {
+    var selectDatas = $('#tt').datagrid('getChecked');
+    if (selectDatas.length != 1) {
+      $.messager.alert("操作提示", "请选择一行数据进行启用！", "warning");
+      return;
+    }
+    var idArray = new Array();
+    selectDatas.forEach(function (ele, index) {
+      if (ele && ele.id) {
+        idArray.push(ele.id)
+      }
+    });
+    if (idArray.length > 0) {
+      tips.confirm("确定要启用吗？\n\n请确认！", function (r) {
+        if (r) {
+          $.ajax({
+            type: "POST",
+            url: basePath + "/logistics/enable",
+            data: {"ids": idArray},
+            traditional: true,
+            cache: false,
+            timeout: 600000,
+            success: function (data) {
+              if (data.flag == 'SUCCESS') {
+                $('#tt').datagrid('reload');
+              }
+              tips.alert(data.message);
+            }
+          });
+        }
+      })
+
+    }
+
+  }
+
+  // 禁用
+  function disableLogistics() {
+    var selectDatas = $('#tt').datagrid('getChecked');
+    if (selectDatas.length != 1) {
+      $.messager.alert("操作提示", "请选择一行数据进行禁用！", "warning");
+      return;
+    }
+    var idArray = new Array();
+    selectDatas.forEach(function (ele, index) {
+      if (ele && ele.id) {
+        idArray.push(ele.id)
+      }
+    });
+    if (idArray.length > 0) {
+      tips.confirm("确定要禁用吗？\n\n请确认！", function (r) {
+        if (r) {
+          $.ajax({
+            type: "POST",
+            url: basePath + "/logistics/disable",
+            data: {"ids": idArray},
+            traditional: true,
+            cache: false,
+            timeout: 600000,
+            success: function (data) {
+              if (data.flag == 'SUCCESS') {
+                $('#tt').datagrid('reload');
+              }
+              tips.alert(data.message);
+            }
+          });
+        }
+      })
+
+    }
+
+  }
+</script>
+

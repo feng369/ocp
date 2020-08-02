@@ -1,0 +1,14 @@
+<!doctype html>
+<html lang="zh-cmn-Hans" xmlns:th="http://www.thymeleaf.org">
+
+<link rel="shortcut icon" th:href="@{|/images/logo/${logoDir}/logo.png|}" type="image/x-icon" />
+
+<head th:replace="common/layout::header(title=~{::title})">
+<title th:text="OCP接单系统"></title>
+</head>
+<body th:replace="common/index::body(title='OCP接单系统',version='TopIdeal 2019',background=~{::div})" >
+  <div  style="width: 100%; height: 90%;">
+    <!--<img th:src="@{/images/index.png}" style="width: 90%; height: 100%;">-->
+  </div>
+</body>
+</html>

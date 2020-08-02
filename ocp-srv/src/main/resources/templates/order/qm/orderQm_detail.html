@@ -1,0 +1,335 @@
+<!doctype html>
+<html lang="zh-cmn-Hans" xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+
+<head th:replace="common/layout::header( ~{::title})">
+    <title id="title">奇门订单信息详情</title>
+</head>
+
+<body>
+<div class="ui container" style="margin-top:10px;width: 95%">
+
+    <input th:value="${orderQm.id}" type="hidden" id="orderId" name="orderId">
+    <form class="ui form" method="post">
+        <h4 style="margin-top: 10px">提货单信息</h4>
+        <hr style="margin-bottom: 10px;">
+        <div class="field">
+            <div class="four fields">
+                <div class=" field">
+                    <label>系统业务单号：</label>
+                    <input class="easyui-textbox" name="code" style="width: 150px;height: 24px;" th:value="${orderQm.code}" readonly>
+                </div>
+                <div class=" field">
+                    <label>出库单号：</label>
+                    <input class="easyui-textbox" name="orderCode" style="width: 150px;height: 24px;" th:value="${orderQm.orderCode}" readonly>
+                </div>
+                <div class=" field">
+                    <label>原出库单号(erp分配)：</label>
+                    <input class="easyui-textbox" name="preErpOrderCode" style="width: 150px;height: 24px;" th:value="${orderQm.preErpOrderCode}" readonly>
+                </div>
+                <div class=" field">
+                    <label>原出库单号(wms分配)：</label>
+                    <input class="easyui-textbox" name="preWmsOrderCode" style="width: 150px;height: 24px;" th:value="${orderQm.preWmsOrderCode}" readonly>
+                </div>
+            </div>
+            <div class="four fields">
+                <div class=" field">
+                    <label>出库单类型：</label>
+                    <input class="easyui-textbox" name="orderType" style="width: 150px;height: 24px;" th:value="${orderQm.orderType}" readonly>
+                </div>
+                <div class=" field">
+                    <label>仓库编码：</label>
+                    <input class="easyui-textbox" name="warehouseCode" style="width: 150px;height: 24px;" th:value="${orderQm.warehouseCode}" readonly>
+                </div>
+                <div class=" field">
+                    <label>订单标记：</label>
+                    <input class="easyui-textbox" name="orderFlag" style="width: 150px;height: 24px;" th:value="${orderQm.orderFlag}" readonly>
+                </div>
+                <div class=" field">
+                    <label>订单来源平台：</label>
+                    <input class="easyui-textbox" name="sourcePlatformName" style="width: 150px;height: 24px;" th:value="${orderQm.sourcePlatformName}" readonly>
+                </div>
+            </div>
+            <div class="four fields">
+                <div class=" field">
+                    <label>发货单创建时间：</label>
+                    <input class="easyui-textbox" name="orderCreateTime" style="width: 150px;height: 24px;" th:value="${#calendars.format(orderQm.orderCreateTime,'yyyy-MM-dd HH:mm:ss')}" readonly>
+                </div>
+                <div class=" field">
+                    <label>订单创建时间：</label>
+                    <input class="easyui-textbox" name="placeOrderTime" style="width: 150px;height: 24px;" th:value="${#calendars.format(orderQm.placeOrderTime,'yyyy-MM-dd HH:mm:ss')}" readonly>
+                </div>
+                <div class=" field">
+                    <label>订单支付时间：</label>
+                    <input class="easyui-textbox" name="payTime" style="width: 150px;height: 24px;" th:value="${#calendars.format(orderQm.payTime,'yyyy-MM-dd HH:mm:ss')}" readonly>
+                </div>
+                <div class=" field">
+                    <label>支付平台交易号：</label>
+                    <input class="easyui-textbox" name="payNo" style="width: 150px;height: 24px;" th:value="${orderQm.payNo}" readonly>
+                </div>
+            </div>
+            <div class="four fields">
+                <div class=" field">
+                    <label>操作人名称：</label>
+                    <input class="easyui-textbox" name="operatorName" style="width: 150px;height: 24px;" th:value="${orderQm.operatorName}" readonly>
+                </div>
+                <div class=" field">
+                    <label>操作时间：</label>
+                    <input class="easyui-textbox" name="operateTime" style="width: 150px;height: 24px;" th:value="${#calendars.format(orderQm.operateTime,'yyyy-MM-dd HH:mm:ss')}" readonly>
+                </div>
+                <div class=" field">
+                    <label>店铺名称：</label>
+                    <input class="easyui-textbox" name="shopNick" style="width: 150px;height: 24px;" th:value="${orderQm.shopNick}" readonly>
+                </div>
+                <div class=" field">
+                    <label>卖家名称：</label>
+                    <input class="easyui-textbox" name="sellerNick" style="width: 150px;height: 24px;" th:value="${orderQm.sellerNick}" readonly>
+                </div>
+            </div>
+            <div class="four fields">
+                <div class=" field">
+                    <label>买家名称：</label>
+                    <input class="easyui-textbox" name="buyerNick" style="width: 150px;height: 24px;" th:value="${orderQm.buyerNick}" readonly>
+                </div>
+                <div class=" field">
+                    <label>订单总金额(元)：</label>
+                    <input class="easyui-textbox" name="totalAmount" style="width: 150px;height: 24px;" th:value="${orderQm.totalAmount}" readonly>
+                </div>
+                <div class=" field">
+                    <label>商品总金额(元)：</label>
+                    <input class="easyui-textbox" name="itemAmount" style="width: 150px;height: 24px;" th:value="${orderQm.itemAmount}" readonly>
+                </div>
+                <div class=" field">
+                    <label>商品折扣金额(元)：</label>
+                    <input class="easyui-textbox" name="discountAmount" style="width: 150px;height: 24px;" th:value="${orderQm.discountAmount}" readonly>
+                </div>
+            </div>
+            <div class="four fields">
+                <div class=" field">
+                    <label>快递费用(元)：</label>
+                    <input class="easyui-textbox" name="freight" style="width: 150px;height: 24px;" th:value="${orderQm.freight}" readonly>
+                </div>
+                <div class=" field">
+                    <label>应收金额(元)：</label>
+                    <input class="easyui-textbox" name="arAmount" style="width: 150px;height: 24px;" th:value="${orderQm.arAmount}" readonly>
+                </div>
+                <div class=" field">
+                    <label>已收金额(元)：</label>
+                    <input class="easyui-textbox" name="gotAmount" style="width: 150px;height: 24px;" th:value="${orderQm.gotAmount}" readonly>
+                </div>
+                <div class=" field">
+                    <label>COD服务费(元)：</label>
+                    <input class="easyui-textbox" name="serviceFee" style="width: 150px;height: 24px;" th:value="${orderQm.serviceFee}" readonly>
+                </div>
+            </div>
+            <div class="four fields">
+                <div class=" field">
+                    <label>物流公司名称：</label>
+                    <input class="easyui-textbox" name="logisticsName" style="width: 150px;height: 24px;" th:value="${orderQm.logisticsName}" readonly>
+                </div>
+                <div class=" field">
+                    <label>运单号：</label>
+                    <input class="easyui-textbox" name="logisticsNo" style="width: 150px;height: 24px;" th:value="${orderQm.logisticsNo}" readonly>
+                </div>
+                <div class=" field">
+                    <label>大头笔信息：</label>
+                    <input class="easyui-textbox" name="logisticsAreaCode" style="width: 150px;height: 24px;" th:value="${orderQm.logisticsAreaCode}" readonly>
+                </div>
+                <div class=" field">
+                    <label>投递时延要求：</label>
+                    <input class="easyui-textbox" name="scheduleType" style="width: 150px;height: 24px;" th:value="${orderQm.scheduleType}" readonly>
+                </div>
+            </div>
+            <div class="four fields">
+                <div class=" field">
+                    <label>要求送达日期：</label>
+                    <input class="easyui-textbox" name="scheduleDay" style="width: 150px;height: 24px;" th:value="${orderQm.scheduleDay}" readonly>
+                </div>
+                <div class=" field">
+                    <label>投递开始时间：</label>
+                    <input class="easyui-textbox" name="scheduleStartTime" style="width: 150px;height: 24px;" th:value="${orderQm.scheduleStartTime}" readonly>
+                </div>
+                <div class=" field">
+                    <label>投递结束时间：</label>
+                    <input class="easyui-textbox" name="scheduleEndTime" style="width: 150px;height: 24px;" th:value="${orderQm.scheduleEndTime}" readonly>
+                </div>
+                <div class=" field">
+                    <label>发货服务类型：</label>
+                    <input class="easyui-textbox" name="deliveryType" style="width: 150px;height: 24px;" th:value="${orderQm.deliveryType}" readonly>
+                </div>
+            </div>
+        </div>
+
+        <h4 style="margin-top: 10px">发件人信息</h4>
+        <hr style="margin-bottom: 10px;">
+        <div class="field">
+            <div class="four fields">
+                <div class=" field">
+                    <label>公司名称：</label>
+                    <input class="easyui-textbox" name="senderCompany" style="width: 150px;height: 24px;" th:value="${orderQm.senderCompany}" readonly>
+                </div>
+                <div class=" field">
+                    <label>姓名：</label>
+                    <input class="easyui-textbox" name="senderName" style="width: 150px;height: 24px;" th:value="${orderQm.senderName}" readonly>
+                </div>
+                <div class=" field">
+                    <label>邮编：</label>
+                    <input class="easyui-textbox" name="senderZip" style="width: 150px;height: 24px;" th:value="${orderQm.senderZip}" readonly>
+                </div>
+                <div class=" field">
+                    <label>固定电话：</label>
+                    <input class="easyui-textbox" name="senderTel" style="width: 150px;height: 24px;" th:value="${orderQm.senderTel}" readonly>
+                </div>
+            </div>
+            <div class="four fields">
+                <div class=" field">
+                    <label>联系方式：</label>
+                    <input class="easyui-textbox" name="senderMobile" style="width: 150px;height: 24px;" th:value="${orderQm.senderMobile}" readonly>
+                </div>
+                <div class=" field">
+                    <label>电子邮箱：</label>
+                    <input class="easyui-textbox" name="senderEmail" style="width: 150px;height: 24px;" th:value="${orderQm.senderEmail}" readonly>
+                </div>
+                <div class=" field">
+                    <label>国家二字码：</label>
+                    <input class="easyui-textbox" name="senderCountryCode" style="width: 150px;height: 24px;" th:value="${orderQm.senderCountryCode}" readonly>
+                </div>
+                <div class=" field">
+                    <label>省：</label>
+                    <input class="easyui-textbox" name="senderProvince" style="width: 150px;height: 24px;" th:value="${orderQm.senderProvince}" readonly>
+                </div>
+            </div>
+            <div class="four fields">
+                <div class=" field">
+                    <label>市：</label>
+                    <input class="easyui-textbox" name="senderCity" style="width: 150px;height: 24px;" th:value="${orderQm.senderCity}" readonly>
+                </div>
+                <div class=" field">
+                    <label>区：</label>
+                    <input class="easyui-textbox" name="senderArea" style="width: 150px;height: 24px;" th:value="${orderQm.senderArea}" readonly>
+                </div>
+                <div class=" field">
+                    <label>村镇：</label>
+                    <input class="easyui-textbox" name="senderTown" style="width: 150px;height: 24px;" th:value="${orderQm.senderTown}" readonly>
+                </div>
+                <div class=" field">
+                    <label>详细地址：</label>
+                    <input class="easyui-textbox" name="senderDetailAddress" style="width: 150px;height: 24px;" th:value="${orderQm.senderDetailAddress}" readonly>
+                </div>
+            </div>
+        </div>
+
+        <h4 style="margin-top: 10px">收件人信息</h4>
+        <hr style="margin-bottom: 10px;">
+        <div class="field">
+            <div class="four fields">
+                <div class=" field">
+                    <label>公司名称：</label>
+                    <input class="easyui-textbox" name="receiverCompany" style="width: 150px;height: 24px;" th:value="${orderQm.receiverCompany}" readonly>
+                </div>
+                <div class=" field">
+                    <label>姓名：</label>
+                    <input class="easyui-textbox" name="receiverName" style="width: 150px;height: 24px;" th:value="${orderQm.receiverName}" readonly>
+                </div>
+                <div class=" field">
+                    <label>邮编：</label>
+                    <input class="easyui-textbox" name="receiverZip" style="width: 150px;height: 24px;" th:value="${orderQm.receiverZip}" readonly>
+                </div>
+                <div class=" field">
+                    <label>固定电话：</label>
+                    <input class="easyui-textbox" name="receiverTel" style="width: 150px;height: 24px;" th:value="${orderQm.receiverTel}" readonly>
+                </div>
+            </div>
+            <div class="four fields">
+                <div class=" field">
+                    <label>联系方式：</label>
+                    <input class="easyui-textbox" name="receiverMobile" style="width: 150px;height: 24px;" th:value="${orderQm.receiverMobile}" readonly>
+                </div>
+                <div class=" field">
+                    <label>证件类型：</label>
+                    <input class="easyui-textbox" name="receiverIdType" style="width: 150px;height: 24px;" th:value="${orderQm.receiverIdType}" readonly>
+                </div>
+                <div class=" field">
+                    <label>电子邮箱：</label>
+                    <input class="easyui-textbox" name="receiverEmail" style="width: 150px;height: 24px;" th:value="${orderQm.receiverEmail}" readonly>
+                </div>
+                <div class=" field">
+                    <label>国家二字码：</label>
+                    <input class="easyui-textbox" name="receiverCountryCode" style="width: 150px;height: 24px;" th:value="${orderQm.receiverCountryCode}" readonly>
+                </div>
+            </div>
+            <div class="four fields">
+                <div class=" field">
+                    <label>省：</label>
+                    <input class="easyui-textbox" name="receiverProvince" style="width: 150px;height: 24px;" th:value="${orderQm.receiverProvince}" readonly>
+                </div>
+                <div class=" field">
+                    <label>市：</label>
+                    <input class="easyui-textbox" name="receiverCity" style="width: 150px;height: 24px;" th:value="${orderQm.receiverCity}" readonly>
+                </div>
+                <div class=" field">
+                    <label>区：</label>
+                    <input class="easyui-textbox" name="receiverArea" style="width: 150px;height: 24px;" th:value="${orderQm.receiverArea}" readonly>
+                </div>
+                <div class=" field">
+                    <label>村镇：</label>
+                    <input class="easyui-textbox" name="receiverTown" style="width: 150px;height: 24px;" th:value="${orderQm.receiverTown}" readonly>
+                </div>
+            </div>
+            <div class="four fields">
+                <div class=" field">
+                    <label>详细地址：</label>
+                    <input class="easyui-textbox" name="receiverDetailAddress" style="width: 150px;height: 24px;" th:value="${orderQm.receiverDetailAddress}" readonly>
+                </div>
+            </div>
+        </div>
+
+
+        <h4 style="margin-top: 10px">订单明细信息</h4>
+        <hr style="margin-bottom: 10px;">
+        <div class="field">
+            <table id="itemTable" style="width:calc(100% - 10px);height:auto;" striped="true" data-options="rownumbers:true">
+                <thead>
+                <tr>
+                    <th field="itemNo" width="100">单据行号</th>
+                    <th field="sourceOrderCode" width="150">交易平台订单</th>
+                    <th field="subSourceOrderCode" width="150">交易平台子订单编码</th>
+                    <th field="payNo" width="150">支付平台交易号</th>
+                    <th field="ownerCode" width="150">货主编码</th>
+                    <th field="goodsCode" width="150">商品编码</th>
+                    <th field="wmsGoodsCode" width="150">仓库系统商品编码</th>
+                    <th field="stockType" width="150">库存类型</th>
+                    <th field="goodsName" width="150">商品名称</th>
+                    <th field="payGoodsCode" width="150">交易平台商品编码</th>
+                    <th field="planQty" width="150">应发商品数量</th>
+                    <th field="retailPrice" width="150">零售价(元)</th>
+                    <th field="actualPrice" width="150">实际成交价(元)</th>
+                    <th field="discountAmount" width="150">单件商品折扣金额(元)</th>
+                    <th field="batchCode" width="150">批次编码</th>
+                    <th field="produceCode" width="150">生产批号</th>
+                    <th field="productDate" width="150">生产日期</th>
+                    <th field="expireDate" width="150">过期日期</th>
+                </tr>
+                </thead>
+            </table>
+        </div>
+    </form>
+</div>
+<script>
+
+    $(function () {
+        var id = $("#orderId").val();
+        $('#itemTable').datagrid({
+            initCount: 1,//开始就加载
+            url: basePath + '/orderQm/detail/json/' + id,
+            methord: 'post',
+            striped: true, //奇偶行是否区分
+            singleSelect: true,//单选模式
+            rownumbers: true//行号
+        });
+    })
+
+</script>
+
+</body>
+</html>

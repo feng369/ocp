@@ -1,0 +1,11 @@
+spring:
+  cloud:
+    config:
+      uri: http://106.75.166.154   # 配置中心服务的地址
+      name: tms   # 要读取的配置文件application属性
+      #label: test
+      #profile: dev # 要读取的配置文件profile属性
+      #profile: beta
+      username: topideal
+      password: E9ukNpZPlTv3HiY0
+      #label: master   # git 配置文件所在分支

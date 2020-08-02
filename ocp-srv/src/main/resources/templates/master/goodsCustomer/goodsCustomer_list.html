@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="zh-cmn-Hans" xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+
+<head th:replace="common/layout::header( ~{::title})">
+  <title id="title">商品业主</title>
+</head>
+<body>
+<div class="contentBox">
+  <div class="ui fluid container box-form">
+    <form class="ui form" id="searchForm" method="post">
+      <div class="field">
+        <div class="inline fields">
+          <div class="field">
+            <label>企业编码：</label>
+            <input type="text" name="enterpriseCode" class="easyui-textbox"
+                   placeholder="" style="width: 150px;height: 24px;"
+            />
+          </div>
+          <div class="field">
+            <label>商品货号：</label>
+            <input type="text" name="goodsCode" class="easyui-textbox"
+                   placeholder="" style="width: 150px;height: 24px;"/>
+          </div>
+
+          <div class="field">
+            <label>关区：</label>
+            <span class="selectBox">
+                            <select class="form-select" name="customerCode"
+                                    style="width: 150px;height: 24px;" editable="false">
+                                <option value=""></option>
+                                <option th:each="enum : ${T(com.topideal.supplychain.ocp.enums.CustomsCodeEnum).values()}"
+                                        th:text="${enum.desc}" th:value="${enum}">
+                                </option>
+                            </select>
+                            <i class="x icon clearBtn" title="清空"></i>
+                            </span>
+          </div>
+
+          <div class="field">
+            <label>贸易模式：</label>
+            <span class="selectBox">
+                            <select class="form-select" name="busiMode"
+                                    style="width: 150px;height: 24px;" editable="false">
+                                <option value=""></option>
+                                <option th:each="enum : ${T(com.topideal.supplychain.ocp.enums.BusiModeEnum).values()}"
+                                        th:text="${enum.desc}" th:value="${enum}">
+                                </option>
+                            </select>
+                            <i class="x icon clearBtn" title="清空"></i>
+                            </span>
+          </div>
+        </div>
+
+        <div class="field" style="margin-left: 35%">
+          <a href="#" class="ui mini primary button form-search"><i class="search icon"></i>查询</a>
+          <a href="#" class="ui mini primar grey button form-reset"><i class="undo icon"></i>重置</a>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="tableBox">
+    <table id="tt" toolbar="#tb" style="height: 100%;" striped="true" data-options="rownumbers:true">
+      <thead>
+      <tr>
+        <th field="ck" checkbox="true"></th>
+        <th field="id" formatter="btnFomatter" width="50px">操作</th>
+        <th field="enterpriseCode" width="10%">企业编码</th>
+        <th field="enterpriseName" width="15%">企业名称</th>
+        <th field="goodsCode" width="10%">商品货号</th>
+        <th field="goodsName" width="15%">商品名称</th>
+        <th field="customerCode" width="10%">关区</th>
+        <th field="busiMode" width="10%">贸易模式</th>
+        <th field="createTime" width="15%">创建时间</th>
+      </tr>
+      </thead>
+    </table>
+  </div>
+
+  <div id="tb" style="display:none;">
+    <a shiro:hasPermission="master.goodsCustomer.add" class="easyui-linkbutton" plain="true" onclick="add()"><i class="green plus square icon"></i>新增</a>
+    <!--<a shiro:hasPermission="master.goodsCustomer.update" class="easyui-linkbutton" plain="true" onclick="edit(this)"><i class="blue edit outline icon register-tip"></i>编辑</a>-->
+    <a shiro:hasPermission="master.goodsCustomer.remove" class="easyui-linkbutton" plain="true" onclick="remove()"><i class="red trash alternate icon register-tip"></i>批量删除</a>
+    <a shiro:hasPermission="master.goodsCustomer.down" class="easyui-linkbutton" plain="true" th:href="@{/excelTemplate/goodsCustomer.xlsx}"><i class="green cloud download icon"></i>导入模板下载</a>
+    <a shiro:hasPermission="master.goodsCustomer.import" class="easyui-linkbutton" plain="true" onclick="importData()"><i class="green upload icon"></i>EXCEL导入</a>
+  </div>
+
+  <div id="tv" style="display: none">
+    <i shiro:hasPermission="master.goodsCustomer.update" class="blue edit outline icon register-tip"
+       data-content="编辑" style="cursor:pointer" onclick="edit(this)"></i>
+
+  </div>
+
+</div>
+<div id="modalDiv"></div>
+</body>
+</html>
+
+<script type="text/javascript">
+  $(function () {
+    $('#tt').datagrid({
+      formId:"#searchForm",
+      url: basePath + '/goodsCustomer/json',
+      method: 'post',
+      singleSelect: false, //by zhf true会导致复选框也只能选单行
+      pagination: true
+    });
+  });
+
+  function add() {
+    var dialogParent = $('#modalDiv').parent();
+    var dialogOwn = $('#modalDiv').clone();
+    $('#modalDiv').dialog({
+      title: "【新增】业主商品信息",
+      width: '70%',
+      height: '50%',
+      closed: false,
+      cache: false,
+      href: basePath + '/goodsCustomer/toAdd',
+      modal: true,
+      onClose: function () {
+        dialogOwn.appendTo(dialogParent);
+        $(this).dialog('destroy').remove();
+      },
+      buttons: [{
+        text: '保存',
+        handler: function () {
+          $("#addForm").form('submit', {
+            onSubmit: function () {
+              return $(this).form('validate');
+            },
+            success: function (data) {
+              var result = JSON.parse(data);
+              if (result.flag == 'SUCCESS') {
+                $('#modalDiv').dialog('close');
+                $('#tt').datagrid('reload');
+              }
+              tips.alert(result.message);
+            }
+          });
+        }
+      }, {
+        text: '取消',
+        handler: function () {
+          $('#modalDiv').dialog('close')
+        }
+      }]
+    });
+  }
+
+  function edit(target) {
+    var dialogParent = $('#modalDiv').parent();
+    var dialogOwn = $('#modalDiv').clone();
+    var id = $(target).attr("data-id");
+    $('#modalDiv').dialog({
+      title: "【编辑】业主商品信息",
+      width: '70%',
+      height: '50%',
+      closed: false,
+      cache: false,
+      method: 'post',
+      href: basePath + '/goodsCustomer/toEdit/' + id,
+      modal: true,
+      onClose: function () {
+        dialogOwn.appendTo(dialogParent);
+        $(this).dialog('destroy').remove();
+      },
+      buttons: [{
+        text: '保存',
+        handler: function () {
+          $("#updateForm").form('submit', {
+            onSubmit: function () {
+              return $(this).form('validate');
+            },
+            success: function (data) {
+              var result = JSON.parse(data);
+              if (result.flag == 'SUCCESS') {
+                $('#modalDiv').dialog('close');
+                $('#tt').datagrid('reload');
+              }
+              tips.alert(result.message);
+            }
+          });
+        }
+      }, {
+        text: '取消',
+        handler: function () {
+          $('#modalDiv').dialog('close')
+        }
+      }]
+    });
+  }
+
+  function remove() {
+    var rows = $('#tt').datagrid("getSelections");
+    if (rows.length === 0) {
+      $.messager.alert("操作提示", "请选择一行或多行数据！", "warning");
+      return;
+    }
+    var idList = [];
+    for (var idx in rows) {
+      var row = rows[idx];
+      idList.push(row.id);
+    }
+    tips.confirm("确定要删除吗？", function (r) {
+      if (r) {
+        $.ajax({
+          url: basePath + '/goodsCustomer/remove',
+          data: {ids: idList},
+          traditional: true,
+          type: 'POST',
+          cache: false,
+          timeout: 600000,
+          success: function (response) {
+            tips.alert(response.message);
+            $('#tt').datagrid("reload");
+          }
+        });
+      }
+    });
+  }
+
+  // excel导入
+  function importData() {
+    var dialogParent = $('#modalDiv').parent();
+    var dialogOwn = $('#modalDiv').clone();
+    $('#modalDiv').dialog({
+      title: "导入",
+      width: 400,
+      height: 200,
+      closed: false,
+      cache: false,
+      href: basePath + '/goodsCustomer/toImport',
+      modal: true,
+      onClose: function () {
+        dialogOwn.appendTo(dialogParent);
+        $(this).dialog('destroy').remove();
+      },
+      buttons: [{
+        text: '确定',
+        handler: function () {
+          $("#excelForm").form('submit', {
+            success: function (data) {
+              var result = JSON.parse(data);
+              if (result.flag == 'SUCCESS') {
+                $('#modalDiv').dialog('close');
+                $('#tt').datagrid('reload');
+              }
+              tips.alert(result.message);
+            }
+          });
+        }
+      }, {
+        text: '取消',
+        handler: function () {
+          $('#modalDiv').dialog('close')
+        }
+      }]
+    });
+
+  }
+</script>
+

@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="zh-cmn-Hans" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="common/layout::header( ~{::title})">
+	<title id="title">企业平台管理</title>
+</head>
+<body>
+
+
+<div class="ui container" style="margin-top:10px;width: 95%">
+	<form th:action="@{/merchant/add}" id="addForm" name="addForm" class="ui form" method="post">
+		<div class="field">
+			<div class="four fields">
+				<div class="required field">
+					<label>企业编码</label>
+					<input type="text" id="code" name="code" class="easyui-validatebox" placeholder="" required="true" />
+				</div>
+				<div class="required field">
+					<label>企业名称</label>
+					<input type="text" id="name" name="name" class="easyui-validatebox" placeholder="" required="true"/>
+				</div>
+				<div class="required field">
+					<label>企业简称</label>
+					<input type="text" id="shortName" name="shortName" class="easyui-validatebox" placeholder="" required="true"/>
+				</div>
+			</div>
+			<div class="field">
+				<label>企业参数：</label>
+				<div id="arguments"></div>
+			</div>
+		</div>
+	</form>
+</div>
+<script th:inline="javascript">
+	$("#arguments").jsoneditor({
+		inputName: "arguments"
+	});
+</script>
+</body>
+
+</html>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.topideal.supplychain.ocp.order.mapper.OrderGsItemMapper">
+
+    <resultMap id="BaseResultMap" type="com.topideal.supplychain.ocp.order.model.OrderGsItem">
+        <id column="id" property="id" />
+        <result column="order_code" property="orderCode" />
+        <result column="order_id" property="orderId" />
+        <result column="sku_title" property="skuTitle" />
+        <result column="deliver_code" property="deliverCode" />
+        <result column="quantity" property="quantity" />
+        <result column="price" property="price" />
+        <result column="ship_expense_share" property="shipExpenseShare" />
+        <result column="shop_promotion_amount" property="shopPromotionAmount" />
+        <result column="platform_promotion_amount" property="platformPromotionAmount" />
+        <result column="pay_price" property="payPrice" />
+        <result column="actual_income_price" property="actualIncomePrice" />
+        <result column="bonded_area_goods_price" property="bondedAreaGoodsPrice" />
+        <result column="bonded_area_non_cash_deduct" property="bondedAreaNonCashDeduct" />
+        <result column="bonded_area_tax" property="bondedAreaTax" />
+        <result column="purchase_count" property="purchaseCount" />
+        <result column="across_promotion_amount" property="acrossPromotionAmount" />
+        <result column="sku_property" property="skuProperty" />
+        <result column="real_cash_amount" property="realCashAmount" />
+        <result column="send_kjb_flag" property="sendKjbFlag" />
+        <result column="total_price" property="totalPrice" />
+        <result column="create_time" property="createTime" />
+        <result column="create_by" property="createBy" />
+        <result column="update_time" property="updateTime" />
+        <result column="update_by" property="updateBy" />
+        <result column="version" property="version" />
+        <result column="is_deleted" property="isDeleted" />
+        <result column="tenant_id" property="tenantId" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, order_code, order_id, sku_title, deliver_code, quantity, price, ship_expense_share,
+        shop_promotion_amount, platform_promotion_amount, pay_price, actual_income_price,
+        bonded_area_goods_price, bonded_area_non_cash_deduct, bonded_area_tax, purchase_count,
+        across_promotion_amount, sku_property, real_cash_amount, send_kjb_flag, create_time,
+        create_by, update_time, update_by, version, is_deleted, tenant_id, total_price
+    </sql>
+
+    <select id="selectByOrderId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from doc_order_gs_item
+        where order_id = #{orderId}
+        <if test="orderNewEnum != null">
+            and send_kjb_flag = #{orderNewEnum}
+        </if>
+    </select>
+
+    <insert id="batchInsert">
+        insert into doc_order_gs_item (id, order_code, order_id, sku_title, deliver_code, send_kjb_flag,
+        quantity, price, ship_expense_share, shop_promotion_amount, platform_promotion_amount, total_price,
+        pay_price, actual_income_price, bonded_area_goods_price, bonded_area_non_cash_deduct,
+        bonded_area_tax, purchase_count, across_promotion_amount, sku_property, real_cash_amount,
+        create_time, create_by, update_time, update_by, version, is_deleted, tenant_id) values
+        <foreach collection="list" item="item" separator=",">
+        (#{item.id}, #{item.orderCode}, #{item.orderId}, #{item.skuTitle}, #{item.deliverCode}, #{item.sendKjbFlag},
+        #{item.quantity}, #{item.price}, #{item.shipExpenseShare}, #{item.shopPromotionAmount},
+        #{item.platformPromotionAmount}, #{item.totalPrice}, #{item.payPrice}, #{item.actualIncomePrice},
+        #{item.bondedAreaGoodsPrice}, #{item.bondedAreaNonCashDeduct}, #{item.bondedAreaTax},
+        #{item.purchaseCount}, #{item.acrossPromotionAmount}, #{item.skuProperty},
+        #{item.realCashAmount}, #{item.createTime}, #{item.createBy}, #{item.updateTime},
+        #{item.updateBy}, #{item.version}, #{item.isDeleted}, #{item.tenantId})
+        </foreach>
+    </insert>
+
+</mapper>

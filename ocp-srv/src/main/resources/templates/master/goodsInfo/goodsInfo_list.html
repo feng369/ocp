@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="zh-cmn-Hans" xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+
+<head th:replace="common/layout::header( ~{::title})">
+    <title id="title">商品登记</title>
+</head>
+
+<body>
+<div class="contentBox">
+    <div class="ui fluid container box-form">
+        <form class="ui form" id="searchForm">
+            <div class="searchBox">
+                <ul>
+                    <li>
+                        <div class="smallBox">
+                            <label>商品名称：</label>
+                            <input class="easyui-textbox" name="goodsName" style="width: 150px;height: 24px;">
+                        </div>
+                    </li>
+                    <li>
+                        <div class="smallBox">
+                            <label>商品类型：</label>
+                            <input class="easyui-textbox" name="goodsType" style="width: 150px;height: 24px;">
+                        </div>
+                    </li>
+                    <li>
+                        <div class="smallBox">
+                            <label>商品编码：</label>
+                            <input class="easyui-textbox" name="goodsNo" style="width: 150px;height: 24px;">
+                        </div>
+                    </li>
+                    <li>
+                        <div class="smallBox">
+                            <label>商品条形码：</label>
+                            <input class="easyui-textbox" name="barCode" style="width: 150px;height: 24px;">
+                        </div>
+                    </li>
+                    <li>
+                        <div class="smallBox">
+                            <label>系统内部编码：</label>
+                            <input class="easyui-textbox" name="code" style="width: 150px;height: 24px;">
+                        </div>
+                    </li>
+                    <li>
+                        <div class="smallBox">
+                            <label>状态：</label>
+                            <span class="selectBox">
+                                <select id="status" class="form-select" name="status"
+                                        style="width: 150px;height: 24px;">
+                                    <option value=""></option>
+                                    <option th:each="status : ${T(com.topideal.supplychain.ocp.enums.SyncStatusEnum).values()}"
+                                            th:text="${status.desc}" th:value="${status}"></option>
+                                </select>
+                                <i class="x icon clearBtn" title="清空"></i>
+                            </span>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="smallBox">
+                            <label>创建时间从</label>
+                            <input type="text" class="form-input-border" id="createBeginTime" name="createBeginTime"
+                                   onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',maxDate:'#F{$dp.$D(\'createEndTime\');}'})"
+                                   style="width: 150px;height: 24px;"/>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="smallBox">
+                            <label>至</label>
+                            <input type="text" class="form-input-border" id="createEndTime" name="createEndTime"
+                                   onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',minDate:'#F{$dp.$D(\'createBeginTime\')}'})"
+                                   style="width: 150px;height: 24px;"/>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="field" style="margin-top: 10px;text-align: center;">
+                <a href="#" class="ui mini primary button form-search"><i class="search icon"></i>查询</a>
+                <a href="#" class="ui mini primar grey button form-reset"><i class="undo icon"></i>重置</a>
+                <a href="#" id="show_i" onclick="hide()" style="float :right"><i class="angle down icon"></i>显示条件</a>
+            </div>
+        </form>
+    </div>
+
+    <div class="tableBox">
+        <table id="tt" striped="true" toolbar="#tb" style="height: 100%;">
+            <thead>
+            <tr>
+                <th field="ck" checkBox="true" align="center" halign="center"></th>
+                <!--<th field="id" formatter="btnFomatter">操作</th>-->
+                <th field="createTime" width="150px">创建时间</th>
+                <th field="code" width="150px" formatter="formatCode">系统内部单号</th>
+                <th field="status" width="80px">状态</th>
+                <th field="ownerCode" width="120px">货主编码</th>
+                <th field="goodsNo" width="120px">商品编码</th>
+                <th field="goodsName" width="150px">商品名称</th>
+                <th field="barCode" width="120px">条形码</th>
+                <th field="goodsType" width="120px">商品类型</th>
+                <th field="goodsCode" width="120px">商品货号</th>
+                <th field="originAddress" width="120px">原产国/地</th>
+                <th field="warehouseCode" width="120px">仓库编码</th>
+                <th field="brandCode" width="120px">品牌编码</th>
+            </tr>
+            </thead>
+        </table>
+    </div>
+
+    <div id="tb" style="display:none;">
+        <a class="easyui-linkbutton" shiro:hasPermission="master.goodsInfo.repushMdm" plain="true" onclick="repushMdm()"><i class="green plus square icon"></i>重推MDM</a>
+    </div>
+
+    <div id="tv" style="display: none">
+    </div>
+
+</div>
+
+<div id="detailDiv"></div>
+<div id="modalDiv"></div>
+
+</body>
+<script type="text/javascript" th:inline="none">
+    $(function () {
+        $('#tt').datagrid({
+            formId: "#searchForm",
+
+            url: basePath + '/goodsInfo/json',
+            method: 'post',
+            pagination: true,
+            // initCount: 1,//开始就加载
+        });
+    });
+
+    /**
+     * 订单的点击链接
+     */
+    function formatCode(value, row, index) {
+        var htmlStr = "<a class='hrefCss blue_link' id='showDetail' title='点击查看详情'  href='javascript:void(0)' "
+            + "onclick=showDetail('" + row.id + "')>"
+            + value + "</a>";
+        htmlStr = htmlStr + "</br>";
+        return htmlStr;
+    }
+
+    /**
+     * 打开商品详细
+     */
+    function showDetail(id) {
+        $('#detailDiv').dialog({
+            title: '商品登记详情',
+            width: "70%",
+            height: "60%",
+            closed: false,
+            cache: false,
+            method: 'post',
+            href: basePath + '/goodsInfo/showDetail/' + id,
+            modal: true
+        });
+    }
+
+    /**
+     * 重推至MDM
+     */
+    function repushMdm() {
+        var checkedItems = $('#tt').datagrid('getChecked');
+        if (checkedItems.length < 1) {
+            tips.alert("请至少选择一行记录操作");
+            return;
+        }
+        var ids = [];
+        $.each(checkedItems, function (index, item) {
+            ids.push(item.id);
+        });
+        $.ajax({
+            url: basePath + "/goodsInfo/repushMdm",
+            type: 'POST',
+            data: {ids: ids},
+            success: function (response) {
+                tips.alert(response.message);
+                if (response.flag == 'SUCCESS') {
+                    $('#tt').datagrid('reload');
+                }
+            }
+        });
+    }
+
+</script>
+</html>

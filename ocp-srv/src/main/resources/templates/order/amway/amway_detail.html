@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="zh-cmn-Hans" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="common/layout::header( ~{::title})">
+  <title id="title">安利订单明细</title>
+</head>
+<body>
+<style>
+  .subContainer .panel {
+    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.3), 0px 0px 3px rgba(0, 0, 0, 0.1) inset;
+  }
+
+  .subContainer > .panel.easyui-fluid:not(:last-child) {
+    margin-bottom: 15px;
+  }
+
+  .subContainer .panel-body {
+    border-width: 0;
+    margin-top: 8px;
+    padding-bottom: 10px;
+  }
+
+  .subContainer .tableBox .datagrid .panel-body {
+    box-shadow: none;
+  }
+
+</style>
+
+<div class="ui fluid subContainer container box-form" style="margin-top:10px;width: 98%">
+  <input th:value="${orderId}" type="hidden" id="orderId" name="orderId">
+  <div id="feeInfo1" class="easyui-panel" title="安利订单明细" style="width:100%;"
+       data-options="collapsible:true">
+    <form class="ui form">
+      <div class="searchBox">
+        <ul>
+          <li class="w-8-4">
+            <div class="smallBox">
+              <label>付款方式：</label>
+              <span style="width: 150px;height: 24px;" th:text="${payline.paymentMethod}"/>
+            </div>
+          </li>
+          <li  class="w-8-4">
+            <div class="smallBox">
+              <label>付款金额(元)：</label>
+              <span style="width: 150px;height: 24px;" th:text="${paymentLineAmount}"/>
+            </div>
+          </li>
+          <li  class="w-8-4">
+            <div class="smallBox">
+              <label>付款名称：</label>
+              <span style="width: 150px;height: 24px;" th:text="${payline.paymentMethodName}"/>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </form>
+  </div>
+
+  <div id="feeInfo2" class="easyui-panel" title="商品信息" style="width:100%;"
+       data-options="collapsible:true">
+    <div class="tableBox">
+      <table id="itemTable" striped="true" style="width:99%;">
+        <thead>
+          <tr>
+            <th field="itemSku" width="120">商品货号</th>
+            <th field="orderingItemName" width="120">产品名称</th>
+            <th field="unitDp" width="90">产品单价(元)</th>
+            <th field="orderQty" width="120">购买数量</th>
+            <th field="orderingItemNumber" width="180">产品下单编号</th>
+            <th field="isReturn" width="120">是否可退</th>
+            <th field="rsvst1" width="90">备用字段1</th>
+            <th field="rsvst2" width="90">备用字段2</th>
+            <th field="rsvst3" width="90">备用字段3</th>
+            <th field="rsvdc1" width="90">备用字段c1</th>
+            <th field="rsvdc2" width="90">备用字段c2</th>
+            <th field="rsvdc3" width="90">备用字段c3</th>
+            <th field="masterOrderingItemNumber" width="90">主产品编号</th>
+            <th field="masterOrderQty" width="90">主产品数量</th>
+            <th field="masterOrderingItemName" width="90">主产品名称</th>
+            <th field="masterOrderingPrice" width="90">主产品价格</th>
+          </tr>
+        </thead>
+      </table>
+    </div>
+  </div>
+</div>
+<script>
+
+
+  $(function () {
+    var id = $("#orderId").val();
+    $('#itemTable').datagrid({
+      initCount: 1,//开始就加载
+      url: basePath + '/orderAmway/detail/json/' + id,
+      method: 'post',
+      //pagination: true
+      rownumbers: true
+    });
+    $(window).resize();
+  })
+
+</script>
+</body>
+</html>

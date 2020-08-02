@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.topideal.supplychain.ocp.order.mapper.OrderYouzanExMapper" >
+  <resultMap id="BaseResultMap" type="com.topideal.supplychain.ocp.order.model.OrderYouzanEx" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="order_id" property="orderId" jdbcType="BIGINT" />
+    <result column="is_from_cart" property="isFromCart" jdbcType="VARCHAR" />
+    <result column="cashier_id" property="cashierId" jdbcType="VARCHAR" />
+    <result column="cashier_name" property="cashierName" jdbcType="VARCHAR" />
+    <result column="invoice_title" property="invoiceTitle" jdbcType="VARCHAR" />
+    <result column="settle_time" property="settleTime" jdbcType="TIMESTAMP" />
+    <result column="is_parent_order" property="isParentOrder" jdbcType="VARCHAR" />
+    <result column="is_sub_order" property="isSubOrder" jdbcType="VARCHAR" />
+    <result column="fx_order_no" property="fxOrderNo" jdbcType="VARCHAR" />
+    <result column="fx_kdt_id" property="fxKdtId" jdbcType="VARCHAR" />
+    <result column="parent_order_no" property="parentOrderNo" jdbcType="VARCHAR" />
+    <result column="purchase_order_no" property="purchaseOrderNo" jdbcType="VARCHAR" />
+    <result column="dept_id" property="deptId" jdbcType="VARCHAR" />
+    <result column="create_device_id" property="createDeviceId" jdbcType="VARCHAR" />
+    <result column="is_points_order" property="isPointsOrder" jdbcType="VARCHAR" />
+    <result column="id_card_number" property="idCardNumber" jdbcType="VARCHAR" />
+    <result column="buyer_name" property="buyerName" jdbcType="VARCHAR" />
+    <result column="is_member" property="isMember" jdbcType="VARCHAR" />
+    <result column="tm_cash" property="tmCash" jdbcType="DECIMAL" />
+    <result column="t_cash" property="tCash" jdbcType="DECIMAL" />
+    <result column="cash" property="cash" jdbcType="DECIMAL" />
+    <result column="orders_combine_id" property="ordersCombineId" jdbcType="VARCHAR" />
+    <result column="kdt_dimension_combine_id" property="kdtDimensionCombineId" jdbcType="VARCHAR" />
+    <result column="promotion_combine_id" property="promotionCombineId" jdbcType="VARCHAR" />
+    <result column="id_card_name" property="idCardName" jdbcType="VARCHAR" />
+    <result column="fx_outer_transaction_no" property="fxOuterTransactionNo" jdbcType="VARCHAR" />
+    <result column="fx_inner_transaction_no" property="fxInnerTransactionNo" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, order_id, is_from_cart, cashier_id, cashier_name, invoice_title, settle_time, 
+    is_parent_order, is_sub_order, fx_order_no, fx_kdt_id, parent_order_no, purchase_order_no, 
+    dept_id, create_device_id, is_points_order, id_card_number, buyer_name, is_member, 
+    tm_cash, t_cash, cash, orders_combine_id, kdt_dimension_combine_id, promotion_combine_id, 
+    id_card_name, fx_outer_transaction_no, fx_inner_transaction_no
+  </sql>
+  <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from doc_order_youzan_ex
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <select id="selectByOrderId" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from doc_order_youzan_ex
+    where order_id = #{orderId,jdbcType=BIGINT}
+  </select>
+
+  <delete id="deleteById" parameterType="java.lang.Long" >
+    delete from doc_order_youzan_ex
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+  <insert id="insert" parameterType="com.topideal.supplychain.ocp.order.model.OrderYouzanEx" >
+    insert into doc_order_youzan_ex
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="orderId != null" >
+        order_id,
+      </if>
+      <if test="isFromCart != null" >
+        is_from_cart,
+      </if>
+      <if test="cashierId != null" >
+        cashier_id,
+      </if>
+      <if test="cashierName != null" >
+        cashier_name,
+      </if>
+      <if test="invoiceTitle != null" >
+        invoice_title,
+      </if>
+      <if test="settleTime != null" >
+        settle_time,
+      </if>
+      <if test="isParentOrder != null" >
+        is_parent_order,
+      </if>
+      <if test="isSubOrder != null" >
+        is_sub_order,
+      </if>
+      <if test="fxOrderNo != null" >
+        fx_order_no,
+      </if>
+      <if test="fxKdtId != null" >
+        fx_kdt_id,
+      </if>
+      <if test="parentOrderNo != null" >
+        parent_order_no,
+      </if>
+      <if test="purchaseOrderNo != null" >
+        purchase_order_no,
+      </if>
+      <if test="deptId != null" >
+        dept_id,
+      </if>
+      <if test="createDeviceId != null" >
+        create_device_id,
+      </if>
+      <if test="isPointsOrder != null" >
+        is_points_order,
+      </if>
+      <if test="idCardNumber != null" >
+        id_card_number,
+      </if>
+      <if test="buyerName != null" >
+        buyer_name,
+      </if>
+      <if test="isMember != null" >
+        is_member,
+      </if>
+      <if test="tmCash != null" >
+        tm_cash,
+      </if>
+      <if test="tCash != null" >
+        t_cash,
+      </if>
+      <if test="cash != null" >
+        cash,
+      </if>
+      <if test="ordersCombineId != null" >
+        orders_combine_id,
+      </if>
+      <if test="kdtDimensionCombineId != null" >
+        kdt_dimension_combine_id,
+      </if>
+      <if test="promotionCombineId != null" >
+        promotion_combine_id,
+      </if>
+      <if test="idCardName != null" >
+        id_card_name,
+      </if>
+      <if test="fxOuterTransactionNo != null" >
+        fx_outer_transaction_no,
+      </if>
+      <if test="fxInnerTransactionNo != null" >
+        fx_inner_transaction_no,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="orderId != null" >
+        #{orderId,jdbcType=BIGINT},
+      </if>
+      <if test="isFromCart != null" >
+        #{isFromCart,jdbcType=VARCHAR},
+      </if>
+      <if test="cashierId != null" >
+        #{cashierId,jdbcType=VARCHAR},
+      </if>
+      <if test="cashierName != null" >
+        #{cashierName,jdbcType=VARCHAR},
+      </if>
+      <if test="invoiceTitle != null" >
+        #{invoiceTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="settleTime != null" >
+        #{settleTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isParentOrder != null" >
+        #{isParentOrder,jdbcType=VARCHAR},
+      </if>
+      <if test="isSubOrder != null" >
+        #{isSubOrder,jdbcType=VARCHAR},
+      </if>
+      <if test="fxOrderNo != null" >
+        #{fxOrderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="fxKdtId != null" >
+        #{fxKdtId,jdbcType=VARCHAR},
+      </if>
+      <if test="parentOrderNo != null" >
+        #{parentOrderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="purchaseOrderNo != null" >
+        #{purchaseOrderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="deptId != null" >
+        #{deptId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDeviceId != null" >
+        #{createDeviceId,jdbcType=VARCHAR},
+      </if>
+      <if test="isPointsOrder != null" >
+        #{isPointsOrder,jdbcType=VARCHAR},
+      </if>
+      <if test="idCardNumber != null" >
+        #{idCardNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="buyerName != null" >
+        #{buyerName,jdbcType=VARCHAR},
+      </if>
+      <if test="isMember != null" >
+        #{isMember,jdbcType=VARCHAR},
+      </if>
+      <if test="tmCash != null" >
+        #{tmCash,jdbcType=DECIMAL},
+      </if>
+      <if test="tCash != null" >
+        #{tCash,jdbcType=DECIMAL},
+      </if>
+      <if test="cash != null" >
+        #{cash,jdbcType=DECIMAL},
+      </if>
+      <if test="ordersCombineId != null" >
+        #{ordersCombineId,jdbcType=VARCHAR},
+      </if>
+      <if test="kdtDimensionCombineId != null" >
+        #{kdtDimensionCombineId,jdbcType=VARCHAR},
+      </if>
+      <if test="promotionCombineId != null" >
+        #{promotionCombineId,jdbcType=VARCHAR},
+      </if>
+      <if test="idCardName != null" >
+        #{idCardName,jdbcType=VARCHAR},
+      </if>
+      <if test="fxOuterTransactionNo != null" >
+        #{fxOuterTransactionNo,jdbcType=VARCHAR},
+      </if>
+      <if test="fxInnerTransactionNo != null" >
+        #{fxInnerTransactionNo,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateById" parameterType="com.topideal.supplychain.ocp.order.model.OrderYouzanEx" >
+    update doc_order_youzan_ex
+    <set >
+      <if test="orderId != null" >
+        order_id = #{orderId,jdbcType=BIGINT},
+      </if>
+      <if test="isFromCart != null" >
+        is_from_cart = #{isFromCart,jdbcType=VARCHAR},
+      </if>
+      <if test="cashierId != null" >
+        cashier_id = #{cashierId,jdbcType=VARCHAR},
+      </if>
+      <if test="cashierName != null" >
+        cashier_name = #{cashierName,jdbcType=VARCHAR},
+      </if>
+      <if test="invoiceTitle != null" >
+        invoice_title = #{invoiceTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="settleTime != null" >
+        settle_time = #{settleTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isParentOrder != null" >
+        is_parent_order = #{isParentOrder,jdbcType=VARCHAR},
+      </if>
+      <if test="isSubOrder != null" >
+        is_sub_order = #{isSubOrder,jdbcType=VARCHAR},
+      </if>
+      <if test="fxOrderNo != null" >
+        fx_order_no = #{fxOrderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="fxKdtId != null" >
+        fx_kdt_id = #{fxKdtId,jdbcType=VARCHAR},
+      </if>
+      <if test="parentOrderNo != null" >
+        parent_order_no = #{parentOrderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="purchaseOrderNo != null" >
+        purchase_order_no = #{purchaseOrderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="deptId != null" >
+        dept_id = #{deptId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDeviceId != null" >
+        create_device_id = #{createDeviceId,jdbcType=VARCHAR},
+      </if>
+      <if test="isPointsOrder != null" >
+        is_points_order = #{isPointsOrder,jdbcType=VARCHAR},
+      </if>
+      <if test="idCardNumber != null" >
+        id_card_number = #{idCardNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="buyerName != null" >
+        buyer_name = #{buyerName,jdbcType=VARCHAR},
+      </if>
+      <if test="isMember != null" >
+        is_member = #{isMember,jdbcType=VARCHAR},
+      </if>
+      <if test="tmCash != null" >
+        tm_cash = #{tmCash,jdbcType=DECIMAL},
+      </if>
+      <if test="tCash != null" >
+        t_cash = #{tCash,jdbcType=DECIMAL},
+      </if>
+      <if test="cash != null" >
+        cash = #{cash,jdbcType=DECIMAL},
+      </if>
+      <if test="ordersCombineId != null" >
+        orders_combine_id = #{ordersCombineId,jdbcType=VARCHAR},
+      </if>
+      <if test="kdtDimensionCombineId != null" >
+        kdt_dimension_combine_id = #{kdtDimensionCombineId,jdbcType=VARCHAR},
+      </if>
+      <if test="promotionCombineId != null" >
+        promotion_combine_id = #{promotionCombineId,jdbcType=VARCHAR},
+      </if>
+      <if test="idCardName != null" >
+        id_card_name = #{idCardName,jdbcType=VARCHAR},
+      </if>
+      <if test="fxOuterTransactionNo != null" >
+        fx_outer_transaction_no = #{fxOuterTransactionNo,jdbcType=VARCHAR},
+      </if>
+      <if test="fxInnerTransactionNo != null" >
+        fx_inner_transaction_no = #{fxInnerTransactionNo,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+</mapper>

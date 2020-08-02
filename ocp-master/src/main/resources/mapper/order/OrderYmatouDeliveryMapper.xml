@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.topideal.supplychain.ocp.order.mapper.OrderYmatouDeliveryMapper">
+  <resultMap id="BaseResultMap" type="com.topideal.supplychain.ocp.order.model.OrderYmatouDelivery">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="msg_order_id" jdbcType="BIGINT" property="msgOrderId" />
+    <result column="logistics_company_code" jdbcType="VARCHAR" property="logisticsCompanyCode" />
+    <result column="tracking_number" jdbcType="VARCHAR" property="trackingNumber" />
+    <result column="delivery_time" jdbcType="VARCHAR" property="deliveryTime" />
+    <result column="logistics_type" jdbcType="BIGINT" property="logisticsType" />
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    id, msg_order_id, logistics_company_code, tracking_number, delivery_time, logistics_type
+  </sql>
+
+  <select id="selectById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from doc_order_ymatou_delivery
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <update id="update" parameterType="com.topideal.supplychain.ocp.order.model.OrderYmatouDelivery">
+    update doc_order_ymatou_delivery
+    <set>
+      <if test="msgOrderId != null">
+        msg_order_id = #{msgOrderId,jdbcType=BIGINT},
+      </if>
+      <if test="logisticsCompanyCode != null">
+        logistics_company_code = #{logisticsCompanyCode,jdbcType=VARCHAR},
+      </if>
+      <if test="trackingNumber != null">
+        tracking_number = #{trackingNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="deliveryTime != null">
+        delivery_time = #{deliveryTime,jdbcType=VARCHAR},
+      </if>
+      <if test="logisticsType != null">
+        logistics_type = #{logisticsType,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <insert id="insert" parameterType="com.topideal.supplychain.ocp.order.model.OrderYmatouDelivery">
+    insert into doc_order_ymatou_delivery
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="msgOrderId != null">
+        msg_order_id,
+      </if>
+      <if test="logisticsCompanyCode != null">
+        logistics_company_code,
+      </if>
+      <if test="trackingNumber != null">
+        tracking_number,
+      </if>
+      <if test="deliveryTime != null">
+        delivery_time,
+      </if>
+      <if test="logisticsType != null">
+        logistics_type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="msgOrderId != null">
+        #{msgOrderId,jdbcType=BIGINT},
+      </if>
+      <if test="logisticsCompanyCode != null">
+        #{logisticsCompanyCode,jdbcType=VARCHAR},
+      </if>
+      <if test="trackingNumber != null">
+        #{trackingNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="deliveryTime != null">
+        #{deliveryTime,jdbcType=VARCHAR},
+      </if>
+      <if test="logisticsType != null">
+        #{logisticsType,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+
+  <select id="selectByMsgOrderId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from doc_order_ymatou_delivery
+    where msg_order_id = #{msgOrderId,jdbcType=BIGINT}
+  </select>
+
+</mapper>

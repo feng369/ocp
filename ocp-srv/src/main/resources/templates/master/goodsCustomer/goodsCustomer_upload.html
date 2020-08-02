@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="zh-cmn-Hans" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="common/layout::header( ~{::title})">
+  <title id="title">商品业主导入</title>
+</head>
+<body>
+
+<div class="ui container" style="margin-top:10px;width: 90%">
+  <form id="excelForm" th:action="@{/goodsCustomer/import}" class="ui form"
+        enctype='multipart/form-data' method="post"
+        style="margin-top: 10px;">
+    <div class="inline fields">
+      <div class="four wide field">
+            <span style="position: absolute;overflow: hidden;">
+                <input id="realFile" type="file" name="excel" style="width: 250px;height: 24px;">
+            </span>
+        <span style="position: relative;">
+                <input id="fakeFile" type="text" class="easyui-textbox"
+                       style="width: 250px;height: 24px;"/>
+            </span>
+        <span style="position: relative;left: -74px;height: 24px;">
+                    <a class="easyui-linkbutton upload-btn" style="width: 74px;height: 24px;"
+                       onclick="bindRealInput()">选择文件</a>
+                </span>
+      </div>
+    </div>
+  </form>
+</div>
+<script type="text/javascript">
+  // 导入
+  function bindRealInput() {
+    $("#realFile").click()
+  }
+  $("#realFile").bind("change", function () {
+    $('#fakeFile').textbox('setText',this.value);
+  })
+</script>
+
+</body>
+</html>

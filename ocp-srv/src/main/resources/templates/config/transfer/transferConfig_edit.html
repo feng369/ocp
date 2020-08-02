@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="zh-cmn-Hans" xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+
+<head th:replace="common/layout::header( ~{::title})">
+    <title id="title">编辑转单配置</title>
+</head>
+
+<body>
+<div class="ui container" style="margin-top:10px;width: 95%">
+    <form th:action="@{/transferConfig/edit}" id="editForm" name="editForm" class="ui form" method="post">
+        <div class="field" style="margin-left: 20px">
+            <div class="four fields">
+                <div class="required field">
+                    <input name="id" id="id" type="hidden" th:value="${transferConfig.id}">
+                    <input name="electricName" id="electricName" type="hidden" th:value="${transferConfig.electricName}">
+                    <input name="platformName" id="platformName" type="hidden" th:value="${transferConfig.platformName}">
+                    <label>电商企业编码</label>
+                    <span class="selectBox">
+                        <select class="form-select" name="electricCode" id="electricCode"
+                                style="width: 150px;height: 24px;" required>
+                            <option value=""></option>
+                            <option th:each="electricCode : ${merchantList}" th:otherFields="${electricCode.code}"
+                                    th:selected="${transferConfig.electricCode == electricCode.code}"
+                                    th:text="${electricCode.name}" th:value="${electricCode.code}">
+                            </option>
+                        </select>
+                        <i class="x icon clearBtn" title="清空"></i>
+                    </span>
+                </div>
+                <div class="required field">
+                    <label>物流企业编码</label>
+                    <input type="text" id="logisticsCode" name="logisticsCode" class="easyui-validatebox" placeholder=""
+                           required="true" th:value="${transferConfig.logisticsCode}"/>
+                </div>
+                <div class="required field">
+                    <label>电商平台编码</label>
+                    <span class="selectBox">
+                        <select class="form-select" name="platformCode" id="platformCode"
+                                style="width: 150px;height: 24px;" required>
+                            <option value=""></option>
+                            <option th:each="platformCode : ${platformList}" th:otherFields="${platformCode.code}"
+                                    th:selected="${transferConfig.platformCode == platformCode.code}"
+                                    th:text="${platformCode.name}" th:value="${platformCode.code}">
+                            </option>
+                        </select>
+                        <i class="x icon clearBtn" title="清空"></i>
+                    </span>
+                </div>
+<!--                <div class="required field">-->
+<!--                    <label>币值转换比</label>-->
+<!--                    <input type="text" id="currencyCoefficient" name="currencyCoefficient" class="easyui-numberbox"-->
+<!--                           data-options="required:true"-->
+<!--                           placeholder=""-->
+<!--                           required="true" th:value="${transferConfig.currencyCoefficient}"/>-->
+<!--                </div>-->
+                <div class="required field">
+                    <label>申报关区</label>
+                    <span class="selectBox">
+						<select id="customsCode" class="form-select" name="customsCode" data-options="required:true"
+                                style="width: 150px;height: 24px;">
+							<option value=""></option>
+							<option th:each="customsCode : ${T(com.topideal.supplychain.ocp.enums.CustomsCodeEnum).values()}"
+                                    th:selected="${transferConfig.customsCode == customsCode}"
+                                    th:text="${customsCode.desc}" th:value="${customsCode}"></option>
+						</select>
+						<i class="x icon clearBtn" title="清空"></i>
+					</span>
+                </div>
+            </div>
+            <div class="four fields">
+
+                <div class="required field">
+                    <label>业务类型</label>
+                    <span class="selectBox">
+                        <select id="businessMode" class="form-select" name="businessMode"
+                                data-options="required:true"
+                                style="width: 150px;height: 24px;">
+                            <option value=""></option>
+                            <option th:each="businessMode : ${T(com.topideal.supplychain.ocp.enums.BusiModeEnum).values()}"
+                                    th:selected="${transferConfig.businessMode == businessMode}"
+                                    th:text="${businessMode.desc}" th:value="${businessMode}"></option>
+                        </select>
+                        <i class="x icon clearBtn" title="清空"></i>
+                    </span>
+                </div>
+
+                <div class="required field">
+                    <label>转发系统</label>
+                    <span class="selectBox">
+						<select id="forwardSystem" class="form-select" name="forwardSystem" data-options="required:true"
+                                style="width: 150px;height: 24px;">
+							<option value=""></option>
+							<option th:each="forwardSystem : ${T(com.topideal.supplychain.ocp.enums.ForwardSystemEnum).values()}"
+                                    th:selected="${transferConfig.forwardSystem == forwardSystem}"
+                                    th:text="${forwardSystem.desc}" th:value="${forwardSystem}"></option>
+						</select>
+						<i class="x icon clearBtn" title="清空"></i>
+					</span>
+                </div>
+                <div class="field">
+                    <label>店铺编码</label>
+                    <span class="selectBox">
+                        <select class="form-select" name="storeCode" style="width: 150px;height: 24px;">
+                            <option value=""></option>
+                            <option th:each="storeCode : ${storeList}"
+                                    th:selected="${transferConfig.storeCode == storeCode.code}"
+                                    th:text="${storeCode.code}" th:value="${storeCode.code}">
+                            </option>
+                        </select>
+                        <i class="x icon clearBtn" title="清空"></i>
+                    </span>
+                </div>
+                <div class="field">
+                    <label>备注</label>
+                    <input type="text" class="easyui-textbox" id="remark" name="remark"
+                           placeholder="" style="width:150px;height:24px;" th:value="${transferConfig.remark}"/>
+                </div>
+            </div>
+            <div class="four fields">
+                <div class="field">
+                    <label>一单多业主</label>
+                    <div style="width: 150px;height: 24px;" class="inline fields">
+                        <div class="field">
+                        <input class="easyui-radiobutton" name="isMultiple"
+                               th:checked="${transferConfig.isMultiple.value} eq 1"
+                               th:value="${T(com.topideal.supplychain.enumeration.YesOrNoEnum).YES}">
+                            <label>是</label>
+                        </div>
+                        <div class="field">
+                        <input class="easyui-radiobutton" name="isMultiple"
+                               th:checked="${transferConfig.isMultiple.value} eq 0"
+                               th:value="${T(com.topideal.supplychain.enumeration.YesOrNoEnum).NO}">
+                            <label>否</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="field" style="margin-top: 10px">
+                <label>转单配置</label>
+                <div id="reEditor"></div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script th:inline="javascript">
+    $().ready(function () {
+        cntr.initSelect()
+    });
+
+    /**
+     * 组合框联动
+     */
+    $("#electricCode").combobox({
+        onSelect: function (rec) {
+            $("#electricName").val(rec.text);
+        }
+    });
+    $("#platformCode").combobox({
+        onSelect: function (rec) {
+            $("#platformName").val(rec.text);
+        }
+    });
+    var args = [[${transferConfig.configuration}]];
+    $("#reEditor").jsoneditor({
+        inputName: "configuration",
+        json: args,
+        treeId: "editTree",
+        codeId:"editCode",
+        inputId: "editInput"
+    });
+</script>
+</body>
+
+</html>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.topideal.supplychain.ocp.order.mapper.OrderAmwayPaymentLineMapper" >
+  <resultMap id="BaseResultMap" type="com.topideal.supplychain.ocp.order.model.OrderAmwayPaymentLine" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="payment_method" property="paymentMethod" jdbcType="VARCHAR" />
+    <result column="payment_line_amount" property="paymentLineAmount" jdbcType="DECIMAL" />
+    <result column="payment_method_name" property="paymentMethodName" jdbcType="VARCHAR" />
+    <result column="order_number" property="orderNumber" jdbcType="VARCHAR" />
+    <result column="order_id" property="orderId" jdbcType="BIGINT" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="create_by" property="createBy" jdbcType="BIGINT" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="BIGINT" />
+    <result column="is_deleted" property="isDeleted" jdbcType="INTEGER" />
+    <result column="tenant_id" property="tenantId" jdbcType="BIGINT" />
+    <result column="version" property="version" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+     id, payment_method, payment_line_amount, payment_method_name, order_number, order_id,
+    create_time, create_by, update_time, update_by, is_deleted, tenant_id, version
+  </sql>
+
+
+  <select id="selectByOrderId" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from doc_order_amway_payment_line
+    where order_id = #{orderId,jdbcType=BIGINT}
+  </select>
+
+  <insert id="insert" parameterType="com.topideal.supplychain.ocp.order.model.OrderAmwayPaymentLine" >
+    insert into doc_order_amway_payment_line (id, payment_method, payment_line_amount, 
+      payment_method_name, order_number, order_id
+      )
+    values (#{id,jdbcType=BIGINT}, #{paymentMethod,jdbcType=VARCHAR}, #{paymentLineAmount,jdbcType=DECIMAL},
+      #{paymentMethodName,jdbcType=VARCHAR}, #{orderNumber,jdbcType=VARCHAR}, #{orderId,jdbcType=BIGINT}
+      )
+  </insert>
+  <insert id="insertList" >
+    insert into doc_order_amway_payment_line (payment_method, payment_line_amount,
+    payment_method_name, order_number, order_id, create_time, create_by, update_time,
+    update_by, is_deleted, tenant_id,version
+    )
+    values
+    <foreach collection="itemList" item="item" separator=",">
+      (#{item.paymentMethod,jdbcType=VARCHAR}, #{item.paymentLineAmount,jdbcType=DECIMAL},
+      #{item.paymentMethodName,jdbcType=VARCHAR}, #{item.orderNumber,jdbcType=VARCHAR}, #{item.orderId,jdbcType=BIGINT},
+      #{item.createTime,jdbcType=TIMESTAMP},#{item.createBy,jdbcType=BIGINT},#{item.updateTime,jdbcType=TIMESTAMP},
+      #{item.updateBy,jdbcType=BIGINT},#{item.isDeleted,jdbcType=INTEGER},#{item.tenantId,jdbcType=BIGINT},#{item.version,jdbcType=INTEGER}
+      )
+    </foreach>
+  </insert>
+
+</mapper>

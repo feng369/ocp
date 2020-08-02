@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="zh-cmn-Hans" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="common/layout::header( ~{::title})">
+    <title id="title">宝妈时光订单明细</title>
+</head>
+<body>
+<div class="ui fluid container box-form">
+    <div class="contentDetail">
+        <div id="tb" class="easyui-tabs" >
+            <div title="宝妈时光订单明细" class="tableBox">
+                <input th:value="${orderId}" type="hidden" id="id">
+                <table id="itemTable" striped="true">
+                    <thead >
+                    <tr>
+                        <th field="thirdPartyGoodsCode" width="180">商品编码</th>
+                        <th field="goodsName" width="180">商品名称</th>
+                        <th field="quantity" width="80">数量</th>
+                        <th field="duty" width="80">税金</th>
+                        <th field="sellPrice" width="100">销售价</th>
+                        <th field="costPrice" width="100">成本价</th>
+                    </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        var id = $("#id").val();
+        $('#itemTable').datagrid({
+            initCount: 1,//开始就加载
+            url: basePath + '/orderBaoma/detail/json/' + id,
+            method: 'post',
+            rownumbers: true,
+            pagination: false
+        });
+        $(window).resize();
+    })
+
+
+</script>
+</body>
+</html>

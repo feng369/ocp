@@ -1,0 +1,410 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.topideal.supplychain.ocp.order.mapper.OrderKjbItemMapper" >
+  <resultMap id="BaseResultMap" type="com.topideal.supplychain.ocp.order.model.OrderKjbItem" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="order_id" property="orderId" jdbcType="BIGINT" />
+    <result column="trade_no" property="tradeNo" jdbcType="VARCHAR" />
+    <result column="item_no" property="itemNo" jdbcType="VARCHAR" />
+    <result column="goods_code" property="goodsCode" jdbcType="VARCHAR" />
+    <result column="is_presente" property="isPresente" jdbcType="INTEGER" />
+    <result column="goods_name" property="goodsName" jdbcType="VARCHAR" />
+    <result column="category_no" property="categoryNo" jdbcType="VARCHAR" />
+    <result column="hscode" property="hscode" jdbcType="VARCHAR" />
+    <result column="cust_no" property="custNo" jdbcType="VARCHAR" />
+    <result column="ciq_no" property="ciqNo" jdbcType="VARCHAR" />
+    <result column="qty" property="qty" jdbcType="INTEGER" />
+    <result column="price" property="price" jdbcType="DECIMAL" />
+    <result column="price_currency" property="priceCurrency" jdbcType="VARCHAR" />
+    <result column="qty1" property="qty1" jdbcType="DECIMAL" />
+    <result column="unit1" property="unit1" jdbcType="VARCHAR" />
+    <result column="qty2" property="qty2" jdbcType="DECIMAL" />
+    <result column="unit2" property="unit2" jdbcType="VARCHAR" />
+    <result column="brand" property="brand" jdbcType="VARCHAR" />
+    <result column="spec" property="spec" jdbcType="VARCHAR" />
+    <result column="unit" property="unit" jdbcType="VARCHAR" />
+    <result column="gross_weight" property="grossWeight" jdbcType="DECIMAL" />
+    <result column="net_weight" property="netWeight" jdbcType="DECIMAL" />
+    <result column="tax" property="tax" jdbcType="VARCHAR" />
+    <result column="origin_country" property="originCountry" jdbcType="VARCHAR" />
+    <result column="ciq_origin_area" property="ciqOriginArea" jdbcType="VARCHAR" />
+    <result column="bar_code" property="barCode" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="create_by" property="createBy" jdbcType="BIGINT" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="BIGINT" />
+    <result column="version" property="version" jdbcType="INTEGER" />
+    <result column="is_deleted" property="isDeleted" jdbcType="INTEGER" />
+    <result column="tenant_id" property="tenantId" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, order_id, trade_no, item_no, goods_code, is_presente, goods_name, category_no,
+    hscode, cust_no, ciq_no, qty, price, price_currency, qty1, unit1, qty2, unit2, brand,
+    spec, unit, gross_weight, net_weight, tax, origin_country, ciq_origin_area, bar_code,
+    create_time, create_by, update_time, update_by, version, is_deleted, tenant_id
+  </sql>
+  <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from doc_order_kjb_item
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteById" parameterType="java.lang.Long" >
+    delete from doc_order_kjb_item
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.topideal.supplychain.ocp.order.model.OrderKjbItem" >
+    insert into doc_order_kjb_item
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="orderId != null" >
+        order_id,
+      </if>
+      <if test="tradeNo != null" >
+        trade_no,
+      </if>
+      <if test="itemNo != null" >
+        item_no,
+      </if>
+      <if test="goodsCode != null" >
+        goods_code,
+      </if>
+      <if test="isPresente != null" >
+        is_presente,
+      </if>
+      <if test="goodsName != null" >
+        goods_name,
+      </if>
+      <if test="categoryNo != null" >
+        category_no,
+      </if>
+      <if test="hscode != null" >
+        hscode,
+      </if>
+      <if test="custNo != null" >
+        cust_no,
+      </if>
+      <if test="ciqNo != null" >
+        ciq_no,
+      </if>
+      <if test="qty != null" >
+        qty,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="priceCurrency != null" >
+        price_currency,
+      </if>
+      <if test="qty1 != null" >
+        qty1,
+      </if>
+      <if test="unit1 != null" >
+        unit1,
+      </if>
+      <if test="qty2 != null" >
+        qty2,
+      </if>
+      <if test="unit2 != null" >
+        unit2,
+      </if>
+      <if test="brand != null" >
+        brand,
+      </if>
+      <if test="spec != null" >
+        spec,
+      </if>
+      <if test="unit != null" >
+        unit,
+      </if>
+      <if test="grossWeight != null" >
+        gross_weight,
+      </if>
+      <if test="netWeight != null" >
+        net_weight,
+      </if>
+      <if test="tax != null" >
+        tax,
+      </if>
+      <if test="originCountry != null" >
+        origin_country,
+      </if>
+      <if test="ciqOriginArea != null" >
+        ciq_origin_area,
+      </if>
+      <if test="barCode != null" >
+        bar_code,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="version != null" >
+        version,
+      </if>
+      <if test="isDeleted != null" >
+        is_deleted,
+      </if>
+      <if test="tenantId != null" >
+        tenant_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="orderId != null" >
+        #{orderId,jdbcType=BIGINT},
+      </if>
+      <if test="tradeNo != null" >
+        #{tradeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="itemNo != null" >
+        #{itemNo,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsCode != null" >
+        #{goodsCode,jdbcType=VARCHAR},
+      </if>
+      <if test="isPresente != null" >
+        #{isPresente,jdbcType=INTEGER},
+      </if>
+      <if test="goodsName != null" >
+        #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryNo != null" >
+        #{categoryNo,jdbcType=VARCHAR},
+      </if>
+      <if test="hscode != null" >
+        #{hscode,jdbcType=VARCHAR},
+      </if>
+      <if test="custNo != null" >
+        #{custNo,jdbcType=VARCHAR},
+      </if>
+      <if test="ciqNo != null" >
+        #{ciqNo,jdbcType=VARCHAR},
+      </if>
+      <if test="qty != null" >
+        #{qty,jdbcType=INTEGER},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="priceCurrency != null" >
+        #{priceCurrency,jdbcType=VARCHAR},
+      </if>
+      <if test="qty1 != null" >
+        #{qty1,jdbcType=DECIMAL},
+      </if>
+      <if test="unit1 != null" >
+        #{unit1,jdbcType=VARCHAR},
+      </if>
+      <if test="qty2 != null" >
+        #{qty2,jdbcType=DECIMAL},
+      </if>
+      <if test="unit2 != null" >
+        #{unit2,jdbcType=VARCHAR},
+      </if>
+      <if test="brand != null" >
+        #{brand,jdbcType=VARCHAR},
+      </if>
+      <if test="spec != null" >
+        #{spec,jdbcType=VARCHAR},
+      </if>
+      <if test="unit != null" >
+        #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="grossWeight != null" >
+        #{grossWeight,jdbcType=DECIMAL},
+      </if>
+      <if test="netWeight != null" >
+        #{netWeight,jdbcType=DECIMAL},
+      </if>
+      <if test="tax != null" >
+        #{tax,jdbcType=VARCHAR},
+      </if>
+      <if test="originCountry != null" >
+        #{originCountry,jdbcType=VARCHAR},
+      </if>
+      <if test="ciqOriginArea != null" >
+        #{ciqOriginArea,jdbcType=VARCHAR},
+      </if>
+      <if test="barCode != null" >
+        #{barCode,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=BIGINT},
+      </if>
+      <if test="version != null" >
+        #{version,jdbcType=INTEGER},
+      </if>
+      <if test="isDeleted != null" >
+        #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="tenantId != null" >
+        #{tenantId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="update" parameterType="com.topideal.supplychain.ocp.order.model.OrderKjbItem" >
+    update doc_order_kjb_item
+    <set >
+      <if test="orderId != null" >
+        order_id = #{orderId,jdbcType=BIGINT},
+      </if>
+      <if test="tradeNo != null" >
+        trade_no = #{tradeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="itemNo != null" >
+        item_no = #{itemNo,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsCode != null" >
+        goods_code = #{goodsCode,jdbcType=VARCHAR},
+      </if>
+      <if test="isPresente != null" >
+        is_presente = #{isPresente,jdbcType=INTEGER},
+      </if>
+      <if test="goodsName != null" >
+        goods_name = #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryNo != null" >
+        category_no = #{categoryNo,jdbcType=VARCHAR},
+      </if>
+      <if test="hscode != null" >
+        hscode = #{hscode,jdbcType=VARCHAR},
+      </if>
+      <if test="custNo != null" >
+        cust_no = #{custNo,jdbcType=VARCHAR},
+      </if>
+      <if test="ciqNo != null" >
+        ciq_no = #{ciqNo,jdbcType=VARCHAR},
+      </if>
+      <if test="qty != null" >
+        qty = #{qty,jdbcType=INTEGER},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="priceCurrency != null" >
+        price_currency = #{priceCurrency,jdbcType=VARCHAR},
+      </if>
+      <if test="qty1 != null" >
+        qty1 = #{qty1,jdbcType=DECIMAL},
+      </if>
+      <if test="unit1 != null" >
+        unit1 = #{unit1,jdbcType=VARCHAR},
+      </if>
+      <if test="qty2 != null" >
+        qty2 = #{qty2,jdbcType=DECIMAL},
+      </if>
+      <if test="unit2 != null" >
+        unit2 = #{unit2,jdbcType=VARCHAR},
+      </if>
+      <if test="brand != null" >
+        brand = #{brand,jdbcType=VARCHAR},
+      </if>
+      <if test="spec != null" >
+        spec = #{spec,jdbcType=VARCHAR},
+      </if>
+      <if test="unit != null" >
+        unit = #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="grossWeight != null" >
+        gross_weight = #{grossWeight,jdbcType=DECIMAL},
+      </if>
+      <if test="netWeight != null" >
+        net_weight = #{netWeight,jdbcType=DECIMAL},
+      </if>
+      <if test="tax != null" >
+        tax = #{tax,jdbcType=VARCHAR},
+      </if>
+      <if test="originCountry != null" >
+        origin_country = #{originCountry,jdbcType=VARCHAR},
+      </if>
+      <if test="ciqOriginArea != null" >
+        ciq_origin_area = #{ciqOriginArea,jdbcType=VARCHAR},
+      </if>
+      <if test="barCode != null" >
+        bar_code = #{barCode,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=BIGINT},
+      </if>
+      <if test="version != null" >
+        version = #{version,jdbcType=INTEGER},
+      </if>
+      <if test="isDeleted != null" >
+        is_deleted = #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="tenantId != null" >
+        tenant_id = #{tenantId,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="selectByOrderId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from doc_order_kjb_item
+    where order_id = #{orderId,jdbcType=BIGINT}
+  </select>
+
+
+  <insert id="batchInsert" parameterType="com.topideal.supplychain.ocp.order.model.OrderKjbItem" >
+    insert into doc_order_kjb_item (order_id, trade_no,
+      item_no, goods_code, is_presente,
+      goods_name, category_no, hscode,
+      cust_no, ciq_no, qty,
+      price, price_currency, qty1,
+      unit1, qty2, unit2,
+      brand, spec, unit,
+      gross_weight, net_weight, tax,
+      origin_country, ciq_origin_area, bar_code,
+      create_time, create_by, update_time,
+      update_by, version, is_deleted,
+      tenant_id)
+    values
+    <foreach collection="list" item="item" separator=",">
+    (#{item.orderId,jdbcType=BIGINT}, #{item.tradeNo,jdbcType=VARCHAR},
+      #{item.itemNo,jdbcType=VARCHAR}, #{item.goodsCode,jdbcType=VARCHAR}, #{item.isPresente,jdbcType=INTEGER},
+      #{item.goodsName,jdbcType=VARCHAR}, #{item.categoryNo,jdbcType=VARCHAR}, #{item.hscode,jdbcType=VARCHAR},
+      #{item.custNo,jdbcType=VARCHAR}, #{item.ciqNo,jdbcType=VARCHAR}, #{item.qty,jdbcType=INTEGER},
+      #{item.price,jdbcType=DECIMAL}, #{item.priceCurrency,jdbcType=VARCHAR}, #{item.qty1,jdbcType=DECIMAL},
+      #{item.unit1,jdbcType=VARCHAR}, #{item.qty2,jdbcType=DECIMAL}, #{item.unit2,jdbcType=VARCHAR},
+      #{item.brand,jdbcType=VARCHAR}, #{item.spec,jdbcType=VARCHAR}, #{item.unit,jdbcType=VARCHAR},
+      #{item.grossWeight,jdbcType=DECIMAL}, #{item.netWeight,jdbcType=DECIMAL}, #{item.tax,jdbcType=VARCHAR},
+      #{item.originCountry,jdbcType=VARCHAR}, #{item.ciqOriginArea,jdbcType=VARCHAR}, #{item.barCode,jdbcType=VARCHAR},
+      #{item.createTime,jdbcType=TIMESTAMP}, #{item.createBy,jdbcType=BIGINT}, #{item.updateTime,jdbcType=TIMESTAMP},
+      #{item.updateBy,jdbcType=BIGINT}, #{item.version,jdbcType=INTEGER}, #{item.isDeleted,jdbcType=INTEGER},
+      #{item.tenantId,jdbcType=BIGINT})
+    </foreach>
+  </insert>
+</mapper>

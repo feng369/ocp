@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.topideal.supplychain.ocp.master.mapper.GoodsCustomerMapper">
+  <resultMap id="BaseResultMap" type="com.topideal.supplychain.ocp.master.model.GoodsCustomerConfig">
+    <id column="id" property="id" jdbcType="BIGINT"/>
+    <result column="enterprise_code" property="enterpriseCode" jdbcType="VARCHAR"/>
+    <result column="enterprise_name" property="enterpriseName" jdbcType="VARCHAR"/>
+    <result column="goods_code" property="goodsCode" jdbcType="VARCHAR"/>
+    <result column="goods_name" property="goodsName" jdbcType="VARCHAR"/>
+    <result column="customer_code" property="customerCode" jdbcType="VARCHAR"/>
+    <result column="busi_mode" property="busiMode" jdbcType="VARCHAR"/>
+    <result column="create_by" property="createBy" jdbcType="BIGINT"/>
+    <result column="update_by" property="updateBy" jdbcType="BIGINT"/>
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+    <result column="version" property="version" jdbcType="INTEGER"/>
+    <result column="tenant_id" property="tenantId" jdbcType="BIGINT"/>
+    <result column="is_deleted" property="isDeleted" jdbcType="BIT"/>
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, enterprise_code, enterprise_name, goods_code, goods_name, customer_code, busi_mode,
+    create_by, update_by, create_time, update_time, version, tenant_id, is_deleted
+  </sql>
+  <sql id="queryCondition">
+    <where>
+      <if test="enterpriseCode != null and enterpriseCode != ''">
+        and enterprise_code = #{enterpriseCode,jdbcType=VARCHAR}
+      </if>
+      <if test="goodsCode != null and goodsCode != '' ">
+        and goods_code = #{goodsCode,jdbcType=VARCHAR}
+      </if>
+      <if test="customerCode != null ">
+        and customer_code = #{customerCode,jdbcType=VARCHAR}
+      </if>
+      <if test="busiMode != null ">
+        and busi_mode = #{busiMode,jdbcType=VARCHAR}
+      </if>
+      and is_deleted = 0
+      ORDER BY create_time DESC
+    </where>
+  </sql>
+
+  <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Long">
+    select
+    <include refid="Base_Column_List"/>
+    from md_goods_customer
+    where id = #{id,jdbcType=BIGINT}
+    and is_deleted = 0
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from md_goods_customer
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+  <insert id="insert" parameterType="com.topideal.supplychain.ocp.master.model.GoodsCustomerConfig">
+    insert into md_goods_customer
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="enterpriseCode != null">
+        enterprise_code,
+      </if>
+      <if test="enterpriseName != null">
+        enterprise_name,
+      </if>
+      <if test="goodsCode != null">
+        goods_code,
+      </if>
+      <if test="goodsName != null">
+        goods_name,
+      </if>
+      <if test="customerCode != null">
+        customer_code,
+      </if>
+      <if test="busiMode != null">
+        busi_mode,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="updateBy != null">
+        update_by,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="version != null">
+        version,
+      </if>
+      <if test="tenantId != null">
+        tenant_id,
+      </if>
+      <if test="isDeleted != null">
+        is_deleted,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="enterpriseCode != null">
+        #{enterpriseCode,jdbcType=VARCHAR},
+      </if>
+      <if test="enterpriseName != null">
+        #{enterpriseName,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsCode != null">
+        #{goodsCode,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsName != null">
+        #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="customerCode != null">
+        #{customerCode,jdbcType=VARCHAR},
+      </if>
+      <if test="busiMode != null">
+        #{busiMode,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=BIGINT},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="version != null">
+        #{version,jdbcType=INTEGER},
+      </if>
+      <if test="tenantId != null">
+        #{tenantId,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null">
+        #{isDeleted,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+
+  <update id="update" parameterType="com.topideal.supplychain.ocp.master.model.GoodsCustomerConfig">
+    update md_goods_customer
+    <set>
+      <if test="enterpriseCode != null">
+        enterprise_code = #{enterpriseCode,jdbcType=VARCHAR},
+      </if>
+      <if test="enterpriseName != null">
+        enterprise_name = #{enterpriseName,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsCode != null">
+        goods_code = #{goodsCode,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsName != null">
+        goods_name = #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="customerCode != null">
+        customer_code = #{customerCode,jdbcType=VARCHAR},
+      </if>
+      <if test="busiMode != null">
+        busi_mode = #{busiMode,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=BIGINT},
+      </if>
+      <if test="updateBy != null">
+        update_by = #{updateBy,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="version != null">
+        version = #{version,jdbcType=INTEGER},
+      </if>
+      <if test="tenantId != null">
+        tenant_id = #{tenantId,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null">
+        is_deleted = #{isDeleted,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="pageList" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from md_goods_customer
+    <include refid="queryCondition"/>
+  </select>
+
+  <update id="batchRemove">
+    update md_goods_customer set
+    update_by = #{userId,jdbcType=BIGINT},
+    update_time = #{nowTime,jdbcType=TIMESTAMP},
+    is_deleted = 1
+    WHERE id IN
+    <foreach collection="idList" item="item" open="(" close=")" separator=",">
+      #{item}
+    </foreach>
+  </update>
+
+  <select id="selectByFilter" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from md_goods_customer
+    <where>
+      <if test="enterpriseCode != null and enterpriseCode != ''">
+        and enterprise_code = #{enterpriseCode,jdbcType=VARCHAR}
+      </if>
+      <if test="goodsCode != null and goodsCode != '' ">
+        and goods_code = #{goodsCode,jdbcType=VARCHAR}
+      </if>
+      <if test="goodsName != null and goodsName != '' ">
+        and goods_name = #{goodsName,jdbcType=VARCHAR}
+      </if>
+      <if test="customerCode != null ">
+        and customer_code = #{customerCode,jdbcType=VARCHAR}
+      </if>
+      <if test="busiMode != null ">
+        and busi_mode = #{busiMode,jdbcType=VARCHAR}
+      </if>
+      and is_deleted = 0
+    </where>
+  </select>
+
+  <insert id="batchInsert" parameterType="com.topideal.supplychain.ocp.master.model.GoodsCustomerConfig">
+      insert into md_goods_customer
+    (enterprise_code, enterprise_name, goods_code, goods_name, customer_code, busi_mode,
+      create_by, update_by, create_time, update_time)
+      values
+     <foreach collection="datas" item="item" separator=",">
+       (#{item.enterpriseCode,jdbcType=VARCHAR}, #{item.enterpriseName,jdbcType=VARCHAR},
+       #{item.goodsCode,jdbcType=VARCHAR}, #{item.goodsName,jdbcType=VARCHAR}, #{item.customerCode,jdbcType=VARCHAR},
+       #{item.busiMode,jdbcType=VARCHAR}, #{userId}, #{userId}, #{nowTime}, #{nowTime})
+     </foreach>
+  </insert>
+</mapper>

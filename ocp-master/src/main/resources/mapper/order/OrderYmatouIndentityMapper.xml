@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.topideal.supplychain.ocp.order.mapper.OrderYmatouIndentityMapper">
+  <resultMap id="BaseResultMap" type="com.topideal.supplychain.ocp.order.model.OrderYmatouIndentity">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="msg_order_id" jdbcType="BIGINT" property="msgOrderId" />
+    <result column="receiver_id_type" jdbcType="BIGINT" property="receiverIdType" />
+    <result column="receiver_id_no" jdbcType="VARCHAR" property="receiverIdNo" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, msg_order_id, receiver_id_type, receiver_id_no
+  </sql>
+  <select id="selectById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from doc_order_ymatou_indentity
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+
+  <insert id="insert" parameterType="com.topideal.supplychain.ocp.order.model.OrderYmatouIndentity">
+    insert into doc_order_ymatou_indentity
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="msgOrderId != null">
+        msg_order_id,
+      </if>
+      <if test="receiverIdType != null">
+        receiver_id_type,
+      </if>
+      <if test="receiverIdNo != null">
+        receiver_id_no,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="msgOrderId != null">
+        #{msgOrderId,jdbcType=BIGINT},
+      </if>
+      <if test="receiverIdType != null">
+        #{receiverIdType,jdbcType=BIGINT},
+      </if>
+      <if test="receiverIdNo != null">
+        #{receiverIdNo,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="update" parameterType="com.topideal.supplychain.ocp.order.model.OrderYmatouIndentity">
+    update doc_order_ymatou_indentity
+    <set>
+      <if test="msgOrderId != null">
+        msg_order_id = #{msgOrderId,jdbcType=BIGINT},
+      </if>
+      <if test="receiverIdType != null">
+        receiver_id_type = #{receiverIdType,jdbcType=BIGINT},
+      </if>
+      <if test="receiverIdNo != null">
+        receiver_id_no = #{receiverIdNo,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="selectByMsgOrderId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from doc_order_ymatou_indentity
+    where msg_order_id = #{msgOrderId,jdbcType=BIGINT}
+  </select>
+</mapper>

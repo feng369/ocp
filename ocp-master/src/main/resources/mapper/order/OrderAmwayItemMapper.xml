@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.topideal.supplychain.ocp.order.mapper.OrderAmwayItemMapper" >
+  <resultMap id="BaseResultMap" type="com.topideal.supplychain.ocp.order.model.OrderAmwayItem" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="item_sku" property="itemSku" jdbcType="VARCHAR" />
+    <result column="unit_dp" property="unitDp" jdbcType="DECIMAL" />
+    <result column="ordering_item_name" property="orderingItemName" jdbcType="VARCHAR" />
+    <result column="ordering_item_number" property="orderingItemNumber" jdbcType="VARCHAR" />
+    <result column="is_return" property="isReturn" jdbcType="VARCHAR" />
+    <result column="order_qty" property="orderQty" jdbcType="DECIMAL" />
+    <result column="rsvst1" property="rsvst1" jdbcType="VARCHAR" />
+    <result column="rsvst2" property="rsvst2" jdbcType="VARCHAR" />
+    <result column="rsvst3" property="rsvst3" jdbcType="VARCHAR" />
+    <result column="rsvdc1" property="rsvdc1" jdbcType="VARCHAR" />
+    <result column="rsvdc2" property="rsvdc2" jdbcType="VARCHAR" />
+    <result column="rsvdc3" property="rsvdc3" jdbcType="VARCHAR" />
+    <result column="master_ordering_item_number" property="masterOrderingItemNumber" jdbcType="VARCHAR" />
+    <result column="master_order_qty" property="masterOrderQty" jdbcType="DECIMAL" />
+    <result column="master_ordering_item_name" property="masterOrderingItemName" jdbcType="VARCHAR" />
+    <result column="master_ordering_price" property="masterOrderingPrice" jdbcType="DECIMAL" />
+    <result column="mix_logistics_code" property="mixLogisticsCode" jdbcType="VARCHAR" />
+    <result column="mix_logistics_name" property="mixLogisticsName" jdbcType="VARCHAR" />
+    <result column="order_number" property="orderNumber" jdbcType="VARCHAR" />
+    <result column="order_id" property="orderId" jdbcType="BIGINT" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="create_by" property="createBy" jdbcType="BIGINT" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="BIGINT" />
+    <result column="is_deleted" property="isDeleted" jdbcType="INTEGER" />
+    <result column="tenant_id" property="tenantId" jdbcType="BIGINT" />
+    <result column="version" property="version" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, item_sku, unit_dp, ordering_item_name, ordering_item_number, is_return, order_qty, 
+    rsvst1, rsvst2, rsvst3, rsvdc1, rsvdc2, rsvdc3, master_ordering_item_number, master_order_qty, 
+    master_ordering_item_name, master_ordering_price, mix_logistics_code, mix_logistics_name, 
+    order_number, order_id,create_time, create_by, update_time, update_by, is_deleted,
+    tenant_id, version
+  </sql>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from doc_order_amway_item
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+  <insert id="insertList">
+    INSERT INTO doc_order_amway_item (item_sku, unit_dp,
+    ordering_item_name, ordering_item_number, is_return,
+    order_qty, rsvst1, rsvst2,
+    rsvst3, rsvdc1, rsvdc2,
+    rsvdc3, master_ordering_item_number, master_order_qty,
+    master_ordering_item_name, master_ordering_price,
+    mix_logistics_code, mix_logistics_name, order_number,
+    order_id,create_time, create_by,
+    update_time, update_by, is_deleted,
+    tenant_id, version)VALUES
+    <foreach collection="itemList" item="item" separator=",">
+      (#{item.itemSku,jdbcType=VARCHAR}, #{item.unitDp,jdbcType=DECIMAL},
+      #{item.orderingItemName,jdbcType=VARCHAR}, #{item.orderingItemNumber,jdbcType=VARCHAR}, #{item.isReturn,jdbcType=VARCHAR},
+      #{item.orderQty,jdbcType=VARCHAR}, #{item.rsvst1,jdbcType=VARCHAR}, #{item.rsvst2,jdbcType=VARCHAR},
+      #{item.rsvst3,jdbcType=VARCHAR}, #{item.rsvdc1,jdbcType=VARCHAR}, #{item.rsvdc2,jdbcType=VARCHAR},
+      #{item.rsvdc3,jdbcType=VARCHAR}, #{item.masterOrderingItemNumber,jdbcType=VARCHAR}, #{item.masterOrderQty,jdbcType=VARCHAR},
+      #{item.masterOrderingItemName,jdbcType=VARCHAR}, #{item.masterOrderingPrice,jdbcType=DECIMAL},
+      #{item.mixLogisticsCode,jdbcType=VARCHAR}, #{item.mixLogisticsName,jdbcType=VARCHAR}, #{item.orderNumber,jdbcType=VARCHAR},
+      #{item.orderId,jdbcType=BIGINT},#{item.createTime,jdbcType=TIMESTAMP}, #{item.createBy,jdbcType=BIGINT},
+      #{item.updateTime,jdbcType=TIMESTAMP}, #{item.updateBy,jdbcType=BIGINT}, #{item.isDeleted,jdbcType=INTEGER},
+      #{item.tenantId,jdbcType=BIGINT}, #{item.version,jdbcType=INTEGER}
+      )
+    </foreach>
+  </insert>
+  <select id="selectByOrderId" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from doc_order_amway_item
+    where order_id = #{orderId,jdbcType=BIGINT}
+  </select>
+
+</mapper>

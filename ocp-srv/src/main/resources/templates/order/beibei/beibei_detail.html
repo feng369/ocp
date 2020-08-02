@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="zh-cmn-Hans" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="common/layout::header( ~{::title})">
+    <title id="title">贝贝订单明细</title>
+</head>
+<body>
+<div class="ui fluid container box-form">
+    <div class="contentDetail">
+        <div id="tb" class="easyui-tabs" >
+            <div title="贝贝订单明细" class="tableBox">
+                <input th:value="${orderId}" type="hidden" id="id">
+                <table id="itemTable" striped="true">
+                    <thead >
+                    <tr>
+                        <th field="gnum" width="180">序号</th>
+                        <th field="outerId" width="180">商品货号</th>
+                        <th field="num" width="80">数量</th>
+                        <th field="price" width="100">商品单价</th>
+                        <th field="totalPrice" width="100" formatter="formatNum">商品总价</th>
+                    </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        var id = $("#id").val();
+        $('#itemTable').datagrid({
+            initCount: 1,//开始就加载
+            url: basePath + '/orderBeibei/detail/json/' + id,
+            method: 'post',
+            rownumbers: true,
+            pagination: false
+        });
+        $(window).resize();
+    })
+
+    function formatNum(value, row, index) {
+        if (row && row.num && row.price) {
+            return row.price*row.num;
+        }
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="zh-cmn-Hans" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="common/layout::header( ~{::title})">
+    <title id="title">电商平台管理</title>
+</head>
+<body>
+
+<div class="ui container" style="margin-top:10px;width: 95%">
+    <form th:action="@{/platform/add}" id="addForm" name="addForm" class="ui form" method="post">
+        <div class="field">
+            <div class="four fields">
+                <div class="required field">
+                    <label>平台编码</label>
+                    <input type="text" id="code" name="code" class="easyui-validatebox" placeholder="" required="true"/>
+                </div>
+                <div class="required field">
+                    <label>平台名称</label>
+                    <input type="text" id="name" name="name" class="easyui-validatebox" placeholder="" required="true"/>
+                </div>
+                <div class="required field">
+                    <label>平台简称</label>
+                    <input type="text" id="shortName" name="shortName" placeholder="" class="easyui-validatebox" required="true"/>
+                </div>
+                <div class="required field">
+                    <label>虚拟编码</label>
+                    <span class="selectBox">
+                        <select name="virtualCode"  class="easyui-combobox"  style="width: 150px;height: 24px;" required="true">
+                          <option value=""></option>
+                          <option
+                              th:each="item : ${T(com.topideal.supplychain.ocp.enums.PlatformEnum).values()}"
+                              th:text="${item.name}" th:value="${item.code}" th:otherFields="${item.code}"></option>
+                        </select>
+                        <i class="x icon clearBtn" th:title="#{button.clear}"></i>
+                    </span>
+                </div>
+            </div>
+            <div class="field">
+                <label>平台参数：</label>
+                <div id="arguments"></div>
+            </div>
+        </div>
+    </form>
+</div>
+<script th:inline="javascript">
+    $("#arguments").jsoneditor({
+        inputName: "arguments"
+    });
+</script>
+</body>
+
+</html>

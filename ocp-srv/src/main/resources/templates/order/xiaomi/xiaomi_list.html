@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="zh-cmn-Hans" xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+
+<head th:replace="common/layout::header( ~{::title})">
+    <title id="title">小米订单管理</title>
+</head>
+<body>
+<div class="contentBox">
+    <div class="ui fluid container box-form">
+        <form class="ui form" id="searchForm">
+            <div class="searchBox">
+                <ul>
+                    <li>
+                        <div class="smallBox">
+                            <label>小米订单号</label>
+                            <input name="orderId" style="width: 150px;height: 24px;">
+                        </div>
+                    </li>
+                    <li>
+                        <div class="smallBox">
+                            <label>店铺编码</label>
+                            <input name="storeCode" style="width: 150px;height: 24px;">
+                        </div>
+                    </li>
+                    <li>
+                        <div class="smallBox">
+                            <label>内部订单号</label>
+                            <input name="code" style="width: 150px;height: 24px;">
+                        </div>
+                    </li>
+                    <li>
+                        <div class="smallBox">
+                            <label>下发状态</label>
+                            <span class="selectBox">
+                                <select id="sendStatus" class="form-select" name="sendStatus"
+                                        style="width: 150px;height: 24px;">
+                                    <option value=""></option>
+                                    <option th:each="orderStatus : ${T(com.topideal.supplychain.ocp.enums.OrderStatusEnum).values()}"
+                                            th:text="${orderStatus.desc}" th:value="${orderStatus}"  th:otherFields="${orderStatus.value}"></option>
+                                </select>
+                                <i class="x icon clearBtn" title="清空"></i>
+                            </span>
+                        </div>
+                    </li>
+
+                    <li>
+                        <div class="smallBox">
+                            <label>电商企业</label>
+                            <span class="selectBox">
+                           <select id="ebcCode" class="form-select" name="ebcCode"
+                                   style="width: 150px;height: 24px;">
+                                <option value=""></option>
+                                <option th:each="merchant : ${merchantList}" th:text="${merchant.name}"
+                                        th:value="${merchant.code}" th:otherFields="${merchant.code}">
+                                </option>
+                            </select>
+                            <i class="x icon clearBtn" title="清空"></i>
+                        </span>
+                        </div>
+                    </li>
+
+                    <li>
+                        <div class="smallBox">
+                            <label>创建时间：</label>
+                            <input type="text" id="startDate" name="startDate"
+                                   class="easyui-text easyui-validatebox"
+                                   onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd HH:mm:ss', maxDate:'#F{$dp.$D(\'endDate\');}'})"
+                                   style="width: 150px;height: 24px;"/>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="smallBox">
+                            <label>至：</label>
+                            <input type="text" id="endDate" name="endDate"
+                                   class="easyui-text"
+                                   onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd HH:mm:ss', minDate:'#F{$dp.$D(\'startDate\');}'})"
+                                   style="width: 150px;height: 24px;"/>
+                        </div>
+                    </li>
+
+                </ul>
+            </div>
+            <div class="field" style="margin-top: 10px;text-align: center;">
+                <a href="#" shiro:hasPermission="order.xiaomi.query" class="ui mini primary button form-search"><i class="search icon"></i>查询</a>
+                <a href="#" class="ui mini grey button form-reset"><i class="undo icon"></i>重置</a>
+                <a href="#" id="show_i" onclick="hide()" style="float :right"><i class="angle down icon"></i>显示条件</a>
+            </div>
+        </form>
+
+    </div>
+    <div class="tableBox">
+        <table id="tt" toolbar="#tb" style="height: 100%;" striped="true">
+            <thead>
+            <tr>
+                <th field="ck" checkbox="true"></th>
+                <th field="code"  width="150px" formatter="formatCode">内部订单号</th>
+                <th field="orderId"  width="150px">小米订单号</th>
+                <th field="sendSystem" width="80px">下发系统</th>
+                <th field="sendStatus"  width="80px">状态</th>
+                <th field="storeCode"  width="80px">店铺编码</th>
+                <th field="ebcName"  width="80px">电商企业</th>
+                <th field="provinceName" width="80px">收货人省</th>
+                <th field="cityName" width="80px">收货人市</th>
+                <th field="districtName" width="80px">收货人区</th>
+                <th field="tel" width="120px">收货人电话</th>
+                <th field="address" width="150px">收货详细地址</th>
+                <th field="consignee" width="100px">收货人</th>
+                <th field="zipcode" width="100px">邮编</th>
+                <th field="cardName" width="100px">订购人</th>
+                <th field="importationType" width="100px">支付类型</th>
+                <th field="couponAmount" width="100px">优惠金额</th>
+                <th field="shipFee" width="80px">运费</th>
+                <th field="totalPrice" width="100px">订单总价</th>
+                <th field="ctime" width="150px">订单创建时间</th>
+                <th field="ftime" width="150px">订单支付时间</th>
+                <th field="createTime" width="150px">系统创建时间</th>
+            </tr>
+            </thead>
+        </table>
+    </div>
+    <div id="tb" style="display:none;">
+        <a shiro:hasPermission="order.xiaomi.grab" class="easyui-linkbutton" plain="true"
+           onclick="toGrabOneOrder()"><i class="blue cart arrow down icon"></i>单票抓取订单</a>
+        <a shiro:hasPermission="order.xiaomi.repush" class="easyui-linkbutton" plain="true"
+           onclick="rePushOrder()"><i class="red reply icon"></i>重推订单</a>
+    </div>
+</div>
+<div id="grabDiv"></div>
+<div id="pushDiv"></div>
+<div id="detailDiv"></div>
+</body>
+</html>
+<script type="text/javascript">
+    $(function () {
+        $('#tt').datagrid({
+            formId: "#searchForm",
+            url: basePath + '/orderXiaomi/json',
+            method: 'post',
+            pagination: true,
+            rownumbers: true
+        });
+    });
+
+
+    function formatCode(value, row, index) {
+        if (row && row.code) {
+            var htmlStr = "<a class='hrefCss blue_link' id='showDetail' title='点击查看详情'  href='javascript:void(0)' "
+                + "onclick=showDetail('" + row.id + "')>"
+                + value + "</a>";
+            htmlStr = htmlStr + "</br>";
+            return htmlStr;
+        }
+    }
+
+    /**
+     * 打开商品详细
+     */
+    function showDetail(id) {
+        $('#detailDiv').dialog({
+            title: '【小米】订单明细',
+            width: 800,
+            height: 600,
+            closed: false,
+            cache: false,
+            method: 'post',
+            href: basePath + '/orderXiaomi/showDetail/' + id,
+            modal: true
+        });
+    }
+
+
+    /**
+     * 重推订单
+     */
+    function rePushOrder() {
+        var selectDatas = $('#tt').datagrid('getChecked');
+        if (selectDatas.length == 0) {
+            tips.alert("至少选择一行数据！");
+            return;
+        }
+        var ids = _.map(selectDatas, 'id');//map操作，获取所有元素的id集合
+        tips.confirm("确认重新推送所选订单吗？", function () {
+            $.ajax({
+                type: "POST",
+                url: basePath + "/orderXiaomi/rePush",
+                data: {ids: ids},
+                success: function (data) {
+                    tips.alert(data.message);
+                    if (data.flag == "SUCCESS") {
+                        $('#tt').datagrid('reload');
+                    }
+                }
+            });
+        });
+    }
+
+    function toGrabOneOrder() {
+        $('#grabDiv').dialog({
+            title: '小米订单抓取',
+            width: '65%',
+            height: '45%',
+            closed: false,
+            cache: false,
+            method: 'post',
+            href: basePath + '/orderXiaomi/toGrab/',
+            modal: true,
+            onLoad: function () {
+                cntr.initSelect();
+            },
+            buttons: [{
+                text: '确定',
+                handler: function () {
+                    $("#receiveForm").form('submit', {
+                        onSubmit: function () {
+                            return $(this).form('validate');
+                        },
+                        success: function (data) {
+                            var result = JSON.parse(data);
+                            tips.alert(result.message);
+                            if (result.flag == 'SUCCESS') {
+                                $('#grabDiv').dialog('close');
+                                $('#tt').datagrid('reload');
+                            }
+                        }
+                    });
+                }
+            }, {
+                text: '取消',
+                handler: function () {
+                    $('#grabDiv').dialog('close')
+                }
+            }]
+        });
+
+    }
+
+</script>
+

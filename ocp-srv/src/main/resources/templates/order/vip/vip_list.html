@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="zh-cmn-Hans" xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+
+<head th:replace="common/layout::header( ~{::title})">
+    <title id="title">唯品会订单主页面</title>
+</head>
+
+
+<body>
+<div class="contentBox">
+    <div class="ui fluid container box-form">
+        <form class="ui form" id="searchForm" method="post">
+            <div class="searchBox">
+                <ul>
+                    <li>
+                        <div class="smallBox">
+                            <label>平台订单号</label>
+                            <input class="easyui-textbox" name="orderNo" id="orderNo"
+                                   style="width:150px;height:24px;">
+                        </div>
+
+                    </li>
+                    <li>
+                        <div class="smallBox">
+                            <label>电商企业</label>
+                            <span class="selectBox">
+                                <select class="form-select" name="ebcCode"
+                                        style="width: 150px;height: 24px;">
+                                    <option value=""></option>
+                                    <option th:each="merchant : ${merchantList}" th:otherFields="${merchant.code}"
+                                            th:text="${merchant.name}" th:value="${merchant.code}">
+                                    </option>
+                                </select>
+                                <i class="x icon clearBtn" title="清空"></i>
+                            </span>
+                        </div>
+
+                    </li>
+                    <li>
+
+                        <div class="smallBox">
+                            <label>内部订单号</label>
+                            <input class="easyui-textbox" name="code" id="code"
+                                   style="width:150px;height:24px;">
+                        </div>
+
+                    </li>
+                    <li>
+                        <div class="smallBox">
+                            <label>关区代码</label>
+                            <span class="selectBox">
+                                <select id="customsCode" class="form-select" name="customsCode"
+                                        style="width: 150px;height: 24px;">
+                                    <option value=""></option>
+                                    <option th:each="customsCode : ${T(com.topideal.supplychain.ocp.enums.CustomsCodeEnum).values()}"
+                                            th:text="${customsCode.desc}" th:value="${customsCode.value}"></option>
+                                </select>
+                                <i class="x icon clearBtn" title="清空"></i>
+                            </span>
+                        </div>
+
+                    </li>
+                    <li>
+                        <div class="smallBox">
+                            <label>业务类型</label>
+                            <span class="selectBox">
+                                <select id="tradeMode" class="form-select" name="tradeMode"
+                                        style="width: 150px;height: 24px;">
+                                    <option value=""></option>
+                                    <option th:each="businessMode : ${T(com.topideal.supplychain.ocp.enums.BusiModeEnum).values()}"
+                                            th:text="${businessMode.desc}" th:value="${businessMode.value}"></option>
+                                </select>
+                                <i class="x icon clearBtn" title="清空"></i>
+                            </span>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="smallBox">
+                            <label>店铺ID</label>
+                            <input class="easyui-textbox" name="storeId" id="storeId"
+                                   style="width:150px;height:24px;">
+                        </div>
+                    </li>
+                    <li>
+                        <div class="smallBox">
+                            <label>制单时间从</label>
+                            <input type="text" id="createTimeStart" name="createTimeStart" th:value="${queryBeginTime}"
+                                   onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',maxDate:'#F{$dp.$D(\'createTimeEnd\');}'})"
+                                   style="width: 150px;height: 24px;"/>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="smallBox">
+                            <label>至</label>
+                            <input type="text" id="createTimeEnd" name="createTimeEnd"
+                                   onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',minDate:'#F{$dp.$D(\'createTimeStart\');}'})"
+                                   style="width: 150px;height: 24px;"/>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="field" style="margin-top: 10px;text-align: center;">
+                <a href="#" class="ui mini primary button form-search"><i class="search icon"></i>查询</a>
+                <a href="#" class="ui mini primar grey button form-reset"><i class="undo icon"></i>重置</a>
+                <a href="#" id="show_i" onclick="hide()" style="float :right"><i class="angle down icon"></i>显示条件</a>
+            </div>
+
+        </form>
+    </div>
+    <div class="tableBox">
+
+        <div id="tb">
+            <a shiro:hasPermission="order.vip.repush" class="easyui-linkbutton" plain="true"
+               onclick="rePush()"><i class="red reply icon"></i>重推订单</a>
+        </div>
+
+        <table id="vipTable" striped="true" toolbar="#tb" style="height: 100%;"
+               data-options="rownumbers:true">
+            <thead frozen="true">
+            <tr>
+                <th field="ck" checkbox="true"></th>
+                <th field="code" style="width: 180px" formatter="formatCode">内部订单号</th>
+                <th field="sendFlag" style="width: 80px">状态</th>
+            </tr>
+            </thead>
+            <thead>
+            <tr>
+
+                <th field="orderNo" style="width: 180px">订单号</th>
+                <th field="ebcName" style="width: 150px">电商企业</th>
+                <th field="storeId" style="width: 150px">店铺ID</th>
+                <th field="tradeMode" style="width: 100px">业务类型</th>
+                <th field="totalValues" style="width: 100px">商品价格</th>
+                <th field="payMount" style="width: 100px">支付金额</th>
+                <th field="buyerName" style="width: 100px">订购人</th>
+                <th field="buyerTelephone" style="width: 100px">订购人电话</th>
+                <th field="consigneeCname" style="width: 100px">收件人</th>
+                <th field="consigneeTel" style="width: 100px">收件人电话</th>
+                <th field="consigneeAddress" style="width: 200px">收件地址</th>
+                <th field="sendSystem" style="width: 100px">转发系统</th>
+                <th field="createTime" style="width: 150px">创建时间</th>
+            </tr>
+            </thead>
+        </table>
+    </div>
+</div>
+<div id="detailDiv"></div>
+
+</body>
+</html>
+<script type="text/javascript">
+    /**
+     * 查询加载页面
+     */
+    $(function () {
+        var params = getFormJson("#searchForm");
+        initSearchHeight();
+        $('#vipTable').datagrid({
+            formId: "#searchForm",
+            url: basePath + '/orderVip/json',
+            method: 'post',
+            queryParams: params,
+            pagination: true
+        });
+        $(window).resize();
+    });
+
+    /**
+     * 重新推送订单
+     */
+    function rePush() {
+        var checkedItems = $('#vipTable').datagrid('getChecked');
+        if (checkedItems.length < 1) {
+            tips.alert("请至少选择一行记录操作");
+            return;
+        }
+        var ids = [];
+        $.each(checkedItems, function (index, item) {
+            ids.push(item.id);
+        });
+        $.ajax({
+            url: basePath + "/orderVip/rePush",
+            type: 'POST',
+            data: {ids: ids},
+            success: function (response) {
+                tips.alert(response.message);
+                if (response.flag == 'SUCCESS') {
+                    $('#vipTable').datagrid('reload');
+                }
+            }
+        });
+    }
+
+    /**
+     * 订单的点击链接
+     */
+    function formatCode(value, row, index) {
+        var htmlStr = "<a class='hrefCss blue_link' id='showDetail' title='点击查看详情'  href='javascript:void(0)' "
+            + "onclick=showDetail('" + row.id + "')>"
+            + value + "</a>";
+        htmlStr = htmlStr + "</br>";
+        return htmlStr;
+    }
+
+    /**
+     * 打开商品详细
+     */
+    function showDetail(id) {
+        $('#detailDiv').dialog({
+            title: '【唯品会】订单明细',
+            width: '75%',
+            height: '65%',
+            closed: false,
+            cache: false,
+            method: 'post',
+            href: basePath + '/orderVip/showDetail/' + id,
+            modal: true
+        });
+    }
+
+</script>

@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.topideal.supplychain.ocp.order.mapper.OrderXiaomiMapper">
+  <resultMap id="BaseResultMap" type="com.topideal.supplychain.ocp.order.model.OrderXiaomi">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="code" jdbcType="VARCHAR" property="code" />
+    <result column="order_id" jdbcType="VARCHAR" property="orderId" />
+    <result column="store_code" jdbcType="VARCHAR" property="storeCode" />
+    <result column="ebc_code" jdbcType="VARCHAR" property="ebcCode" />
+    <result column="province_name" jdbcType="VARCHAR" property="provinceName" />
+    <result column="city_name" jdbcType="VARCHAR" property="cityName" />
+    <result column="district_name" jdbcType="VARCHAR" property="districtName" />
+    <result column="area_name" jdbcType="VARCHAR" property="areaName" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="tel" jdbcType="VARCHAR" property="tel" />
+    <result column="consignee" jdbcType="VARCHAR" property="consignee" />
+    <result column="zipcode" jdbcType="VARCHAR" property="zipcode" />
+    <result column="card_id" jdbcType="VARCHAR" property="cardId" />
+    <result column="card_name" jdbcType="VARCHAR" property="cardName" />
+    <result column="importation_type" jdbcType="VARCHAR" property="importationType" />
+    <result column="coupon_amount" jdbcType="DECIMAL" property="couponAmount" />
+    <result column="ship_fee" jdbcType="DECIMAL" property="shipFee" />
+    <result column="total_price" jdbcType="DECIMAL" property="totalPrice" />
+    <result column="ctime" jdbcType="TIMESTAMP" property="ctime" />
+    <result column="ftime" jdbcType="TIMESTAMP" property="ftime" />
+    <result column="send_system" jdbcType="VARCHAR" property="sendSystem" />
+    <result column="send_status" jdbcType="VARCHAR" property="sendStatus" />
+    <result column="fail_reason" jdbcType="VARCHAR" property="failReason" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="is_deleted" jdbcType="INTEGER" property="isDeleted" />
+    <result column="version" jdbcType="INTEGER" property="version" />
+  </resultMap>
+
+  <resultMap id="DtoResultMap" type="com.topideal.supplychain.ocp.order.dto.OrderXiaomiDto" extends="BaseResultMap">
+
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    id, code, order_id, store_code, ebc_code, province_name, city_name, district_name, area_name,
+    address, tel, consignee, zipcode, card_id, card_name, importation_type, coupon_amount, 
+    ship_fee, total_price, ctime, ftime, send_system, send_status,fail_reason,create_by, create_time,
+    update_by, update_time, is_deleted, version
+  </sql>
+
+  <select id="pageList" resultType="com.topideal.supplychain.ocp.order.dto.OrderXiaomiDto">
+    SELECT
+    y.id,y.code,y.order_id orderId,y.send_system sendSystem,y.send_status sendStatus,y.store_code storeCode,m.name ebcName,
+    y.province_name provinceName,y.city_name cityName,y.district_name districtName,y.tel tel,y.address address,y.consignee consignee,
+    y.zipcode zipcode, y.card_name cardName,y.importation_type importationType,y.coupon_amount couponAmount,y.ship_fee shipFee,
+    y.total_price totalPrice,y.ctime ctime,y.ftime ftime,y.create_time createTime
+    FROM doc_order_xiaomi y
+    INNER JOIN md_merchant m ON y.ebc_code = m.code
+    <where>
+      <if test="orderId != null">
+        and y.order_id =#{orderId}
+      </if>
+      <if test="code != null">
+        and y.code =#{code}
+      </if>
+      <if test="ebcCode != null">
+        and y.ebc_code =#{ebcCode}
+      </if>
+      <if test="storeCode != null">
+        and y.store_code =#{storeCode}
+      </if>
+      <if test="sendStatus !=null">
+        AND y.send_status = #{sendStatus}
+      </if>
+      <if test="startDate !=null">
+        AND y.create_time <![CDATA[>=]]> #{startDate}
+      </if>
+      <if test="endDate != null">
+        AND y.create_time <![CDATA[<=]]> #{endDate}
+      </if>
+    </where>
+  </select>
+
+  <select id="selectById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from doc_order_xiaomi
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <select id="selectByOrderId" parameterType="string" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from doc_order_xiaomi
+    where order_id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <select id="selectDtoById" parameterType="java.lang.Long" resultMap="DtoResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from doc_order_xiaomi
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <update id="updateOrderStatus">
+    update doc_order_xiaomi set send_status = #{status},fail_reason = #{reason} where id = #{id} and send_status != '140'
+  </update>
+
+  <insert id="insert" parameterType="com.topideal.supplychain.ocp.order.model.OrderXiaomi" useGeneratedKeys="true" keyProperty="id">
+    insert into doc_order_xiaomi
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="code != null">
+        code,
+      </if>
+      <if test="orderId != null">
+        order_id,
+      </if>
+      <if test="storeCode != null">
+        store_code,
+      </if>
+      <if test="ebcCode != null">
+        ebc_code,
+      </if>
+      <if test="provinceName != null">
+        province_name,
+      </if>
+      <if test="cityName != null">
+        city_name,
+      </if>
+      <if test="districtName != null">
+        district_name,
+      </if>
+      <if test="areaName != null">
+        area_name,
+      </if>
+      <if test="address != null">
+        address,
+      </if>
+      <if test="tel != null">
+        tel,
+      </if>
+      <if test="consignee != null">
+        consignee,
+      </if>
+      <if test="zipcode != null">
+        zipcode,
+      </if>
+      <if test="cardId != null">
+        card_id,
+      </if>
+      <if test="cardName != null">
+        card_name,
+      </if>
+      <if test="importationType != null">
+        importation_type,
+      </if>
+      <if test="couponAmount != null">
+        coupon_amount,
+      </if>
+      <if test="shipFee != null">
+        ship_fee,
+      </if>
+      <if test="totalPrice != null">
+        total_price,
+      </if>
+      <if test="ctime != null">
+        ctime,
+      </if>
+      <if test="ftime != null">
+        ftime,
+      </if>
+      <if test="sendSystem != null">
+        send_system,
+      </if>
+      <if test="sendStatus != null">
+        send_status,
+      </if>
+      <if test="failReason != null">
+        fail_reason,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateBy != null">
+        update_by,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="isDeleted != null">
+        is_deleted,
+      </if>
+      <if test="version != null">
+        version,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="code != null">
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="orderId != null">
+        #{orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="storeCode != null">
+        #{storeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="ebcCode != null">
+        #{ebcCode,jdbcType=VARCHAR},
+      </if>
+      <if test="provinceName != null">
+        #{provinceName,jdbcType=VARCHAR},
+      </if>
+      <if test="cityName != null">
+        #{cityName,jdbcType=VARCHAR},
+      </if>
+      <if test="districtName != null">
+        #{districtName,jdbcType=VARCHAR},
+      </if>
+      <if test="areaName != null">
+        #{areaName,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="tel != null">
+        #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="consignee != null">
+        #{consignee,jdbcType=VARCHAR},
+      </if>
+      <if test="zipcode != null">
+        #{zipcode,jdbcType=VARCHAR},
+      </if>
+      <if test="cardId != null">
+        #{cardId,jdbcType=VARCHAR},
+      </if>
+      <if test="cardName != null">
+        #{cardName,jdbcType=VARCHAR},
+      </if>
+      <if test="importationType != null">
+        #{importationType,jdbcType=VARCHAR},
+      </if>
+      <if test="couponAmount != null">
+        #{couponAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="shipFee != null">
+        #{shipFee,jdbcType=DECIMAL},
+      </if>
+      <if test="totalPrice != null">
+        #{totalPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="ctime != null">
+        #{ctime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ftime != null">
+        #{ftime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sendSystem != null">
+        #{sendSystem,jdbcType=VARCHAR},
+      </if>
+      <if test="sendStatus != null">
+        #{sendStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="failReason != null">
+        #{failReason,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDeleted != null">
+        #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="version != null">
+        #{version,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+
+  <select id="selectByIds"  resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from doc_order_xiaomi
+    where id in
+    <foreach collection="list" separator="," item="id" open="(" close=")" >
+      #{id,jdbcType=BIGINT}
+    </foreach>
+  </select>
+
+</mapper>

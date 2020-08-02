@@ -1,0 +1,597 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.topideal.supplychain.ocp.order.mapper.OrderJdMapper" >
+  <resultMap id="BaseResultMap" type="com.topideal.supplychain.ocp.order.model.OrderJd" >
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="order_id" jdbcType="VARCHAR" property="orderId" />
+    <result column="order_create_time" jdbcType="TIMESTAMP" property="orderCreateTime" />
+    <result column="ie_flag" jdbcType="VARCHAR" property="ieFlag" />
+    <result column="customs_type" jdbcType="INTEGER" property="customsType" />
+    <result column="logistics_code" jdbcType="VARCHAR" property="logisticsCode" />
+    <result column="logistics_no" jdbcType="VARCHAR" property="logisticsNo" />
+    <result column="logistics_name" jdbcType="VARCHAR" property="logisticsName" />
+    <result column="order_type" jdbcType="VARCHAR" property="orderType" />
+    <result column="should_pay" jdbcType="DECIMAL" property="shouldPay" />
+    <result column="goods_value" jdbcType="DECIMAL" property="goodsValue" />
+    <result column="other_price" jdbcType="DECIMAL" property="otherPrice" />
+    <result column="discount" jdbcType="DECIMAL" property="discount" />
+    <result column="freight" jdbcType="DECIMAL" property="freight" />
+    <result column="freight_curr" jdbcType="VARCHAR" property="freightCurr" />
+    <result column="tax" jdbcType="DECIMAL" property="tax" />
+    <result column="tax_curr" jdbcType="VARCHAR" property="taxCurr" />
+    <result column="good_info" jdbcType="VARCHAR" property="goodInfo" />
+    <result column="insured_fee" jdbcType="DECIMAL" property="insuredFee" />
+    <result column="buyer_phone" jdbcType="VARCHAR" property="buyerPhone" />
+    <result column="buyer_name" jdbcType="VARCHAR" property="buyerName" />
+    <result column="buyer_id_type" jdbcType="VARCHAR" property="buyerIdType" />
+    <result column="buyer_id_number" jdbcType="VARCHAR" property="buyerIdNumber" />
+    <result column="buyer_reg_no" jdbcType="VARCHAR" property="buyerRegNo" />
+    <result column="consignee_name" jdbcType="VARCHAR" property="consigneeName" />
+    <result column="recipient_provinces_code" jdbcType="VARCHAR" property="recipientProvincesCode" />
+    <result column="consignee_phone" jdbcType="VARCHAR" property="consigneePhone" />
+    <result column="consignee_address" jdbcType="VARCHAR" property="consigneeAddress" />
+    <result column="consignee_country" jdbcType="VARCHAR" property="consigneeCountry" />
+    <result column="consignee_email" jdbcType="VARCHAR" property="consigneeEmail" />
+    <result column="consignee_id_type" jdbcType="VARCHAR" property="consigneeIdType" />
+    <result column="consignee_id_number" jdbcType="VARCHAR" property="consigneeIdNumber" />
+    <result column="consignee_post_code" jdbcType="VARCHAR" property="consigneePostCode" />
+    <result column="consignee_province" jdbcType="VARCHAR" property="consigneeProvince" />
+    <result column="consignee_city" jdbcType="VARCHAR" property="consigneeCity" />
+    <result column="consignee_county" jdbcType="VARCHAR" property="consigneeCounty" />
+    <result column="consignee_town" jdbcType="VARCHAR" property="consigneeTown" />
+    <result column="shipper_country_code" jdbcType="VARCHAR" property="shipperCountryCode" />
+    <result column="pack_no" jdbcType="VARCHAR" property="packNo" />
+    <result column="vender_id" jdbcType="VARCHAR" property="venderId" />
+    <result column="custom_model" jdbcType="VARCHAR" property="customModel" />
+    <result column="ebp_code" jdbcType="VARCHAR" property="ebpCode" />
+    <result column="ebc_code" jdbcType="VARCHAR" property="ebcCode" />
+    <result column="ebc_name" jdbcType="VARCHAR" property="ebcName" />
+    <result column="ebp_name" jdbcType="VARCHAR" property="ebpName" />
+    <result column="dpdm" jdbcType="VARCHAR" property="dpdm" />
+    <result column="internet_code" jdbcType="VARCHAR" property="internetCode" />
+    <result column="currency" jdbcType="VARCHAR" property="currency" />
+    <result column="v_qy_state" jdbcType="VARCHAR" property="vQyState" />
+    <result column="ciqb_code" jdbcType="VARCHAR" property="ciqbCode" />
+    <result column="customs_code" jdbcType="VARCHAR" property="customsCode" />
+    <result column="pay_code" jdbcType="VARCHAR" property="payCode" />
+    <result column="pay_name" jdbcType="VARCHAR" property="payName" />
+    <result column="pay_transaction_id" jdbcType="VARCHAR" property="payTransactionId" />
+    <result column="is_tax" jdbcType="VARCHAR" property="isTax" />
+    <result column="warehouse_no" jdbcType="VARCHAR" property="warehouseNo" />
+    <result column="eclp_code" jdbcType="VARCHAR" property="eclpCode" />
+    <result column="create_by" jdbcType="BIGINT" property="createBy" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="update_by" jdbcType="BIGINT" property="updateBy" />
+    <result column="is_deleted" jdbcType="INTEGER" property="isDeleted" />
+    <result column="version" jdbcType="INTEGER" property="version" />
+    <result column="tenant_id" jdbcType="BIGINT" property="tenantId" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+    <result column="code" jdbcType="VARCHAR" property="code" />
+    <result column="grab_key" jdbcType="VARCHAR" property="grabKey" />
+    <result column="store_id" jdbcType="VARCHAR" property="storeId" />
+    <result column="third_platform_code" jdbcType="VARCHAR" property="thirdPlatformCode" />
+    <result column="third_platform_name" jdbcType="VARCHAR" property="thirdPlatformName" />
+    <result column="discount_note" jdbcType="VARCHAR" property="discountNote" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, code, status, order_id, fail_reason, order_create_time, ie_flag, customs_type,
+    logistics_code, logistics_no, logistics_name, order_type, should_pay, goods_value,
+    other_price, discount, freight, freight_curr, tax, tax_curr, good_info, insured_fee,
+    buyer_phone, buyer_name, buyer_id_type, buyer_id_number, buyer_reg_no, consignee_name,
+    recipient_provinces_code, consignee_phone, consignee_address, consignee_country,
+    consignee_email, consignee_id_type, consignee_id_number, consignee_post_code, consignee_province,
+    consignee_city, consignee_county, consignee_town, shipper_country_code, pack_no,
+    vender_id, custom_model, ebp_code, ebc_code, ebc_name, ebp_name, dpdm, internet_code,
+    currency, v_qy_state, ciqb_code, customs_code, pay_code, pay_name, pay_transaction_id,
+    is_tax, warehouse_no, eclp_code, business_mode, store_id, third_platform_code, third_platform_name,
+    discount_note, create_time, create_by, update_time, update_by, is_deleted, version,
+    tenant_id, grab_key
+  </sql>
+
+  <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from doc_order_jd
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <select id="pageList" resultMap="BaseResultMap"
+          parameterType="com.topideal.supplychain.ocp.order.dto.OrderJdDto">
+    select
+    <include refid="Base_Column_List"/>
+    from doc_order_jd
+    <where>
+      <if test="status != null ">
+        AND status = #{status,jdbcType=VARCHAR}
+      </if>
+      <if test="orderId!=null and orderId!=''">
+        AND order_id = #{orderId,jdbcType=VARCHAR}
+      </if>
+      <if test="logisticsNo!=null and logisticsNo!=''">
+        AND logistics_no = #{logisticsNo,jdbcType=VARCHAR}
+      </if>
+      <if test="code!=null and code!=''">
+        AND code = #{code,jdbcType=VARCHAR}
+      </if>
+      <if test="grabKey!=null and grabKey!=''">
+        AND grab_key = #{grabKey,jdbcType=VARCHAR}
+      </if>
+      <if test="createTimeStart!=null">
+        AND create_time <![CDATA[ >= ]]> #{createTimeStart,jdbcType=TIMESTAMP}
+      </if>
+      <if test="createTimeEnd!=null">
+        AND create_time <![CDATA[ <= ]]> #{createTimeEnd,jdbcType=TIMESTAMP}
+      </if>
+      <if test="orderCreateTimeStart!=null">
+        AND order_create_time <![CDATA[ >= ]]> #{orderCreateTimeStart,jdbcType=TIMESTAMP}
+      </if>
+      <if test="orderCreateTimeEnd!=null">
+        AND order_create_time <![CDATA[ <= ]]> #{orderCreateTimeEnd,jdbcType=TIMESTAMP}
+      </if>
+
+    </where>
+    order by create_time desc
+  </select>
+
+
+  <insert id="insert" parameterType="com.topideal.supplychain.ocp.order.model.OrderJd" useGeneratedKeys="true" keyProperty="id">
+    insert into doc_order_jd
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null">
+        id,
+      </if>
+      <if test="orderId != null">
+        order_id,
+      </if>
+      <if test="orderCreateTime != null">
+        order_create_time,
+      </if>
+      <if test="ieFlag != null">
+        ie_flag,
+      </if>
+      <if test="customsType != null">
+        customs_type,
+      </if>
+      <if test="logisticsCode != null">
+        logistics_code,
+      </if>
+      <if test="logisticsNo != null">
+        logistics_no,
+      </if>
+      <if test="logisticsName != null">
+        logistics_name,
+      </if>
+      <if test="orderType != null">
+        order_type,
+      </if>
+      <if test="shouldPay != null">
+        should_pay,
+      </if>
+      <if test="goodsValue != null">
+        goods_value,
+      </if>
+      <if test="otherPrice != null">
+        other_price,
+      </if>
+      <if test="discount != null">
+        discount,
+      </if>
+      <if test="freight != null">
+        freight,
+      </if>
+      <if test="freightCurr != null">
+        freight_curr,
+      </if>
+      <if test="tax != null">
+        tax,
+      </if>
+      <if test="taxCurr != null">
+        tax_curr,
+      </if>
+      <if test="goodInfo != null">
+        good_info,
+      </if>
+      <if test="insuredFee != null">
+        insured_fee,
+      </if>
+      <if test="buyerPhone != null">
+        buyer_phone,
+      </if>
+      <if test="buyerName != null">
+        buyer_name,
+      </if>
+      <if test="buyerIdType != null">
+        buyer_id_type,
+      </if>
+      <if test="buyerIdNumber != null">
+        buyer_id_number,
+      </if>
+      <if test="buyerRegNo != null">
+        buyer_reg_no,
+      </if>
+      <if test="consigneeName != null">
+        consignee_name,
+      </if>
+      <if test="recipientProvincesCode != null">
+        recipient_provinces_code,
+      </if>
+      <if test="consigneePhone != null">
+        consignee_phone,
+      </if>
+      <if test="consigneeAddress != null">
+        consignee_address,
+      </if>
+      <if test="consigneeCountry != null">
+        consignee_country,
+      </if>
+      <if test="consigneeEmail != null">
+        consignee_email,
+      </if>
+      <if test="consigneeIdType != null">
+        consignee_id_type,
+      </if>
+      <if test="consigneeIdNumber != null">
+        consignee_id_number,
+      </if>
+      <if test="consigneePostCode != null">
+        consignee_post_code,
+      </if>
+      <if test="consigneeProvince != null">
+        consignee_province,
+      </if>
+      <if test="consigneeCity != null">
+        consignee_city,
+      </if>
+      <if test="consigneeCounty != null">
+        consignee_county,
+      </if>
+      <if test="consigneeTown != null">
+        consignee_town,
+      </if>
+      <if test="shipperCountryCode != null">
+        shipper_country_code,
+      </if>
+      <if test="packNo != null">
+        pack_no,
+      </if>
+      <if test="venderId != null">
+        vender_id,
+      </if>
+      <if test="customModel != null">
+        custom_model,
+      </if>
+      <if test="ebpCode != null">
+        ebp_code,
+      </if>
+      <if test="ebcCode != null">
+        ebc_code,
+      </if>
+      <if test="ebcName != null">
+        ebc_name,
+      </if>
+      <if test="ebpName != null">
+        ebp_name,
+      </if>
+      <if test="dpdm != null">
+        dpdm,
+      </if>
+      <if test="internetCode != null">
+        internet_code,
+      </if>
+      <if test="currency != null">
+        currency,
+      </if>
+      <if test="vQyState != null">
+        v_qy_state,
+      </if>
+      <if test="ciqbCode != null">
+        ciqb_code,
+      </if>
+      <if test="customsCode != null">
+        customs_code,
+      </if>
+      <if test="payCode != null">
+        pay_code,
+      </if>
+      <if test="payName != null">
+        pay_name,
+      </if>
+      <if test="payTransactionId != null">
+        pay_transaction_id,
+      </if>
+      <if test="isTax != null">
+        is_tax,
+      </if>
+      <if test="warehouseNo != null">
+        warehouse_no,
+      </if>
+      <if test="eclpCode != null">
+        eclp_code,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateBy != null">
+        update_by,
+      </if>
+      <if test="isDeleted != null">
+        is_deleted,
+      </if>
+      <if test="version != null">
+        version,
+      </if>
+      <if test="tenantId != null">
+        tenant_id,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="code != null">
+        code,
+      </if>
+      <if test="grabKey != null">
+        grab_key,
+      </if>
+      <if test="storeId != null">
+        store_id,
+      </if>
+      <if test="thirdPlatformCode != null">
+        third_platform_code,
+      </if>
+      <if test="thirdPlatformName != null">
+        third_platform_name,
+      </if>
+      <if test="discountNote != null">
+        discount_note,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="orderId != null">
+        #{orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="orderCreateTime != null">
+        #{orderCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ieFlag != null">
+        #{ieFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="customsType != null">
+        #{customsType,jdbcType=INTEGER},
+      </if>
+      <if test="logisticsCode != null">
+        #{logisticsCode,jdbcType=VARCHAR},
+      </if>
+      <if test="logisticsNo != null">
+        #{logisticsNo,jdbcType=VARCHAR},
+      </if>
+      <if test="logisticsName != null">
+        #{logisticsName,jdbcType=VARCHAR},
+      </if>
+      <if test="orderType != null">
+        #{orderType,jdbcType=VARCHAR},
+      </if>
+      <if test="shouldPay != null">
+        #{shouldPay,jdbcType=DECIMAL},
+      </if>
+      <if test="goodsValue != null">
+        #{goodsValue,jdbcType=DECIMAL},
+      </if>
+      <if test="otherPrice != null">
+        #{otherPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="discount != null">
+        #{discount,jdbcType=DECIMAL},
+      </if>
+      <if test="freight != null">
+        #{freight,jdbcType=DECIMAL},
+      </if>
+      <if test="freightCurr != null">
+        #{freightCurr,jdbcType=VARCHAR},
+      </if>
+      <if test="tax != null">
+        #{tax,jdbcType=DECIMAL},
+      </if>
+      <if test="taxCurr != null">
+        #{taxCurr,jdbcType=VARCHAR},
+      </if>
+      <if test="goodInfo != null">
+        #{goodInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="insuredFee != null">
+        #{insuredFee,jdbcType=DECIMAL},
+      </if>
+      <if test="buyerPhone != null">
+        #{buyerPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="buyerName != null">
+        #{buyerName,jdbcType=VARCHAR},
+      </if>
+      <if test="buyerIdType != null">
+        #{buyerIdType,jdbcType=VARCHAR},
+      </if>
+      <if test="buyerIdNumber != null">
+        #{buyerIdNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="buyerRegNo != null">
+        #{buyerRegNo,jdbcType=VARCHAR},
+      </if>
+      <if test="consigneeName != null">
+        #{consigneeName,jdbcType=VARCHAR},
+      </if>
+      <if test="recipientProvincesCode != null">
+        #{recipientProvincesCode,jdbcType=VARCHAR},
+      </if>
+      <if test="consigneePhone != null">
+        #{consigneePhone,jdbcType=VARCHAR},
+      </if>
+      <if test="consigneeAddress != null">
+        #{consigneeAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="consigneeCountry != null">
+        #{consigneeCountry,jdbcType=VARCHAR},
+      </if>
+      <if test="consigneeEmail != null">
+        #{consigneeEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="consigneeIdType != null">
+        #{consigneeIdType,jdbcType=VARCHAR},
+      </if>
+      <if test="consigneeIdNumber != null">
+        #{consigneeIdNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="consigneePostCode != null">
+        #{consigneePostCode,jdbcType=VARCHAR},
+      </if>
+      <if test="consigneeProvince != null">
+        #{consigneeProvince,jdbcType=VARCHAR},
+      </if>
+      <if test="consigneeCity != null">
+        #{consigneeCity,jdbcType=VARCHAR},
+      </if>
+      <if test="consigneeCounty != null">
+        #{consigneeCounty,jdbcType=VARCHAR},
+      </if>
+      <if test="consigneeTown != null">
+        #{consigneeTown,jdbcType=VARCHAR},
+      </if>
+      <if test="shipperCountryCode != null">
+        #{shipperCountryCode,jdbcType=VARCHAR},
+      </if>
+      <if test="packNo != null">
+        #{packNo,jdbcType=VARCHAR},
+      </if>
+      <if test="venderId != null">
+        #{venderId,jdbcType=VARCHAR},
+      </if>
+      <if test="customModel != null">
+        #{customModel,jdbcType=VARCHAR},
+      </if>
+      <if test="ebpCode != null">
+        #{ebpCode,jdbcType=VARCHAR},
+      </if>
+      <if test="ebcCode != null">
+        #{ebcCode,jdbcType=VARCHAR},
+      </if>
+      <if test="ebcName != null">
+        #{ebcName,jdbcType=VARCHAR},
+      </if>
+      <if test="ebpName != null">
+        #{ebpName,jdbcType=VARCHAR},
+      </if>
+      <if test="dpdm != null">
+        #{dpdm,jdbcType=VARCHAR},
+      </if>
+      <if test="internetCode != null">
+        #{internetCode,jdbcType=VARCHAR},
+      </if>
+      <if test="currency != null">
+        #{currency,jdbcType=VARCHAR},
+      </if>
+      <if test="vQyState != null">
+        #{vQyState,jdbcType=VARCHAR},
+      </if>
+      <if test="ciqbCode != null">
+        #{ciqbCode,jdbcType=VARCHAR},
+      </if>
+      <if test="customsCode != null">
+        #{customsCode,jdbcType=VARCHAR},
+      </if>
+      <if test="payCode != null">
+        #{payCode,jdbcType=VARCHAR},
+      </if>
+      <if test="payName != null">
+        #{payName,jdbcType=VARCHAR},
+      </if>
+      <if test="payTransactionId != null">
+        #{payTransactionId,jdbcType=VARCHAR},
+      </if>
+      <if test="isTax != null">
+        #{isTax,jdbcType=VARCHAR},
+      </if>
+      <if test="warehouseNo != null">
+        #{warehouseNo,jdbcType=VARCHAR},
+      </if>
+      <if test="eclpCode != null">
+        #{eclpCode,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null">
+        #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="version != null">
+        #{version,jdbcType=INTEGER},
+      </if>
+      <if test="tenantId != null">
+        #{tenantId,jdbcType=BIGINT},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null">
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="grabKey != null">
+        #{grabKey,jdbcType=VARCHAR},
+      </if>
+      <if test="storeId != null">
+        #{storeId,jdbcType=VARCHAR},
+      </if>
+      <if test="thirdPlatformCode != null">
+        #{thirdPlatformCode,jdbcType=VARCHAR},
+      </if>
+      <if test="thirdPlatformName != null">
+        #{thirdPlatformName,jdbcType=VARCHAR},
+      </if>
+      <if test="discountNote != null">
+        #{discountNote,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+
+  <update id="updateOrderStatus">
+    update doc_order_jd set status = #{status},fail_reason = #{reason}
+    where id = #{id} and status != '140'
+  </update>
+
+
+  <select id="selectListByIds" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from doc_order_jd
+    where id in
+    <foreach item="item" collection="ids" open="("
+      separator="," close=")">
+      #{item}
+    </foreach>
+  </select>
+
+  <select id="isExist" resultType="java.lang.Boolean">
+    SELECT EXISTS(
+    SELECT id FROM doc_order_jd WHERE status = #{status,jdbcType=VARCHAR}
+      AND order_id = #{orderId,jdbcType=VARCHAR}
+    )
+  </select>
+
+</mapper>

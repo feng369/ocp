@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="zh-cmn-Hans" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="common/layout::header( ~{::title})">
+    <title id="title">拼多多订单明细</title>
+</head>
+<body>
+<style>
+    .subContainer .panel {
+        box-shadow: 0px 1px 4px rgba(0,0,0,0.3), 0px 0px 3px rgba(0,0,0,0.1) inset;
+    }
+
+    .subContainer > .panel.easyui-fluid:first-child {
+        margin-bottom: 10px;
+    }
+
+    .subContainer .panel-body {
+        border-width: 0;
+        margin-top: 8px;
+    }
+
+    .subContainer .tableBox .datagrid .panel-body {
+        box-shadow: none;
+    }
+
+</style>
+<div class="ui fluid subContainer container box-form" style="margin-top:10px;width: 98%">
+    <div id="p1" class="easyui-panel" title="订单信息" style="width:100%;" data-options="collapsible:true">
+        <form class="ui form">
+            <div class="searchBox">
+                <ul>
+                    <li class="w-8-4">
+                        <div class="smallBox">
+                            <label>内部订单号:</label>
+                            <span style="width: 150px;height: 24px;" th:text="${order.code}"/>
+                        </div>
+                        <div class="smallBox">
+                            <label>平台订单号:</label>
+                            <span style="width: 150px;height: 24px;" th:text="${order.orderSn}"/>
+                        </div>
+                        <div class="smallBox">
+                            <label>订单号:</label>
+                            <span style="width: 150px;height: 24px;" th:text="${order.orderId}"/>
+                        </div>
+                        <div class="smallBox">
+                            <label>店铺编码:</label>
+                            <span style="width: 150px;height: 24px;" th:text="${order.sid}"/>
+                        </div>
+                    </li>
+                    <li class="w-8-4 notFlex">
+                        <div class="smallBox">
+                            <label>状态:</label>
+                            <span style="width: 150px;height: 24px;" th:text="${order.status.desc}"/>
+                        </div>
+                        <div class="smallBox">
+                            <label>订单类型:</label>
+                            <span style="width: 150px;height: 24px;" th:text="${order.type.desc}"/>
+                        </div>
+                        <div class="smallBox">
+                            <label>电商平台:</label>
+                            <span style="width: 150px;height: 24px;" th:text="${order.cbepcomCode}"/>
+                        </div>
+                        <div class="smallBox">
+                            <label>电商企业:</label>
+                            <span style="width: 150px;height: 24px;" th:text="${order.electricCode}"/>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </form>
+    </div>
+    <div class="ui divider hidden"></div>
+    <div id="p2" class="easyui-panel" title="订单金额信息" style="width:100%;" data-options="collapsible:true">
+        <form class="ui form">
+            <div class="searchBox">
+                <ul>
+                    <li class="w-8-4">
+                        <div class="smallBox">
+                            <label>实际支付金额（元）:</label>
+                            <span style="width: 150px;height: 24px;" th:text="${order.acturalPaid}"/>
+                        </div>
+                        <div class="smallBox">
+                            <label>折扣金额（元）:</label>
+                            <span style="width: 150px;height: 24px;" th:text="${order.discount}"/>
+                        </div>
+                        <div class="smallBox">
+                            <label>完税货价:</label>
+                            <span style="width: 150px;height: 24px;" th:text="${order.geminiTotalPrice}"/>
+                        </div>
+                    </li>
+                    <li class="w-8-4 notFlex">
+                        <div class="smallBox">
+                            <label>税费:</label>
+                            <span style="width: 150px;height: 24px;" th:text="${order.taxFcy}"/>
+                        </div>
+                        <div class="smallBox">
+                            <label>保费:</label>
+                            <span style="width: 150px;height: 24px;" th:text="${order.insuredFee}"/>
+                        </div>
+                        <div class="smallBox">
+                            <label>商品金额（元）:</label>
+                            <span style="width: 150px;height: 24px;" th:text="${order.goodsAmount}"/>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </form>
+    </div>
+    <div class="ui divider hidden"></div>
+    <div id="p3" class="easyui-panel" title="订购信息" style="width:100%;" data-options="collapsible:true">
+        <form class="ui form">
+            <div class="searchBox">
+                <ul>
+                    <li class="w-8-4">
+                        <div class="smallBox">
+                            <label>订购人姓名:</label>
+                            <span style="width: 150px;height: 24px;" th:text="${order.buyerName}"/>
+                        </div>
+                        <div class="smallBox">
+                            <label>订购人电话:</label>
+                            <span style="width: 150px;height: 24px;" th:text="${order.buyerTelephone}"/>
+                        </div>
+                    </li>
+                    <li class="w-8-4 notFlex">
+                        <div class="smallBox">
+                            <label>收货人姓名:</label>
+                            <span style="width: 150px;height: 24px;" th:text="${order.name}"/>
+                        </div>
+                        <div class="smallBox">
+                            <label>收货人手机号码:</label>
+                            <span style="width: 150px;height: 24px;" th:text="${order.mobilePhone}"/>
+                        </div>
+                    </li>
+                    <li class="w-8-8">
+                        <div class="smallBox">
+                            <label>收件详细地址:</label>
+                            <span style="width: 150px;height: 24px;" th:text="${order.address}"/>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </form>
+    </div>
+    <div class="ui divider hidden"></div>
+    <div id="p4" class="easyui-panel" title="商品明细" style="width:100%;" data-options="collapsible:true">
+        <div class="">
+            <div class="tableBox">
+                <table id="itemTable" class="easyui-datagrid" striped="true" style="width:100%;">
+                    <thead >
+                    <tr>
+                        <th field="goodId" width="15%">商品货号</th>
+                        <th field="copGName" width="22%">产品名称</th>
+                        <th field="amount" width="10%">购买数量</th>
+                        <th field="price" width="15%">商品单价(完税)(元)</th>
+                        <th field="totalPrice" width="20%">商品总价(完税)(元)</th>
+                        <th field="goodPrice" width="20%">商品单价(含税)(元)</th>
+                        <th field="decTotal" width="20%">商品总价(含税)(元)</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="item : ${itemList}">
+                            <td th:text="${item.goodId}"></td>
+                            <td th:text="${item.copGName}"></td>
+                            <td th:text="${item.amount}"></td>
+                            <td th:text="${item.price}"></td>
+                            <td th:text="${item.totalPrice}"></td>
+                            <td th:text="${item.goodPrice}"></td>
+                            <td th:text="${item.decTotal}"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script >
+</script>
+</body>
+</html>

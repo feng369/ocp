@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="zh-cmn-Hans" xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+
+<head th:replace="common/layout::header( ~{::title})">
+    <title id="title">新增组套商品配置</title>
+</head>
+
+<body>
+<div class="ui container" style="margin-top:10px;width: 95%">
+    <form th:action="@{/combineGoodsConfig/add}" id="addForm" name="addForm" class="ui form" method="post">
+        <div class="field" style="margin-left: 20%">
+            <ul style="list-style: none">
+                <li>
+                    <div class="required field">
+                        <label>商品名称</label>
+                        <input type="text" class="easyui-textbox" id="itemName" name="itemName"
+                               placeholder="" style="width:300px;height:26px;"/>
+                    </div>
+                    <div class="required field">
+                        <label>组套商品编码</label>
+                        <input type="text" class="easyui-textbox" id="combineCode" name="combineCode"
+                               placeholder="" style="width:300px;height:26px;"/>
+                    </div>
+                    <div class="required field">
+                        <label>商品编码</label>
+                        <input type="text" class="easyui-textbox" id="itemCode" name="itemCode"
+                               placeholder="" style="width:300px;height:26px;"/>
+                    </div>
+                    <div class="required field">
+                        <label>拆分数量</label>
+                        <input type="text" class="easyui-textbox" id="apartQty" name="apartQty"
+                               placeholder="" style="width:300px;height:26px;"/>
+                    </div>
+                    <div class="field">
+                        <label>备注</label>
+                        <input type="text" class="easyui-textbox" data-options="multiline:true" id="remark" name="remark"
+                               placeholder="" style="width:300px;height:80px;padding: 3px 3px;"/>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </form>
+</div>
+
+</body>
+
+</html>
+

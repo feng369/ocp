@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="zh-cmn-Hans" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="common/layout::header( ~{::title})">
+    <title id="title">新增</title>
+</head>
+<body>
+<div class="ui container" style="margin-top:10px;width: 95%">
+    <form th:action="@{/catchOrderConfig/add}" id="addForm" name="addForm" class="ui form" method="post">
+
+        <div class="field" style="margin-left: 20px">
+            <div class="four fields">
+                <div class="field">
+                    <input name="merchantName" id="merchantName" type="hidden">
+                    <input name="platformName" id="platformName" type="hidden">
+                    <input name="storeCode" id="storeCode" type="hidden">
+                    <label  class="form-require-after">抓单名称:</label>
+                    <input class="easyui-textbox" type="text" name="name" style="width: 150px;height: 24px;" data-options="required:true"/>
+                </div>
+                <div class="field">
+                    <label  class="form-require-after">电商平台：</label>
+                    <span class="selectBox">
+                        <select id="platformCode" class="form-select" name="platformCode"
+                                style="width: 150px;height: 24px;">
+                            <option value=""></option>
+                            <option th:each="platform : ${platformList}" th:text="${platform.name}"
+                                    th:value="${platform.code}" th:otherFields="${platform.code}"  data-options="required:true">
+                            </option>
+                        </select>
+                        <i class="x icon clearBtn" title="清空"></i>
+                    </span>
+                </div>
+                <div class="field">
+                    <label  class="form-require-after">电商企业：</label>
+                    <span class="selectBox">
+                        <select id="merchantCode" class="form-select" name="merchantCode"
+                                style="width: 150px;height: 24px;">
+                            <option value=""></option>
+                            <option th:each="merchant : ${merchantList}" th:text="${merchant.name}"
+                                    th:value="${merchant.code}" th:otherFields="${merchant.code}" data-options="required:true">
+                            </option>
+                        </select>
+                        <i class="x icon clearBtn" title="清空"></i>
+                    </span>
+                </div>
+                <div class="field">
+                    <label>店铺：</label>
+                    <span class="selectBox">
+                        <select id="storeId" class="form-select" name="storeId"
+                                style="width: 150px;height: 24px;">
+                            <option value=""></option>
+                            <option th:each="store : ${storeList}" th:text="${store.code}"
+                                    th:value="${store.id}" th:otherFields="${store.id}">
+                            </option>
+                        </select>
+                        <i class="x icon clearBtn" title="清空"></i>
+                    </span>
+                </div>
+            </div>
+            <div class="four fields">
+
+                <div class="field">
+                    <label class="form-require-after">每页查询条数:</label>
+                    <input class="easyui-numberbox" name="pageSize" data-options="required:true"
+                           style="width: 150px;height: 24px;" th:value="100"/>
+                </div>
+                <div class="field">
+                    <label class="form-require-after">抓取间隔:</label>
+                    <input class="easyui-numberbox" name="intervalCount" style="width: 150px;height: 24px;"data-options="required:true" th:value="5"/>
+                </div>
+                <div class="field">
+                    <label >抓单id(京东必填):</label>
+                    <span class="selectBox">
+                        <select name="grabId"  class="form-select"  style="width: 150px;height: 24px;">
+                          <option value=""></option>
+                          <option
+                              th:each="item : ${T(com.topideal.supplychain.ocp.enums.GrabIdEnum).values()}"
+                              th:text="${item.desc}" th:value="${item.value}" th:otherFields="${item.value}"></option>
+                        </select>
+                        <i class="x icon clearBtn" th:title="#{button.clear}"></i>
+                    </span>
+                </div>
+
+                <div class="field">
+                    <label>查询起始时间:</label>
+                    <input  name="lastQueryTime" type="text" class="Wdate"
+                            onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})"
+                            style="width: 150px;height: 24px;"/>
+                </div>
+            </div>
+            <div class="field">
+                <label>默认值配置：</label>
+                <div id="defaultArguments"></div>
+            </div>
+            <div class="field">
+                <label>平台参数配置：</label>
+                <div id="platformArguments"></div>
+            </div>
+        </div>
+
+    </form>
+</div>
+
+<script type="application/javascript" th:inline="javascript">
+    $().ready(function () {
+        cntr.initSelect()
+    });
+    /**
+     * 组合框联动
+     */
+    $("#merchantCode").combobox({
+        onSelect: function (rec) {
+            $("#merchantName").val(rec.text);
+        }
+    });
+    $("#platformCode").combobox({
+        onSelect: function (rec) {
+            $("#platformName").val(rec.text);
+        }
+    });
+    $("#storeId").combobox({
+        onSelect: function (rec) {
+            $("#storeCode").val(rec.text);
+        }
+    });
+    $("#defaultArguments").jsoneditor({
+        inputName: "defaultArguments",
+        json: [[${defaultArguments}]]
+
+    });
+    $("#platformArguments").jsoneditor({
+        inputName: "platformArguments",
+        json: {
+            "appKey": "",
+            "secret": "",
+            "token": "",
+        }
+    });
+</script>
+
+</body>
+
+
+</html>

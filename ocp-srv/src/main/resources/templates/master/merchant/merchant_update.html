@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="zh-cmn-Hans" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="common/layout::header( ~{::title})">
+  <title id="title">编辑电商企业</title>
+</head>
+<body>
+
+<div class="ui container" style="margin-top:10px;width: 95%">
+  <form th:action="@{/merchant/update}" id="updateForm" name="updateForm" class="ui form"
+        method="post">
+    <div class="field">
+      <div class="three fields">
+        <div class="field">
+          <label>电商企业编码：</label>
+          <input type="text" id="code" name="code"
+                 class="easyui-validatebox" th:value="${merchant.code}"
+                 placeholder="" th:readonly="true"/>
+        </div>
+
+        <div class="field">
+          <label>电商企业名称：</label>
+          <input type="text" id="name" name="name"
+                 class="easyui-validatebox" th:value="${merchant.name}"
+                 placeholder="" th:readonly="true"/>
+        </div>
+
+        <div class="field">
+          <label>电商企业简称：</label>
+          <input type="text" id="shortName" name="shortName"
+                 class="easyui-validatebox" th:value="${merchant.shortName}"
+                 placeholder="" th:readonly="true"/>
+        </div>
+      </div>
+    </div>
+
+    <div class="field">
+      <div class="two fields">
+        <div class="field">
+          <label>是否税金分离：</label>
+          <div>
+            是：<input type="radio" style="height: 15px; width: 15px;" name="taxFlagStr" value="1"
+                     th:checked="${merchant.taxFlag.value} == 1">
+          </div>
+          <div>
+            否：<input type="radio" style="height: 15px; width: 15px;" name="taxFlagStr" value="0"
+                     th:checked="${merchant.taxFlag.value} == 0">
+          </div>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>企业参数</label>
+        <input type="hidden" name="id" th:value="${merchant.id}">
+        <div id="editor"></div>
+      </div>
+
+    </div>
+
+
+  </form>
+</div>
+<script th:inline="javascript">
+  var args = [[${merchant.arguments}]]
+  $("#editor").jsoneditor({
+    inputName: "arguments",
+    json: args
+  });
+</script>
+</body>
+
+</html>

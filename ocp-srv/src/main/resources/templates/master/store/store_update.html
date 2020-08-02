@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="zh-cmn-Hans" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="common/layout::header( ~{::title})">
+    <title id="title">店铺信息管理</title>
+</head>
+<body>
+
+
+
+<div class="ui container" style="margin-top:10px;width: 95%">
+    <form class="ui form" id="updateForm" method="post" th:action="@{/store/update}">
+        <div class="field">
+            <div class="fields">
+                <div class="four wide field">
+                    <label class="form-require-before">店铺编码</label>
+                    <input name="id" type="hidden" th:value="${store.id}" style="width: 150px;height: 24px;">
+                    <input name="code" th:value="${store.code}" class="easyui-textbox" style="width: 150px;height: 24px;" required>
+                </div>
+                <!--<div class="four wide field">
+                    <label>海外仓编码</label>
+                    <input name="overseaHouseCode" th:value="${store.overseaHouseCode}" class="easyui-textbox" style="width: 150px;height: 24px;" >
+                </div>
+                <div class="four wide field">
+                    <label class="form-require-before">appId</label>
+                    <input name="appId" th:value="${store.appId}" class="easyui-textbox" style="width: 150px;height: 24px;" required>
+                </div>
+                <div class="four wide field">
+                    <label>appKey</label>
+                    <input name="appKey" th:value="${store.appKey}" class="easyui-textbox" style="width: 150px;height: 24px;">
+                </div>-->
+            <!--</div>
+            <div class="fields">-->
+                <div class="four wide field">
+                    <label class="form-require-before">电商平台</label>
+                    <span class="selectBox">
+                        <select class="form-select" name="platformCode"
+                                style="width: 150px;height: 24px;" required>
+                            <option value=""></option>
+                            <option th:each="platform : ${platformList}" th:otherFields="${platform.code}"
+                                    th:text="${platform.name}" th:value="${platform.code}"
+                                    th:selected="${store.platformCode == platform.code}">
+                            </option>
+                        </select>
+                        <i class="x icon clearBtn" title="清空"></i>
+                    </span>
+                </div>
+                <div class="four wide field">
+                    <label class="form-require-before">电商企业</label>
+                    <span class="selectBox">
+                        <select class="form-select" name="merchantCode"
+                                style="width: 150px;height: 24px;" required>
+                            <option value=""></option>
+                            <option th:each="merchant : ${merchantList}" th:otherFields="${merchant.code}"
+                                    th:text="${merchant.name}" th:value="${merchant.code}"
+                                    th:selected="${store.merchantCode == merchant.code}">
+                            </option>
+                        </select>
+                        <i class="x icon clearBtn" title="清空"></i>
+                    </span>
+                </div>
+                <div class="four wide field">
+                    <label class="form-require-before">业务类型</label>
+                    <span class="selectBox">
+                        <select id="add_busiType" class="form-select" name="busiType" data-options="multiple:true,separator:','" style="width: 150px;height: 24px;" required>
+	                        <option th:each="mode : ${busiModeList}" th:otherFields="${mode.key}"
+                                    th:text="${mode.value}" th:value="${mode.key}"></option>
+                        </select>
+                        <i class="x icon clearBtn" title="清空"></i>
+                    </span>
+                </div>
+            </div>
+            <div class="field">
+                <label>店铺参数</label>
+                <div id="editor"></div>
+            </div>
+            <div class="field">
+                <label>ESD店铺参数</label>
+                <div id="esdArguments"></div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script th:inline="javascript">
+    var busiType = [[${store.busiType}]]
+    var typeArr = _.split(busiType, ',');
+    $().ready(function () {
+        cntr.initSelect()
+        $("#add_busiType").combobox('setValues', typeArr)
+    });
+    var args = [[${store.arguments}]]
+    $("#editor").jsoneditor({
+        inputName: "arguments",
+        json: args
+    });
+    var esdArguments = [[${store.esdArguments}]]
+    $("#esdArguments").jsoneditor({
+        inputName: "esdArguments",
+        json: esdArguments
+    });
+</script>
+</body>
+
+</html>

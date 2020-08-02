@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.topideal.supplychain.ocp.master.mapper.LogisticsMapper" >
+  <resultMap id="BaseResultMap" type="com.topideal.supplychain.ocp.master.model.Logistics" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="is_deleted" property="isDeleted" jdbcType="INTEGER" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    id, code, name, is_deleted
+  </sql>
+
+  <sql id="queryCondition">
+      <where>
+        <if test="code != null and code != ''">
+          and code = #{code,jdbcType=BIGINT}
+        </if>
+        <if test="name != null and name != '' ">
+          and name like concat('%',#{name},'%')
+        </if>
+      </where>
+  </sql>
+
+  <select id="pageList" resultMap="BaseResultMap" parameterType="com.topideal.supplychain.ocp.master.model.Logistics" >
+    select
+    <include refid="Base_Column_List" />
+    from md_logistics
+    <include refid="queryCondition"/>
+  </select>
+
+    <select id="findAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from md_logistics
+        where is_deleted = 0
+    </select>
+
+  <update id="updateStatus" >
+    update md_logistics
+    set is_deleted = #{status}
+    WHERE id = #{id}
+  </update>
+
+
+</mapper>

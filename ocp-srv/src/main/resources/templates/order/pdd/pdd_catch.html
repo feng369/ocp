@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="zh-cmn-Hans" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="common/layout::header( ~{::title})">
+    <title id="title">拼多多单票抓单</title>
+</head>
+<body>
+
+<div class="ui container" style="margin-top:10px;width: 95%">
+    <form th:action="@{/pdd/catchOrder}" id="catchForm" name="catchForm" class="ui form" method="post">
+        <div class="field">
+            <div class="two fields">
+                <div class="required field">
+                    <label>订单号：</label>
+                    <input type="text" name="orderSn" class="easyui-textbox" placeholder="" required="true"/>
+                </div>
+                <div class="required field">
+                    <label>抓单配置：</label>
+                    <span class="selectBox">
+                        <select name="configId"  class="form-select"  style="width: 150px;height: 24px;" required="true">
+                          <option value=""></option>
+                            <option th:each="config : ${configList}"
+                                    th:text="${config.name}"
+                                    th:value="${config.id}"
+                                    th:otherFields="${config.code}">
+                            </option>
+                        </select>
+                        <i class="x icon clearBtn" th:title="#{button.clear}"></i>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<script type="text/javascript">
+    $(function () {
+        cntr.initSelect();
+    });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,476 @@
+<!doctype html>
+<html lang="zh-cmn-Hans" xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+
+<head th:replace="common/layout::header( ~{::title})">
+    <title id="title">标准订单详情页面</title>
+</head>
+
+
+<body>
+<style>
+    .subContainer .panel {
+        box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.3), 0px 0px 3px rgba(0, 0, 0, 0.1) inset;
+    }
+
+    .subContainer > .panel.easyui-fluid:not(:last-child) {
+        margin-bottom: 15px;
+    }
+
+    .subContainer .panel-body {
+        border-width: 0;
+        margin-top: 8px;
+        padding-bottom: 15px;
+    }
+
+    .subContainer .tableBox .datagrid .panel-body {
+        box-shadow: none;
+    }
+
+</style>
+<div class="ui fluid subContainer container box-form" style="margin-top:10px;width: 98%">
+    <div id="orderTb" class="easyui-panel" title="订单信息"
+         style="width:100%;"
+         data-options="collapsible:true">
+        <form class="ui form">
+            <div class="searchBox">
+                <ul>
+                    <li>
+                        <label class="important">系统业务单号</label>
+                        <div class="ui input mini">
+                            <input class="easyui-textbox" th:value="${orderPub.code}" readonly>
+                        </div>
+                    </li>
+                    <li>
+                        <label class="important">服务类型</label>
+                        <div class="ui input mini">
+                            <input class="easyui-textbox" th:value="${orderPub.serviceType}" readonly>
+                        </div>
+                    </li>
+                    <li>
+                        <label class="important">店铺编码</label>
+                        <div class="ui input mini">
+                            <input class="easyui-textbox" th:value="${orderPub.storeCode}" readonly>
+                        </div>
+                    </li>
+                    <li>
+                        <label>物流公司编码</label>
+                        <div class="ui input mini">
+                            <input class="easyui-textbox" th:value="${orderPub.logisticsCode}" readonly>
+                        </div>
+                    </li>
+                    <li>
+                        <label>物流运单号</label>
+                        <div class="ui input mini">
+                            <input class="easyui-textbox" th:value="${orderPub.logisticsNo}" readonly>
+                        </div>
+                    </li>
+                    <li>
+                        <label>国际快递单号</label>
+                        <div class="ui input mini">
+                            <input class="easyui-textbox" th:value="${orderPub.transportNo}" readonly>
+                        </div>
+                    </li>
+                    <li>
+                        <label>菜鸟物流单号</label>
+                        <div class="ui input mini">
+                            <input class="easyui-textbox" th:value="${orderPub.logisticsId}" readonly>
+                        </div>
+                    </li>
+                    <li>
+                        <label>淘宝店铺编码</label>
+                        <div class="ui input mini">
+                            <input class="easyui-textbox" th:value="${orderPub.sellerCode}" readonly>
+                        </div>
+                    </li>
+                    <li>
+                        <label class="important">订单创建时间</label>
+                        <div class="ui input mini">
+                            <input class="easyui-textbox"
+                                   th:value="${#calendars.format(orderPub.orderCreateTime,'yyyy-MM-dd HH:mm:ss')}"
+                                   readonly>
+                        </div>
+                    </li>
+                    <li>
+                        <label class="important">海外仓编码</label>
+                        <div class="ui input mini">
+                            <input class="easyui-textbox" th:value="${orderPub.warehouseCode}" readonly>
+                        </div>
+                    </li>
+                    <li>
+                        <label>卓志速运订单号</label>
+                        <div class="ui input mini">
+                            <input class="easyui-textbox" th:value="${orderPub.esdNo}" readonly>
+                        </div>
+                    </li>
+                    <li>
+                        <label class="important">交易订单号</label>
+                        <div class="ui input mini">
+                            <input class="easyui-textbox" th:value="${orderPub.orderNo}" readonly>
+                        </div>
+                    </li>
+                    <li>
+                        <label>支付企业编号</label>
+                        <div class="ui input mini">
+                            <input class="easyui-textbox" th:value="${orderPub.paymentEnterprise}" readonly>
+                        </div>
+                    </li>
+                    <li>
+                        <label>支付企业名称</label>
+                        <div class="ui input mini">
+                            <input class="easyui-textbox" th:value="${orderPub.paymentEnterpriseName}" readonly>
+                        </div>
+                    </li>
+                    <li>
+                        <label>支付流水号</label>
+                        <div class="ui input mini">
+                            <input class="easyui-textbox" th:value="${orderPub.paymentTransaction}" readonly>
+                        </div>
+                    </li>
+                    <li>
+                        <label>支付信息备注</label>
+                        <div class="ui input mini">
+                            <input class="easyui-textbox" th:value="${orderPub.paymentRemark}" readonly>
+                        </div>
+                    </li>
+                    <li>
+                        <label>面单url</label>
+                        <div class="ui input mini">
+                            <input class="easyui-textbox" th:value="${orderPub.wayBillUrl}" readonly>
+                        </div>
+                    </li>
+                    <li>
+                        <label>申报方案编码</label>
+                        <div class="ui input mini">
+                            <input class="easyui-textbox" th:value="${orderPub.declareSchemeSid}" readonly>
+                        </div>
+                    </li>
+                    <li>
+                        <label class="important">产品代码</label>
+                        <div class="ui input mini">
+                            <input class="easyui-textbox" th:value="${orderPub.productCode}" readonly>
+                        </div>
+                    </li>
+                    <li>
+                        <label>运费</label>
+                        <div class="ui input mini">
+                            <input class="easyui-textbox" th:value="${orderPub.totalFreight}" readonly>
+                        </div>
+                    </li>
+                    <li>
+                        <label>运费币制</label>
+                        <div class="ui input mini">
+                            <input class="easyui-textbox" th:value="${orderPub.totalCode}" readonly>
+                        </div>
+                    </li>
+                    <li>
+                        <label>保费</label>
+                        <div class="ui input mini">
+                            <input class="easyui-textbox" th:value="${orderPub.premiumFee}" readonly>
+                        </div>
+                    </li>
+                    <li>
+                        <label>保费币制</label>
+                        <div class="ui input mini">
+                            <input class="easyui-textbox" th:value="${orderPub.premiumCurrency}" readonly>
+                        </div>
+                    </li>
+                    <li>
+                        <label>税费</label>
+                        <div class="ui input mini">
+                            <input class="easyui-textbox" th:value="${orderPub.totalTaxes}" readonly>
+                        </div>
+                    </li>
+                    <li>
+                        <label>税费币制</label>
+                        <div class="ui input mini">
+                            <input class="easyui-textbox" th:value="${orderPub.taxCurrency}" readonly>
+                        </div>
+                    </li>
+                    <li>
+                        <label>优惠减免金额</label>
+                        <div class="ui input mini">
+                            <input class="easyui-textbox" th:value="${orderPub.discountFee}" readonly>
+                        </div>
+                    </li>
+                    <li>
+                        <label>优惠减免金额币制</label>
+                        <div class="ui input mini">
+                            <input class="easyui-textbox" th:value="${orderPub.discountCurrency}" readonly>
+                        </div>
+                    </li>
+                    <li>
+                        <label>包裹净重（kg）</label>
+                        <div class="ui input mini">
+                            <input class="easyui-textbox" th:value="${orderPub.netWeight}" readonly>
+                        </div>
+                    </li>
+                    <li>
+                        <label>包裹毛重（kg）</label>
+                        <div class="ui input mini">
+                            <input class="easyui-textbox" th:value="${orderPub.grossWeight}" readonly>
+                        </div>
+                    </li>
+                    <li>
+                        <label>提单号</label>
+                        <div class="ui input mini">
+                            <input class="easyui-textbox" th:value="${orderPub.billNo}" readonly>
+                        </div>
+                    </li>
+                    <li>
+                        <label class="important">电商平台</label>
+                        <div class="ui input mini">
+                            <input class="easyui-textbox" th:value="${orderPub.platformCode}" readonly>
+                        </div>
+                    </li>
+                    <li>
+                        <label class="important">是否溯源</label>
+                        <div class="ui input mini">
+                            <input class="easyui-textbox" th:value="${orderPub.isTrace}" readonly>
+                        </div>
+                    </li>
+                    <li>
+                        <label>溯源码值</label>
+                        <div class="ui input mini">
+                            <input class="easyui-textbox" th:value="${orderPub.zcode}" readonly>
+                        </div>
+                    </li>
+                    <li>
+                        <label>实际支付金额</label>
+                        <div class="ui input mini">
+                            <input class="easyui-textbox" th:value="${orderPub.totalTaxesPay}" readonly>
+                        </div>
+                    </li>
+                    <li>
+                        <label class="important">支付币制</label>
+                        <div class="ui input mini">
+                            <input class="easyui-textbox" th:value="${orderPub.totalPayCode}" readonly>
+                        </div>
+                    </li>
+                    <li>
+                        <label class="important">换单标志</label>
+                        <div class="ui input mini">
+                            <input class="easyui-textbox" th:value="${orderPub.isTrans}" readonly>
+                        </div>
+                    </li>
+                    <li>
+                        <label>备注</label>
+                        <div class="ui input mini">
+                            <input class="easyui-textbox" th:value="${orderPub.remark}" readonly>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </form>
+    </div>
+    <div id="senderTb" class="easyui-panel" title="发件人信息"
+         style="width:100%;"
+         data-options="collapsible:true">
+        <form class="ui form">
+            <div class="searchBox">
+                <ul>
+                    <li>
+                        <label class="important">姓名</label>
+                        <div class="ui input mini">
+                            <input class="easyui-textbox" th:value="${orderPub.senderName}" readonly>
+                        </div>
+                    </li>
+                    <li>
+                        <label>发件人电话</label>
+                        <div class="ui input mini">
+                            <input class="easyui-textbox" th:value="${orderPub.senderPhone}" readonly>
+                        </div>
+                    </li>
+                    <li>
+                        <label>发件人手机</label>
+                        <div class="ui input mini">
+                            <input class="easyui-textbox" th:value="${orderPub.senderMobile}" readonly>
+                        </div>
+                    </li>
+                    <li>
+                        <label class="important">发件人国家</label>
+                        <div class="ui input mini">
+                            <input class="easyui-textbox" th:value="${orderPub.senderCountry}" readonly>
+                        </div>
+                    </li>
+                    <li>
+                        <label>发件人省</label>
+                        <div class="ui input mini">
+                            <input class="easyui-textbox" th:value="${orderPub.senderProvince}" readonly>
+                        </div>
+                    </li>
+                    <li>
+                        <label class="important">发件人市</label>
+                        <div class="ui input mini">
+                            <input class="easyui-textbox" th:value="${orderPub.senderCity}" readonly>
+                        </div>
+                    </li>
+                    <li>
+                        <label>发件人区</label>
+                        <div class="ui input mini">
+                            <input class="easyui-textbox" th:value="${orderPub.senderCounty}" readonly>
+                        </div>
+                    </li>
+                    <li>
+                        <label class="important">发件人详细地址</label>
+                        <div class="ui input mini">
+                            <input class="easyui-textbox" th:value="${orderPub.senderAddress}" readonly>
+                        </div>
+                    </li>
+                    <li>
+                        <label>发件人邮编</label>
+                        <div class="ui input mini">
+                            <input class="easyui-textbox" th:value="${orderPub.senderZipCode}" readonly>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </form>
+    </div>
+    <div id="buyerTb" class="easyui-panel" title="订购人信息"
+         style="width:100%;"
+         data-options="collapsible:true">
+        <form class="ui form">
+            <div class="searchBox">
+                <ul>
+                    <li>
+                        <label>姓名</label>
+                        <div class="ui input mini">
+                            <input class="easyui-textbox" th:value="${orderPub.buyerName}" readonly>
+                        </div>
+                    </li>
+                    <li>
+                        <label>联系电话</label>
+                        <div class="ui input mini">
+                            <input class="easyui-textbox" th:value="${orderPub.buyerPhone}" readonly>
+                        </div>
+                    </li>
+                    <li>
+                        <label>订购人注册号</label>
+                        <div class="ui input mini">
+                            <input class="easyui-textbox" th:value="${orderPub.buyerMobile}" readonly>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </form>
+    </div>
+    <div id="receiverTb" class="easyui-panel" title="收件人信息"
+         style="width:100%;"
+         data-options="collapsible:true">
+        <form class="ui form">
+            <div class="searchBox">
+                <ul>
+                    <li>
+                        <label class="important">收件人姓名</label>
+                        <div class="ui input mini">
+                            <input class="easyui-textbox" th:value="${orderPub.receiverName}" readonly>
+                        </div>
+                    </li>
+                    <li>
+                        <label>收件人电话</label>
+                        <div class="ui input mini">
+                            <input class="easyui-textbox" th:value="${orderPub.receiverPhone}" readonly>
+                        </div>
+                    </li>
+                    <li>
+                        <label>收件人手机</label>
+                        <div class="ui input mini">
+                            <input class="easyui-textbox" th:value="${orderPub.receiverMobile}" readonly>
+                        </div>
+                    </li>
+                    <li>
+                        <label class="important">收件人国家</label>
+                        <div class="ui input mini">
+                            <input class="easyui-textbox" th:value="${orderPub.receiverCountry}" readonly>
+                        </div>
+                    </li>
+                    <li>
+                        <label class="important">收件人省</label>
+                        <div class="ui input mini">
+                            <input class="easyui-textbox" th:value="${orderPub.receiverProvince}" readonly>
+                        </div>
+                    </li>
+                    <li>
+                        <label class="important">收件人市</label>
+                        <div class="ui input mini">
+                            <input class="easyui-textbox" th:value="${orderPub.receiverCity}" readonly>
+                        </div>
+                    </li>
+                    <li>
+                        <label>收件人区</label>
+                        <div class="ui input mini">
+                            <input class="easyui-textbox" th:value="${orderPub.receiverCounty}" readonly>
+                        </div>
+                    </li>
+                    <li>
+                        <label class="important">收件人详细地址</label>
+                        <div class="ui input mini">
+                            <input class="easyui-textbox" th:value="${orderPub.receiverAddress}" readonly>
+                        </div>
+                    </li>
+                    <li>
+                        <label>收件人邮编</label>
+                        <div class="ui input mini">
+                            <input class="easyui-textbox" th:value="${orderPub.receiverZipCode}" readonly>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </form>
+    </div>
+    <div id="itemTb" class="easyui-panel" title="商品信息"
+         style="width:100%;"
+         data-options="collapsible:true">
+        <div class="tableBox">
+            <table id="itemTable" striped="true" style="width:99%;">
+                <thead>
+                <tr>
+                    <th field="itemNo" width="50">序号</th>
+                    <th field="goodsCode" width="120">商品货号</th>
+                    <th field="isPretence" width="120">是否商品备案</th>
+                    <th field="goodsName" width="120">商品名称</th>
+                    <th field="itemCategory" width="120">商品行邮税号</th>
+                    <th field="hsCode" width="120">HS海关编码</th>
+                    <th field="custNo" width="120">商品海关备案号</th>
+                    <th field="ciqNo" width="120">商品国检备案号</th>
+                    <th field="qty" width="120">商品数量</th>
+                    <th field="netWeight" width="120">商品净重(kg)</th>
+                    <th field="grossWeight" width="120">商品毛重(kg)</th>
+                    <th field="unitPrice" width="120">商品单价</th>
+                    <th field="currency" width="120">单价币制</th>
+                    <th field="unit" width="120">计量单位</th>
+                    <th field="unit1" width="120">第一法定单位</th>
+                    <th field="qty1" width="120">第一法定数量</th>
+                    <th field="unit2" width="120">第二法定单位</th>
+                    <th field="qty2" width="120">第二法定数量</th>
+                    <th field="brand" width="120">品牌</th>
+                    <th field="tax" width="120">商品税金</th>
+                    <th field="oriCountry" width="120">原产国</th>
+                    <th field="oriArea" width="120">国检原产地</th>
+                    <th field="spec" width="120">规格型号</th>
+                    <th field="barCode" width="120">商品条形码</th>
+                </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+<script th:inline="javascript">
+    $(function () {
+        var id = [[${orderPub.id}]];
+        $('#itemTable').datagrid({
+            initCount: 1,//开始就加载
+            url: basePath + '/orderPub/detail/json/' + id,
+            method: 'post',
+            rownumbers :true
+        });
+        $(window).resize();
+    })
+
+</script>
+</body>
+
+</html>

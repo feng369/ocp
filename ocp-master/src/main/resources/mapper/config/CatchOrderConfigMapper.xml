@@ -1,0 +1,401 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.topideal.supplychain.ocp.config.mapper.CatchOrderConfigMapper" >
+  <resultMap id="BaseResultMap" type="com.topideal.supplychain.ocp.config.model.CatchOrderConfig" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="platform_code" property="platformCode" jdbcType="VARCHAR" />
+    <result column="platform_name" property="platformName" jdbcType="VARCHAR" />
+    <result column="merchant_code" property="merchantCode" jdbcType="VARCHAR" />
+    <result column="merchant_name" property="merchantName" jdbcType="VARCHAR" />
+    <!--<result column="cron" property="cron" jdbcType="VARCHAR" />
+    <result column="execute_class" property="executeClass" jdbcType="VARCHAR" />
+    <result column="single_method" property="singleMethod" jdbcType="VARCHAR" />
+    <result column="multiple_method" property="multipleMethod" jdbcType="VARCHAR" />
+    <result column="last_run_time" property="lastRunTime" jdbcType="TIMESTAMP" />-->
+    <result column="last_query_time" property="lastQueryTime" jdbcType="TIMESTAMP" />
+    <!--<result column="default_query_time" property="defaultQueryTime" jdbcType="TIMESTAMP" />-->
+    <result column="interval_count" property="intervalCount" jdbcType="INTEGER" />
+    <!--<result column="delay" property="delay" jdbcType="INTEGER" />
+    <result column="url" property="url" jdbcType="VARCHAR" />-->
+    <result column="page_size" property="pageSize" jdbcType="INTEGER" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="store_code" property="storeCode" jdbcType="VARCHAR" />
+    <result column="store_id" property="storeId" jdbcType="BIGINT" />
+    <result column="create_by" property="createBy" jdbcType="BIGINT" />
+    <result column="update_by" property="updateBy" jdbcType="BIGINT" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="version" property="version" jdbcType="INTEGER" />
+    <result column="tenant_id" property="tenantId" jdbcType="BIGINT" />
+    <result column="is_deleted" property="isDeleted" jdbcType="BIT" />
+    <result column="default_arguments" property="defaultArguments" jdbcType="VARCHAR" />
+    <!--<result column="job_arguments" property="jobArguments" jdbcType="VARCHAR" />-->
+    <result column="platform_arguments" property="platformArguments" jdbcType="VARCHAR" />
+    <result column="grab_id" property="grabId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, code, name, platform_code, platform_name, merchant_code, merchant_name,last_query_time, interval_count, grab_id,page_size,
+    remark, store_code, store_id, create_by, update_by, create_time,
+    update_time, version, tenant_id, is_deleted, default_arguments, platform_arguments
+  </sql>
+  <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from cfg_catch_order_config
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteById" parameterType="java.lang.Long" >
+    delete from cfg_catch_order_config
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.topideal.supplychain.ocp.config.model.CatchOrderConfig" >
+    insert into cfg_catch_order_config
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="platformCode != null" >
+        platform_code,
+      </if>
+      <if test="platformName != null" >
+        platform_name,
+      </if>
+      <if test="merchantCode != null" >
+        merchant_code,
+      </if>
+      <if test="merchantName != null" >
+        merchant_name,
+      </if>
+      <if test="lastQueryTime != null" >
+        last_query_time,
+      </if>
+      <if test="intervalCount != null" >
+        interval_count,
+      </if>
+      <if test="pageSize != null" >
+        page_size,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="storeCode != null" >
+        store_code,
+      </if>
+      <if test="storeId != null" >
+        store_id,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="version != null" >
+        version,
+      </if>
+      <if test="tenantId != null" >
+        tenant_id,
+      </if>
+      <if test="isDeleted != null" >
+        is_deleted,
+      </if>
+      <if test="defaultArguments != null" >
+        default_arguments,
+      </if>
+      <if test="platformArguments != null" >
+        platform_arguments,
+      </if>
+      <if test="grabId != null" >
+        grab_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="platformCode != null" >
+        #{platformCode,jdbcType=VARCHAR},
+      </if>
+      <if test="platformName != null" >
+        #{platformName,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantCode != null" >
+        #{merchantCode,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantName != null" >
+        #{merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="lastQueryTime != null" >
+        #{lastQueryTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="intervalCount != null" >
+        #{intervalCount,jdbcType=INTEGER},
+      </if>
+      <if test="pageSize != null" >
+        #{pageSize,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="storeCode != null" >
+        #{storeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="storeId != null" >
+        #{storeId,jdbcType=BIGINT},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=BIGINT},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="version != null" >
+        #{version,jdbcType=INTEGER},
+      </if>
+      <if test="tenantId != null" >
+        #{tenantId,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null" >
+        #{isDeleted,jdbcType=BIT},
+      </if>
+      <if test="defaultArguments != null" >
+        #{defaultArguments,jdbcType=VARCHAR},
+      </if>
+      <if test="platformArguments != null" >
+        #{platformArguments,jdbcType=VARCHAR},
+      </if>
+      <if test="grabId != null" >
+        #{grabId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="update" parameterType="com.topideal.supplychain.ocp.config.model.CatchOrderConfig" >
+    update cfg_catch_order_config
+    <set>
+      <if test="code != null" >
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="platformCode != null" >
+        platform_code = #{platformCode,jdbcType=VARCHAR},
+      </if>
+      <if test="platformName != null" >
+        platform_name = #{platformName,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantCode != null" >
+        merchant_code = #{merchantCode,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantName != null" >
+        merchant_name = #{merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="lastQueryTime != null" >
+        last_query_time = #{lastQueryTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="intervalCount != null" >
+        interval_count = #{intervalCount,jdbcType=INTEGER},
+      </if>
+      <if test="pageSize != null" >
+        page_size = #{pageSize,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="storeCode != null" >
+        store_code = #{storeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="storeId != null" >
+        store_id = #{storeId,jdbcType=BIGINT},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=BIGINT},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="version != null" >
+        version = #{version,jdbcType=INTEGER},
+      </if>
+      <if test="tenantId != null" >
+        tenant_id = #{tenantId,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null" >
+        is_deleted = #{isDeleted,jdbcType=BIT},
+      </if>
+      <if test="defaultArguments != null" >
+        default_arguments = #{defaultArguments,jdbcType=VARCHAR},
+      </if>
+      <!--<if test="jobArguments != null" >
+        job_arguments = #{jobArguments,jdbcType=VARCHAR},
+      </if>-->
+      <if test="platformArguments != null" >
+        platform_arguments = #{platformArguments,jdbcType=VARCHAR},
+      </if>
+      <if test="grabId != null" >
+        grab_id = #{grabId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="pageList" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from cfg_catch_order_config
+    <include refid="queryCondition"/>
+  </select>
+
+  <sql id="queryCondition">
+    <where>
+      <if test="code != null and code != ''">
+        and code = #{code,jdbcType=VARCHAR}
+      </if>
+      <if test="isDeleted != null">
+        and is_deleted = #{isDeleted,jdbcType=BIT}
+      </if>
+      <if test="name != null and name != '' ">
+        and name like "%"#{name,jdbcType=VARCHAR}"%"
+      </if>
+      <if test="platformCode != null and platformCode != ''">
+        and platform_code = #{platformCode,jdbcType=VARCHAR}
+      </if>
+      <if test="merchantCode != null and merchantCode != ''">
+        and merchant_code = #{merchantCode,jdbcType=VARCHAR}
+      </if>
+      <if test="grabId != null and grabId != ''">
+        and grab_id = #{grabId,jdbcType=VARCHAR}
+      </if>
+      <!--<if test="createBeginTime != null">
+        and create_time <![CDATA[>=]]>
+        #{createBeginTime}
+      </if>
+      <if test="createEndTime != null">
+        and create_time <![CDATA[<=]]>
+        #{createEndTime}
+      </if>
+      <if test="updateBeginTime != null">
+        and update_time <![CDATA[>=]]>
+        #{updateBeginTime}
+      </if>
+      <if test="updateEndTime != null">
+        and update_time <![CDATA[<=]]>
+        #{updateEndTime}
+      </if>-->
+    </where>
+  </sql>
+
+  <update id="enable">
+    update cfg_catch_order_config
+    set is_deleted = #{enable}
+    where id in
+    <foreach item="id" collection="ids" open="(" separator="," close=")">
+      #{id}
+    </foreach>
+  </update>
+
+  <update id="disable">
+    update cfg_catch_order_config
+    set is_deleted = #{disable}
+    where id in
+    <foreach item="id" collection="ids" open="(" separator="," close=")">
+      #{id}
+    </foreach>
+  </update>
+
+
+  <select id="selectByPlatform" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List"></include>
+    FROM cfg_catch_order_config WHERE is_deleted = 0 and
+    platform_code in
+    <foreach item="platform" collection="platforms" open="(" separator="," close=")">
+      #{platform.code}
+    </foreach>
+  </select>
+
+  <select id="selectByPlatformCode" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List"></include>
+    FROM cfg_catch_order_config WHERE is_deleted = 0 and
+    platform_code = #{code}
+  </select>
+
+  <select id="selectEnableById" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from cfg_catch_order_config
+    where id = #{id,jdbcType=BIGINT} and is_deleted = 0
+  </select>
+
+  <select id="selectByCode" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select
+    <include refid="Base_Column_List" />
+    from cfg_catch_order_config
+    where code = #{code,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByGrabKey" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from cfg_catch_order_config
+    where grab_id = #{grabKey,jdbcType=VARCHAR} and is_deleted = 0
+  </select>
+
+  <update id="edit" parameterType="com.topideal.supplychain.ocp.config.model.CatchOrderConfig" >
+    update cfg_catch_order_config
+    <set>
+        name = #{name,jdbcType=VARCHAR},
+        platform_code = #{platformCode,jdbcType=VARCHAR},
+        platform_name = #{platformName,jdbcType=VARCHAR},
+        merchant_code = #{merchantCode,jdbcType=VARCHAR},
+        merchant_name = #{merchantName,jdbcType=VARCHAR},
+        page_size = #{pageSize,jdbcType=INTEGER},
+        interval_count = #{intervalCount,jdbcType=INTEGER},
+        remark = #{remark,jdbcType=VARCHAR},
+        store_code = #{storeCode,jdbcType=VARCHAR},
+        store_id = #{storeId,jdbcType=BIGINT},
+        update_by = #{updateBy,jdbcType=BIGINT},
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+        last_query_time = #{lastQueryTime,jdbcType=TIMESTAMP},
+        default_arguments = #{defaultArguments,jdbcType=VARCHAR},
+        platform_arguments = #{platformArguments,jdbcType=VARCHAR},
+        grab_id = #{grabId,jdbcType=VARCHAR}
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateQueryTime">
+      update cfg_catch_order_config set last_query_time = #{queryTime}
+      where id = #{id}
+  </update>
+</mapper>

@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.topideal.supplychain.ocp.master.mapper.MerchantMapper">
+    <resultMap id="BaseResultMap" type="com.topideal.supplychain.ocp.master.model.Merchant">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="code" property="code" jdbcType="VARCHAR"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="short_name" property="shortName" jdbcType="VARCHAR"/>
+        <result column="arguments" property="arguments" jdbcType="OTHER" />
+        <result column="tax_flag" property="taxFlag" jdbcType="TINYINT" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="create_by" property="createBy" jdbcType="INTEGER"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+        <result column="update_by" property="updateBy" jdbcType="INTEGER"/>
+        <result column="version" property="version" jdbcType="INTEGER"/>
+        <result column="is_deleted" property="isDeleted" jdbcType="INTEGER"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, code, `name`, short_name, arguments,tax_flag,create_time, create_by, update_time, update_by, version,
+    is_deleted
+    </sql>
+
+    <select id="findById" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from md_merchant
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <select id="findAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from md_merchant
+        where is_deleted = 0
+    </select>
+
+    <select id="findBySelective" resultMap="BaseResultMap"
+            parameterType="com.topideal.supplychain.ocp.master.model.Merchant">
+        select
+        <include refid="Base_Column_List"/>
+        from md_merchant
+        <include refid="queryCondition"/>
+    </select>
+
+    <select id="findByCode" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from md_merchant
+        where is_deleted = 0 and code = #{code}
+    </select>
+
+
+    <sql id="queryCondition">
+        <where>
+            <if test="code != null and code != ''">
+                and code = #{code,jdbcType=BIGINT}
+            </if>
+            <if test="name != null and name != ''">
+                and name like concat('%',#{name},'%')
+            </if>
+            <if test="shortName != null and shortName != '' ">
+                and short_name = #{shortName,jdbcType=BIGINT}
+            </if>
+        </where>
+    </sql>
+
+
+    <insert id="insert" parameterType="com.topideal.supplychain.ocp.master.model.Merchant" useGeneratedKeys="true" keyProperty="id">
+        insert into md_merchant
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="code != null">
+                code,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="shortName != null">
+                short_name,
+            </if>
+            <if test="arguments != null">
+                arguments,
+            </if>
+            <if test="taxFlag != null">
+                tax_flag,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="createBy != null">
+                create_by,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="updateBy != null">
+                update_by,
+            </if>
+            <if test="version != null">
+                version,
+            </if>
+            <if test="isDeleted != null">
+                is_deleted,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="code != null">
+                #{code,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="shortName != null">
+                #{shortName,jdbcType=VARCHAR},
+            </if>
+            <if test="arguments != null">
+                #{arguments,jdbcType=VARCHAR},
+            </if>
+            <if test="taxFlag != null">
+                #{taxFlag,jdbcType=TINYINT},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createBy != null">
+                #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateBy != null">
+                #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="version != null">
+                #{version,jdbcType=INTEGER},
+            </if>
+            <if test="isDeleted != null">
+                #{isDeleted,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <update id="update" parameterType="com.topideal.supplychain.ocp.master.model.Merchant">
+        <!--
+          WARNING - @mbggenerated
+          This element is automatically generated by MyBatis Generator, do ngeneratorConfigot modify.
+          This element was generated on Fri May 10 16:00:45 CST 2019.
+        -->
+        update md_merchant
+        <set>
+            <if test="code != null">
+                code = #{code,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="shortName != null">
+                short_name = #{shortName,jdbcType=VARCHAR},
+            </if>
+            <if test="arguments != null">
+                arguments = #{arguments,jdbcType=VARCHAR},
+            </if>
+            <if test="taxFlag != null">
+                tax_flag = #{taxFlag,jdbcType=TINYINT},
+            </if>
+            <if test="taxFlagStr != null">
+                tax_flag = #{taxFlagStr},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createBy != null">
+                create_by = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateBy != null">
+                update_by = #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="version != null">
+                version = #{version,jdbcType=INTEGER},
+            </if>
+            <if test="isDeleted != null">
+                is_deleted = #{isDeleted,jdbcType=INTEGER},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+
+    <update id="forbidden" parameterType="map">
+        update md_merchant
+        set is_deleted = 1
+        where id in
+        <foreach item="id" collection="ids" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
+
+    <update id="updateStatus" >
+        update md_merchant
+        set is_deleted = #{status}
+        WHERE id = #{id}
+    </update>
+
+    <select id="autoCompletion" resultMap="BaseResultMap">
+        select
+        code, short_name,name
+        from md_merchant
+        <where>
+            <if test="keyword != null">
+                code like CONCAT('%',#{keyword},'%')
+                or short_name like CONCAT('%',#{keyword},'%')
+                or name like CONCAT('%',#{keyword},'%')
+            </if>
+        </where>
+        limit 20
+
+    </select>
+</mapper>

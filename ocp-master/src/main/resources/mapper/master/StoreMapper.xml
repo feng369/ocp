@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.topideal.supplychain.ocp.master.mapper.StoreMapper" >
+  <resultMap id="BaseResultMap" type="com.topideal.supplychain.ocp.master.model.Store" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="busi_type" property="busiType" jdbcType="VARCHAR" />
+    <result column="platform_code" property="platformCode" jdbcType="VARCHAR" />
+    <result column="merchant_code" property="merchantCode" jdbcType="VARCHAR" />
+    <!--<result column="oversea_house_code" property="overseaHouseCode" jdbcType="VARCHAR" />
+    <result column="app_id" property="appId" jdbcType="VARCHAR" />
+    <result column="app_key" property="appKey" jdbcType="VARCHAR" />-->
+    <result column="arguments" property="arguments" jdbcType="VARCHAR" />
+    <result column="esd_arguments" property="esdArguments" jdbcType="VARCHAR" />
+    <result column="create_by" property="createBy" jdbcType="BIGINT" />
+    <result column="update_by" property="updateBy" jdbcType="BIGINT" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="version" property="version" jdbcType="INTEGER" />
+    <result column="tenant_id" property="tenantId" jdbcType="BIGINT" />
+    <result column="is_deleted" property="isDeleted" jdbcType="INTEGER" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    id, code, busi_type, platform_code, merchant_code,
+    arguments,esd_arguments, create_by, update_by, create_time, update_time, version, tenant_id, is_deleted
+  </sql>
+
+  <select id="autoCompletion" resultMap="BaseResultMap">
+    select
+    id,code
+    from md_store
+    <where>
+      <if test="keyword != null">
+        code like CONCAT('%',#{keyword},'%')
+        or id = #{keyword}
+      </if>
+    </where>
+    limit 20
+  </select>
+
+  <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from md_store
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <select id="selectEnableById" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from md_store
+    where id = #{id,jdbcType=BIGINT} and is_deleted = 0
+  </select>
+
+  <select id="selectEnableByCodes" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from md_store
+    where code = #{storeCode,jdbcType=VARCHAR} and is_deleted = 0
+  </select>
+
+  <select id="selectByCode" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from md_store
+    where
+      code = #{code,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectEnableByCode" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from md_store
+    where
+      code = #{code,jdbcType=VARCHAR}
+      and is_deleted = 0
+  </select>
+
+  <select id="selectByCondition" parameterType="com.topideal.supplychain.ocp.master.dto.StoreDto" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from md_store
+    <where>
+        <if test="platformCode != null">
+          and platform_code = #{platformCode,jdbcType=VARCHAR}
+        </if>
+        <if test="merchantCode != null">
+          and merchant_code = #{merchantCode,jdbcType=VARCHAR}
+        </if>
+        <if test="code != null">
+          and code = #{code,jdbcType=VARCHAR}
+        </if>
+        <if test="platformCodeList != null">
+          and platform_code in
+          <foreach collection="platformCodeList" item="item" separator="," open="(" close=")">
+            ${item}
+          </foreach>
+        </if>
+    </where>
+  </select>
+
+  <select id="findAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from md_store
+  </select>
+
+  <select id="pageList" resultType="com.topideal.supplychain.ocp.master.dto.StoreDto" parameterType="com.topideal.supplychain.ocp.master.dto.StoreDto">
+    select
+    s.id, s.is_deleted isDeleted, s.busi_type busiType, p.name as platformName, m.name as merchantName, s.code,
+    s.arguments arguments,s.esd_arguments esdArguments
+    from md_store s
+    left join md_platform p on s.platform_code = p.code
+    left join md_merchant m on s.merchant_code = m.code
+    <include refid="queryCondition"/>
+    order by s.id desc
+  </select>
+
+  <sql id="queryCondition">
+    <where>
+      <if test="platformCode != null and platformCode != ''">
+        and s.platform_code = #{platformCode,jdbcType=VARCHAR}
+      </if>
+      <if test="merchantCode != null and merchantCode != '' ">
+        and s.merchant_code = #{merchantCode,jdbcType=VARCHAR}
+      </if>
+      <if test="code != null and code != '' ">
+        and s.code = #{code,jdbcType=VARCHAR}
+      </if>
+    </where>
+  </sql>
+
+  <update id="disable">
+    UPDATE md_store SET is_deleted = 1
+    where id in
+    <foreach item="id" collection="ids" open="(" separator="," close=")">
+      #{id}
+    </foreach>
+  </update>
+
+  <update id="enable" >
+    UPDATE md_store SET is_deleted = 0
+    where id in
+    <foreach item="id" collection="ids" open="(" separator="," close=")">
+      #{id}
+    </foreach>
+  </update>
+
+  <delete id="removeById" parameterType="java.lang.Long" >
+    delete from md_store
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.topideal.supplychain.ocp.master.model.Store" >
+    insert into md_store
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="busiType != null" >
+        busi_type,
+      </if>
+      <if test="platformCode != null" >
+        platform_code,
+      </if>
+      <if test="merchantCode != null" >
+        merchant_code,
+      </if>
+      <if test="arguments != null" >
+        arguments,
+      </if>
+      <if test="esdArguments != null" >
+        esd_arguments,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="version != null" >
+        version,
+      </if>
+      <if test="tenantId != null" >
+        tenant_id,
+      </if>
+      <if test="isDeleted != null" >
+        is_deleted,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="busiType != null" >
+        #{busiType,jdbcType=VARCHAR},
+      </if>
+      <if test="platformCode != null" >
+        #{platformCode,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantCode != null" >
+        #{merchantCode,jdbcType=VARCHAR},
+      </if>
+      <if test="arguments != null" >
+        #{arguments,jdbcType=VARCHAR},
+      </if>
+      <if test="esdArguments != null" >
+        #{esdArguments,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=BIGINT},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="version != null" >
+        #{version,jdbcType=INTEGER},
+      </if>
+      <if test="tenantId != null" >
+        #{tenantId,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null" >
+        #{isDeleted,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="update" parameterType="com.topideal.supplychain.ocp.master.model.Store" >
+    update md_store
+    <set >
+      <if test="code != null" >
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="busiType != null" >
+        busi_type = #{busiType,jdbcType=VARCHAR},
+      </if>
+      <if test="platformCode != null" >
+        platform_code = #{platformCode,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantCode != null" >
+        merchant_code = #{merchantCode,jdbcType=VARCHAR},
+      </if>
+      <if test="arguments != null" >
+        arguments = #{arguments,jdbcType=VARCHAR},
+      </if>
+      <if test="esdArguments != null" >
+        esd_arguments = #{esdArguments,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=BIGINT},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="version != null" >
+        version = #{version,jdbcType=INTEGER},
+      </if>
+      <if test="tenantId != null" >
+        tenant_id = #{tenantId,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null" >
+        is_deleted = #{isDeleted,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateAll" parameterType="com.topideal.supplychain.ocp.master.model.Store" >
+    update md_store
+    <set >
+      code = #{code,jdbcType=VARCHAR},
+      busi_type = #{busiType,jdbcType=VARCHAR},
+      platform_code = #{platformCode,jdbcType=VARCHAR},
+      merchant_code = #{merchantCode,jdbcType=VARCHAR},
+      arguments = #{arguments,jdbcType=VARCHAR},
+      esd_arguments = #{esdArguments,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=BIGINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=BIGINT},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      version = #{version,jdbcType=INTEGER},
+      tenant_id = #{tenantId,jdbcType=BIGINT},
+      is_deleted = #{isDeleted,jdbcType=BIT},
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="findByFilter" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from md_store
+    <where>
+      <if test ="code != null">
+        AND code = #{code}
+      </if>
+      <if test ="busiType != null">
+        AND busi_type = #{busiType}
+      </if>
+      <if test ="platformCode != null">
+        AND platform_code = #{platformCode}
+      </if>
+      <if test ="merchantCode != null">
+        AND merchant_code = #{merchantCode}
+      </if>
+      <if test ="arguments != null">
+        AND arguments = #{arguments}
+      </if>
+    </where>
+  </select>
+
+  <select id="findByPlatforms" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List"></include>
+    FROM md_store WHERE is_deleted = 0 and
+    platform_code in
+    <foreach item="platform" collection="platforms" open="(" separator="," close=")">
+      #{platform.code}
+    </foreach>
+  </select>
+
+</mapper>

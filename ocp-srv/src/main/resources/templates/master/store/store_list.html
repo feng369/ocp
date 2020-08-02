@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="zh-cmn-Hans" xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+
+<head th:replace="common/layout::header( ~{::title})">
+  <title id="title">店铺信息</title>
+</head>
+<body>
+<div class="contentBox">
+  <div class="ui fluid container box-form">
+    <form class="ui form" id="searchForm" method="post">
+      <div class="field">
+        <div class="inline fields">
+          <div class="field">
+            <label>电商平台：</label>
+            <span class="selectBox">
+                            <select id="platformCode" class="form-select" name="platformCode"
+                                    style="width: 150px;height: 24px;">
+                                <option value=""></option>
+                                <option th:each="platform : ${platformList}"
+                                        th:text="${platform.name}"
+                                        th:value="${platform.code}"
+                                        th:otherFields="${platform.code}">
+                                </option>
+                            </select>
+                            <i class="x icon clearBtn" title="清空"></i>
+                        </span>
+          </div>
+          <div class="field">
+            <label>电商企业：</label>
+            <span class="selectBox">
+                            <select id="merchantCode" class="form-select" name="merchantCode"
+                                    style="width: 150px;height: 24px;">
+                                <option value=""></option>
+                                <option th:each="merchant : ${merchantList}"
+                                        th:text="${merchant.name}"
+                                        th:value="${merchant.code}"
+                                        th:otherFields="${merchant.code}">
+                                </option>
+                            </select>
+                            <i class="x icon clearBtn" title="清空"></i>
+                        </span>
+          </div>
+          <div class="field">
+            <label>店铺编码：</label>
+            <input name="code" style="width: 150px;height: 24px;">
+          </div>
+          <!--<div class="field">
+              <label>appId：</label>
+              <input name="appId" style="width: 150px;height: 24px;">
+          </div>-->
+        </div>
+      </div>
+      <div class="field" style="text-align:center">
+        <a href="#" class="ui mini primary button form-search"><i class="search icon"></i>查询</a>
+        <a href="#" class="ui mini primar grey button form-reset"><i class="undo icon"></i>重置</a>
+      </div>
+    </form>
+  </div>
+  <div class="tableBox">
+    <table id="tt" toolbar="#tb" style="height: 100%;" striped="true">
+      <thead>
+      <tr>
+        <th field="ck" align="center" halign="center" checkbox="true"></th>
+        <th field="id" formatter="btnFomatter">操作</th>
+        <th field="isDeleted" width="80px">是否启用</th>
+        <th field="busiModeName" width="100px">类型</th>
+        <th field="platformName" width="150px">电商平台</th>
+        <th field="merchantName" width="150px">电商企业</th>
+        <th field="code" width="150px">店铺编码</th>
+        <!--<th field="overseaHouseCode" width="100px">海外仓编码</th>
+        <th field="appId" width="200px">appId</th>
+        <th field="appKey" width="200px">appKey</th>-->
+        <th field="arguments" width="300px" formatter="argFormatter">店铺参数</th>
+        <th field="esdArguments" width="300px" formatter="argFormatter">ESD店铺参数</th>
+      </tr>
+      </thead>
+    </table>
+  </div>
+
+  <div id="tb" style="display:none;">
+    <a shiro:hasPermission="master.store.add" class="easyui-linkbutton" plain="true"
+       onclick="add()"><i class="green plus square icon"></i>新增</a>
+    <a shiro:hasPermission="master.store.enable" class="easyui-linkbutton" plain="true"
+       onclick="enable()"><i class="green check circle icon"></i>启用</a>
+    <a shiro:hasPermission="master.store.disable" class="easyui-linkbutton" plain="true"
+       onclick="disable()"><i class="red ban icon"></i>禁用</a>
+  </div>
+
+  <div id="tv" style="display: none">
+    <i shiro:hasPermission="master.store.update" class="blue edit outline icon register-tip"
+       data-content="编辑" style="cursor:pointer" onclick="edit(this)"></i>
+    <i shiro:hasPermission="master.store.remove" class="red trash alternate icon register-tip"
+       data-content="删除" style="cursor:pointer" onclick="remove(this)"></i>
+  </div>
+
+</div>
+<div id="modalDiv"></div>
+</body>
+</html>
+<script type="text/javascript">
+  $(function () {
+    $('#tt').datagrid({
+      formId: "#searchForm",
+      url: basePath + '/store/json',
+      method: 'post',
+      singleSelect: false,
+      pagination: true
+    });
+  });
+
+  function argFormatter(val, row, index) {
+    if (val) {
+      return "<span class='register-tip' data-content='" + val + " '>" + val + "</span>";
+    }
+  }
+
+  function add() {
+    $('#modalDiv').dialog({
+      title: "新增",
+      width: '80%',
+      height: '80%',
+      closed: false,
+      cache: false,
+      href: basePath + '/store/toAdd',
+      modal: true,
+      buttons: [{
+        text: '保存',
+        handler: function () {
+          $("#addForm").form('submit', {
+            onSubmit: function () {
+              return $(this).form('validate');
+            },
+            success: function (data) {
+              var response = JSON.parse(data)
+              tips.alert(response.message);
+              if (response.flag == "SUCCESS") {
+                $('#tt').datagrid('reload');
+                $('#modalDiv').dialog('close')
+              }
+            }
+          });
+        }
+      }, {
+        text: '取消',
+        handler: function () {
+          $('#modalDiv').dialog('close')
+        }
+      }]
+    });
+  }
+
+  function edit(target) {
+    var id = $(target).attr("data-id");
+    $('#modalDiv').dialog({
+      title: "编辑",
+      width: '80%',
+      height: '80%',
+      closed: false,
+      cache: false,
+      href: basePath + '/store/toUpdate?id=' + id,
+      modal: true,
+      buttons: [{
+        text: '保存',
+        handler: function () {
+          $("#updateForm").form('submit', {
+            onSubmit: function () {
+              return $(this).form('validate');
+            },
+            success: function (data) {
+              var response = JSON.parse(data)
+              tips.alert(response.message);
+              if (response.flag == "SUCCESS") {
+                $('#tt').datagrid('reload');
+                $('#modalDiv').dialog('close')
+              }
+            }
+          });
+        }
+      }, {
+        text: '取消',
+        handler: function () {
+          $('#modalDiv').dialog('close')
+        }
+      }]
+    });
+  }
+
+  function enable() {
+    var selectDatas = $('#tt').datagrid('getChecked');
+    if (selectDatas.length == 0) {
+      tips.alert("至少选择一行数据！");
+      return;
+    }
+    var ids = _.map(selectDatas, 'id');//map操作，获取所有元素的id集合
+    tips.confirm("是否要启用选中的数据？", function (r) {
+      $.ajax({
+        type: "POST",
+        url: basePath + "/store/enable",
+        data: {"ids": ids},
+        modalWindow: true,
+        traditional: true,
+        success: function (data) {
+          tips.alert(data.message);
+          if (data.flag == "SUCCESS") {
+            $('#tt').datagrid('reload');
+          }
+        },
+      });
+    });
+  }
+
+  function disable() {
+    var selectDatas = $('#tt').datagrid('getChecked');
+    if (selectDatas.length == 0) {
+      tips.alert("至少选择一行数据！");
+      return;
+    }
+    var ids = _.map(selectDatas, 'id');//map操作，获取所有元素的id集合
+    tips.confirm("是否要禁用选中的数据？", function (r) {
+      $.ajax({
+        type: "POST",
+        url: basePath + "/store/disable",
+        data: {"ids": ids},
+        modalWindow: true,
+        traditional: true,
+        success: function (data) {
+          tips.alert(data.message);
+          if (data.flag == "SUCCESS") {
+            $('#tt').datagrid('reload');
+          }
+        },
+      });
+    });
+  }
+
+  function remove(target) {
+    var id = $(target).attr("data-id");
+    var index = $(target).attr("data-index");
+    var code = getRow("tt", index).code;
+    tips.confirm("确定要删除店铺:" + code + "吗？", function (r) {
+      $.ajax({
+        type: "POST",
+        url: basePath + "/store/remove",
+        data: {"id": id},
+        modalWindow: true,
+        traditional: true,
+        success: function (data) {
+          tips.alert(data.message);
+          if (data.flag == "SUCCESS") {
+            $('#tt').datagrid('reload');
+          }
+        },
+      });
+    });
+  }
+</script>
+

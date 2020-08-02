@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="zh-cmn-Hans" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="common/layout::header( ~{::title})">
+    <title id="title">丁香医生订单明细</title>
+</head>
+<body>
+<style>
+    .subContainer .panel {
+        box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.3), 0px 0px 3px rgba(0, 0, 0, 0.1) inset;
+    }
+
+    .subContainer > .panel.easyui-fluid:not(:last-child) {
+        margin-bottom: 15px;
+    }
+
+    .subContainer .panel-body {
+        border-width: 0;
+        margin-top: 8px;
+        padding-bottom: 10px;
+    }
+
+    .subContainer .tableBox .datagrid .panel-body {
+        box-shadow: none;
+    }
+
+</style>
+
+<div class="ui fluid subContainer container box-form" style="margin-top:10px;width: 98%">
+    <div id="basicInfo" class="easyui-panel" title="订单基本信息"
+         style="width:100%;"
+         data-options="collapsible:true">
+        <form class="ui form">
+            <div class="searchBox">
+                <ul>
+                    <li class="w-8-4">
+                        <div class="smallBox">
+                            <label>内部订单号:</label>
+                            <span style="width: 150px;height: 24px;" th:text="${order.code}"/>
+                        </div>
+                        <div class="smallBox">
+                            <label>平台订单号：</label>
+                            <span style="width: 150px;height: 24px;" th:text="${order.orderId}"/>
+                        </div>
+                        <div class="smallBox">
+                            <label>订单生成时间：</label>
+                            <span style="width: 150px;height: 24px;" th:text="${#dates.format(order.orderCreateTime,'yyyy-MM-dd HH:mm:ss')}"/>
+                        </div>
+                        <div class="smallBox">
+                            <label>订购人姓名：</label>
+                            <span style="width: 150px;height: 24px;" th:text="${order.buyerName}"/>
+                        </div>
+
+                        <div class="smallBox">
+                            <label>订购人证件号码：</label>
+                            <span style="width: 150px;height: 24px;" th:text="${order.buyerIdCard}"></span>
+                        </div>
+                        <div class="smallBox">
+                            <label>订购人电话：</label>
+                            <span style="width: 150px;height: 24px;" th:text="${order.buyerMobile}"/>
+                        </div>
+                        <div class="smallBox">
+                            <label>支付类型：</label>
+                            <span style="width: 150px;height: 24px;" th:text="${order.payType}"/>
+                        </div>
+
+                    </li>
+
+                    <li class="w-8-4 notFlex">
+                        <div class="smallBox">
+                            <label>支付流水号：</label>
+                            <span style="width: 150px;height: 24px;"  th:text="${order.paymentNo}"></span>
+                        </div>
+                        <div class="smallBox">
+                            <label>支付时间：</label>
+                            <span style="width: 150px;height: 24px;" th:text="${#dates.format(order.payTime,'yyyy-MM-dd HH:mm:ss')}"/>
+                        </div>
+                        <div class="smallBox">
+                            <label>电商平台编码：</label>
+                            <span style="width: 150px;height: 24px;" th:text="${order.platformCode}"/>
+                        </div>
+                        <div class="smallBox">
+                            <label>申报关区：</label>
+                            <span style="width: 150px;height: 24px;" th:text="${order.customsCode}"/>
+                        </div>
+                        <div class="smallBox">
+                            <label>订单状态：</label>
+                            <span style="width: 150px;height: 24px;" th:text="${order.status.desc}"/>
+                        </div>
+                        <div class="smallBox">
+                            <label>支付企业编码：</label>
+                            <span style="width: 150px;height: 24px;" th:text="${order.payCompanyCode}"/>
+                        </div>
+
+                    </li>
+
+                </ul>
+            </div>
+        </form>
+    </div>
+
+    <div id="feeInfo" class="easyui-panel" title="费用信息"
+         style="width:100%;"
+         data-options="collapsible:true">
+        <form class="ui form">
+            <div class="searchBox">
+                <ul>
+                    <li class="w-8-4">
+                        <div class="smallBox">
+                            <label>运费(元)：</label>
+                            <span style="width: 150px;height: 24px;" th:text="${freight}"/>
+                        </div>
+                        <div class="smallBox">
+                            <label>税费(元)：</label>
+                            <span style="width: 150px;height: 24px;" th:text="${tax}"/>
+                        </div>
+
+                    </li>
+                    <li class="w-8-4" notFlex>
+                        <div class="smallBox">
+                            <label>优惠金额(元)：</label>
+                            <span style="width: 150px;height: 24px;" th:text="${discount}"/>
+                        </div>
+                        <div class="smallBox">
+                            <label>实际支付金额(元)：</label>
+                            <span style="width: 150px;height: 24px;" th:text="${realPayAmount}"/>
+                        </div>
+
+                    </li>
+
+                </ul>
+            </div>
+        </form>
+    </div>
+
+    <div id="receiverInfo" class="easyui-panel" title="收货信息"
+         style="width:100%;"
+         data-options="collapsible:true">
+        <form class="ui form">
+            <div class="searchBox">
+                <ul>
+                    <li class="w-8-4">
+                        <div class="smallBox">
+                            <label>收货人：</label>
+                            <span style="width: 150px;height: 24px;" th:text="${order.receiverName}"/>
+                        </div>
+                        <div class="smallBox">
+                            <label>收货人电话：</label>
+                            <span style="width: 150px;height: 24px;" th:text="${order.receiverMobile}"/>
+                        </div>
+                        <div class="smallBox">
+                            <label>省份：</label>
+                            <span style="width: 150px;height: 24px;" th:text="${order.province}"/>
+                        </div>
+                        <div class="smallBox">
+                            <label>城市：</label>
+                            <span style="width: 150px;height: 24px;" th:text="${order.city}"/>
+                        </div>
+                    </li>
+                    <li class="w-8-4" notFlex>
+                        <div class="smallBox">
+                            <label>收件人证件号：</label>
+                            <span style="width: 150px;height: 24px;" th:text="${order.receiverIdCard}"/>
+                        </div>
+                        <div class="smallBox">
+                            <label>收件人姓名：</label>
+                            <span style="width: 150px;height: 24px;" th:text="${order.receiverName}"/>
+                        </div>
+                        <div class="smallBox">
+                            <label>区/县：</label>
+                            <span style="width: 150px;height: 24px;" th:text="${order.area}"/>
+                        </div>
+                        <div class="smallBox">
+                            <label>地址：</label>
+                            <span style="width: 150px;height: 24px;" th:text="${order.address}"/>
+                        </div>
+                    </li>
+
+                </ul>
+            </div>
+        </form>
+    </div>
+
+
+    <div id="goodsInfo" class="easyui-panel" title="商品信息"
+         style="width:100%;margin-bottom: 40px;"
+         data-options="collapsible:true">
+        <div class="">
+            <input th:value="${mainId}" type="hidden" id="mainId" name="mainId">
+            <div class="tableBox">
+                <table id="itemTable" striped="true" style="width:99%;">
+                    <thead >
+                    <tr>
+                        <th field="skuCode" width="15%">供应商商品编码</th>
+                        <th field="commodityName" width="20%">商品名称</th>
+                        <th field="specificationName" width="25%">商品规格</th>
+                        <th field="quantity" width="10%">数量</th>
+                        <th field="price" width="10%">单价(元)</th>
+                        <th field="taxAmount" width="10%">申报金额(元)</th>
+                        <th field="discountAmount" width="10%">优惠金额(元)</th>
+                    </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+
+$(function () {
+    var id = $("#mainId").val();
+    $('#itemTable').datagrid({
+        initCount: 1,//开始就加载
+        url: basePath + '/orderDxy/detail/json/' + id,
+        method: 'post',
+        pagination: false
+    });
+    $(window).resize();
+})
+
+</script>
+</body>
+</html>

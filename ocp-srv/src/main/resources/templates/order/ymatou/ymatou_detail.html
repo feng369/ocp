@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="zh-cmn-Hans" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="common/layout::header( ~{::title})">
+    <title id="title">洋码头订单明细</title>
+</head>
+<body>
+<div class="ui fluid container box-form">
+    <div class="contentDetail">
+        <div id="tb" class="easyui-tabs" style="padding: 0 10px;width: 100%;">
+            <div title="洋码头订单明细" style="display: none;margin-top: 10px">
+                <input th:value="${orderId}" type="hidden" id="id">
+                <table id="itemTable" striped="true" style="height: auto"
+                       data-options="rownumbers:true">
+                    <thead >
+                    <tr>
+                        <th field="outerSkuId" width="180">商品货号</th>
+                        <th field="productTitle" width="180">产品名称</th>
+                        <th field="price" width="180">商品单价</th>
+                        <th field="num" width="180" formatter="formatNum">商品总价</th>
+                    </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        var id = $("#id").val();
+        $('#itemTable').datagrid({
+            initCount: 1,//开始就加载
+            url: basePath + '/orderYmatou/detail/json/' + id,
+            method: 'post',
+            pagination: false
+        });
+        $(window).resize();
+    })
+
+    function formatNum(value, row, index) {
+        if (row && row.num && row.price) {
+            return row.price*row.num;
+        }
+    }
+
+</script>
+</body>
+</html>

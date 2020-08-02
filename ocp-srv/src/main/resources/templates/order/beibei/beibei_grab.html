@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="zh-cmn-Hans" xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+
+<head th:replace="common/layout::header( ~{::title})">
+  <title id="title">贝贝订单管理</title>
+</head>
+<body>
+<div class="contentBox">
+  <div class="ui container" style="margin-top:10px;width: 95%">
+    <form class="ui form" id="receiveForm" name="receiveForm" th:action="@{/orderBeibei/oneGrab}" method="post">
+        <div class="field">
+            <div class="two fields">
+
+                <div class="required field">
+                <label>订单号:</label>
+                <input name="orderId" class="easyui-textbox" style="width: 150px;height: 24px;" required>
+                </div>
+
+                <div class="required field">
+                    <label>店铺：</label>
+                    <span class="selectBox">
+                            <select id="storeId" class="form-select" name="storeId"
+                                    style="width: 150px;height: 24px;" required>
+                                <option value=""></option>
+                                <option th:each="store : ${storeList}" th:text="${store.code}"
+                                        th:value="${store.id}">
+                                </option>
+                            </select>
+                            <i class="x icon clearBtn" title="清空"></i>
+                </span>
+                </div>
+
+            </div>
+        </div>
+    </form>
+  </div>
+
+
+</div>
+
+</body>

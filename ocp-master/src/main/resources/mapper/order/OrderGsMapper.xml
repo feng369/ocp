@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.topideal.supplychain.ocp.order.mapper.OrderGsMapper">
+
+    <resultMap id="BaseResultMap" type="com.topideal.supplychain.ocp.order.model.OrderGs">
+        <id column="id" property="id" />
+        <result column="code" property="code" />
+        <result column="grab_id" property="grabId" />
+        <result column="ebp_code" property="ebpCode" />
+        <result column="ebc_code" property="ebcCode" />
+        <result column="customs_code" property="customsCode" />
+        <result column="ciq_code" property="ciqCode" />
+        <result column="logistics_code" property="logisticsCode" />
+        <result column="busi_mode" property="busiMode" />
+        <result column="shop_order_id" property="shopOrderId" />
+        <result column="consign_code" property="consignCode" />
+        <result column="status" property="status" />
+        <result column="status_desc" property="statusDesc" />
+        <result column="freeze_status" property="freezeStatus" />
+        <result column="freeze_status_desc" property="freezeStatusDesc" />
+        <result column="pay_time" property="payTime" />
+        <result column="gs_create_time" property="gsCreateTime" />
+        <result column="pay_channel" property="payChannel" />
+        <result column="trade_no" property="tradeNo" />
+        <result column="bonded_area_ship_expense" property="bondedAreaShipExpense" />
+        <result column="bonded_area_goods_price" property="bondedAreaGoodsPrice" />
+        <result column="bonded_area_tax" property="bondedAreaTax" />
+        <result column="bonded_area_pay_cash" property="bondedAreaPayCash" />
+        <result column="bonded_area_non_cash_deduct" property="bondedAreaNonCashDeduct" />
+        <result column="ship_to_name" property="shipToName" />
+        <result column="ship_to_mobile" property="shipToMobile" />
+        <result column="ship_to_zip" property="shipToZip" />
+        <result column="ship_to_province" property="shipToProvince" />
+        <result column="ship_to_city" property="shipToCity" />
+        <result column="ship_to_district" property="shipToDistrict" />
+        <result column="ship_to_town" property="shipToTown" />
+        <result column="ship_to_address" property="shipToAddress" />
+        <result column="id_card_no" property="idCardNo" />
+        <result column="id_card_name" property="idCardName" />
+        <result column="positive_url" property="positiveUrl" />
+        <result column="other_side_url" property="otherSideUrl" />
+        <result column="logistics_channel" property="logisticsChannel" />
+        <result column="logistics_number" property="logisticsNumber" />
+        <result column="logistics_status" property="logisticsStatus" />
+        <result column="logistics_status_desc" property="logisticsStatusDesc" />
+        <result column="shop_code" property="shopCode" />
+        <result column="from_eplat" property="fromEplat" />
+        <result column="fail_reason" property="failReason" />
+        <result column="note" property="note" />
+        <result column="buyer_comment" property="buyerComment" />
+        <result column="seller_comment" property="sellerComment" />
+        <result column="order_create_time" property="orderCreateTime" />
+        <result column="create_time" property="createTime" />
+        <result column="create_by" property="createBy" />
+        <result column="update_time" property="updateTime" />
+        <result column="update_by" property="updateBy" />
+        <result column="version" property="version" />
+        <result column="is_deleted" property="isDeleted" />
+        <result column="tenant_id" property="tenantId" />
+        <result column="to_status" property="toStatus" />
+        <result column="send_kjb_status" property="sendKjbStatus" />
+        <result column="warehouse_code" property="warehouseCode" />
+        <result column="to_system" property="toSystem" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, code, grab_id, ebp_code, ebc_code, customs_code, ciq_code, logistics_code,
+        busi_mode, shop_order_id, consign_code, status, status_desc, freeze_status,
+        freeze_status_desc, pay_time, gs_create_time, pay_channel, trade_no,
+        bonded_area_ship_expense, bonded_area_goods_price, bonded_area_tax, bonded_area_pay_cash,
+        ship_to_name, ship_to_mobile, ship_to_zip, ship_to_province, ship_to_city,
+        ship_to_district, ship_to_town, ship_to_address, id_card_no, id_card_name, positive_url,
+        other_side_url, logistics_channel, logistics_number, logistics_status, bonded_area_non_cash_deduct,
+        logistics_status_desc, shop_code, from_eplat, fail_reason, note, buyer_comment,
+        seller_comment, order_create_time, create_time, create_by, update_time, update_by,
+        version, is_deleted, tenant_id, to_status, send_kjb_status, warehouse_code, to_system
+    </sql>
+
+    <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from doc_order_gs
+        where id = #{id}
+    </select>
+
+    <select id="selectByIds" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from doc_order_gs
+        where id in
+        <foreach collection="ids" separator="," item="id" open="(" close=")" >
+            #{id,jdbcType=BIGINT}
+        </foreach>
+    </select>
+
+    <select id="pageList" resultMap="BaseResultMap" parameterType="com.topideal.supplychain.ocp.order.dto.OrderGsDto">
+        select
+        <include refid="Base_Column_List" />
+        from doc_order_gs
+        <where>
+            <if test="code != null"> and code = #{code}</if>
+            <if test="ebpCode != null"> and ebp_code = #{ebpCode}</if>
+            <if test="ebcCode != null"> and ebc_code = #{ebcCode}</if>
+            <if test="customsCode != null"> and customs_code = #{customsCode}</if>
+            <if test="busiMode != null"> and busi_mode = #{busiMode}</if>
+            <if test="consignCode != null"> and consign_code = #{consignCode}</if>
+            <!--<if test="payTime != null"> and pay_time = #{payTime}</if>
+            <if test="createTime != null"> and create_time = #{createTime}</if>-->
+            <if test="toStatus != null"> and to_status = #{toStatus}</if>
+            <!--<if test="id != null"> and id = #{id} </if>-->
+        </where>
+        order by create_time desc
+    </select>
+
+    <select id="selectByConsignCode" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from doc_order_gs
+        where consign_code = #{consignCode} and to_status in ('70','140')
+    </select>
+
+    <update id="updateForwardSystem">
+        update doc_order_gs set to_system = #{forwardSystem}
+        where id = #{id}
+    </update>
+
+    <update id="updateOrderStatus">
+        update doc_order_gs set to_status = #{status}, fail_reason = #{reason}
+        <if test="kjbStatus != null">
+            ,send_kjb_status = #{kjbStatus}
+        </if>
+        where id = #{id} and to_status != '140'
+    </update>
+
+    <insert id="insert" parameterType="com.topideal.supplychain.ocp.order.model.OrderGs" keyProperty="id"
+            useGeneratedKeys="true">
+        insert into doc_order_gs
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="code != null">code,</if>
+            <if test="grabId != null">grab_id,</if>
+            <if test="ebpCode != null">ebp_code,</if>
+            <if test="ebcCode != null">ebc_code,</if>
+            <if test="customsCode != null">customs_code,</if>
+            <if test="ciqCode != null">ciq_code,</if>
+            <if test="logisticsCode != null">logistics_code,</if>
+            <if test="busiMode != null">busi_mode,</if>
+            <if test="shopOrderId != null">shop_order_id,</if>
+            <if test="consignCode != null">consign_code,</if>
+            <if test="status != null">status,</if>
+            <if test="statusDesc != null">status_desc,</if>
+            <if test="freezeStatus != null">freeze_status,</if>
+            <if test="freezeStatusDesc != null">freeze_status_desc,</if>
+            <if test="payTime != null">pay_time,</if>
+            <if test="gsCreateTime != null">gs_create_time,</if>
+            <if test="payChannel != null">pay_channel,</if>
+            <if test="tradeNo != null">trade_no,</if>
+            <if test="bondedAreaShipExpense != null">bonded_area_ship_expense,</if>
+            <if test="bondedAreaGoodsPrice != null">bonded_area_goods_price,</if>
+            <if test="bondedAreaTax != null">bonded_area_tax,</if>
+            <if test="bondedAreaPayCash != null">bonded_area_pay_cash,</if>
+            <if test="bondedAreaNonCashDeduct != null">bonded_area_non_cash_deduct,</if>
+            <if test="shipToName != null">ship_to_name,</if>
+            <if test="shipToMobile != null">ship_to_mobile,</if>
+            <if test="shipToZip != null">ship_to_zip,</if>
+            <if test="shipToProvince != null">ship_to_province,</if>
+            <if test="shipToCity != null">ship_to_city,</if>
+            <if test="shipToDistrict != null">ship_to_district,</if>
+            <if test="shipToTown != null">ship_to_town,</if>
+            <if test="shipToAddress != null">ship_to_address,</if>
+            <if test="idCardNo != null">id_card_no,</if>
+            <if test="idCardName != null">id_card_name,</if>
+            <if test="positiveUrl != null">positive_url,</if>
+            <if test="otherSideUrl != null">other_side_url,</if>
+            <if test="logisticsChannel != null">logistics_channel,</if>
+            <if test="logisticsNumber != null">logistics_number,</if>
+            <if test="logisticsStatus != null">logistics_status,</if>
+            <if test="logisticsStatusDesc != null">logistics_status_desc,</if>
+            <if test="shopCode != null">shop_code,</if>
+            <if test="fromEplat != null">from_eplat,</if>
+            <if test="failReason != null">fail_reason,</if>
+            <if test="note != null">note,</if>
+            <if test="buyerComment != null">buyer_comment,</if>
+            <if test="sellerComment != null">seller_comment,</if>
+            <if test="orderCreateTime != null">order_create_time,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="version != null">version,</if>
+            <if test="isDeleted != null">is_deleted,</if>
+            <if test="tenantId != null">tenant_id,</if>
+            <if test="toStatus != null">to_status,</if>
+            <if test="sendKjbStatus != null">send_kjb_status,</if>
+            <if test="warehouseCode != null">warehouse_code,</if>
+            <if test="toSystem != null">to_system,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="code != null">#{code},</if>
+            <if test="grabId != null">#{grabId},</if>
+            <if test="ebpCode != null">#{ebpCode},</if>
+            <if test="ebcCode != null">#{ebcCode},</if>
+            <if test="customsCode != null">#{customsCode},</if>
+            <if test="ciqCode != null">#{ciqCode},</if>
+            <if test="logisticsCode != null">#{logisticsCode},</if>
+            <if test="busiMode != null">#{busiMode},</if>
+            <if test="shopOrderId != null">#{shopOrderId},</if>
+            <if test="consignCode != null">#{consignCode},</if>
+            <if test="status != null">#{status},</if>
+            <if test="statusDesc != null">#{statusDesc},</if>
+            <if test="freezeStatus != null">#{freezeStatus},</if>
+            <if test="freezeStatusDesc != null">#{freezeStatusDesc},</if>
+            <if test="payTime != null">#{payTime},</if>
+            <if test="gsCreateTime != null">#{gsCreateTime},</if>
+            <if test="payChannel != null">#{payChannel},</if>
+            <if test="tradeNo != null">#{tradeNo},</if>
+            <if test="bondedAreaShipExpense != null">#{bondedAreaShipExpense},</if>
+            <if test="bondedAreaGoodsPrice != null">#{bondedAreaGoodsPrice},</if>
+            <if test="bondedAreaTax != null">#{bondedAreaTax},</if>
+            <if test="bondedAreaPayCash != null">#{bondedAreaPayCash},</if>
+            <if test="bondedAreaNonCashDeduct != null">#{bondedAreaNonCashDeduct},</if>
+            <if test="shipToName != null">#{shipToName},</if>
+            <if test="shipToMobile != null">#{shipToMobile},</if>
+            <if test="shipToZip != null">#{shipToZip},</if>
+            <if test="shipToProvince != null">#{shipToProvince},</if>
+            <if test="shipToCity != null">#{shipToCity},</if>
+            <if test="shipToDistrict != null">#{shipToDistrict},</if>
+            <if test="shipToTown != null">#{shipToTown},</if>
+            <if test="shipToAddress != null">#{shipToAddress},</if>
+            <if test="idCardNo != null">#{idCardNo},</if>
+            <if test="idCardName != null">#{idCardName},</if>
+            <if test="positiveUrl != null">#{positiveUrl},</if>
+            <if test="otherSideUrl != null">#{otherSideUrl},</if>
+            <if test="logisticsChannel != null">#{logisticsChannel},</if>
+            <if test="logisticsNumber != null">#{logisticsNumber},</if>
+            <if test="logisticsStatus != null">#{logisticsStatus},</if>
+            <if test="logisticsStatusDesc != null">#{logisticsStatusDesc},</if>
+            <if test="shopCode != null">#{shopCode},</if>
+            <if test="fromEplat != null">#{fromEplat},</if>
+            <if test="failReason != null">#{failReason},</if>
+            <if test="note != null">#{note},</if>
+            <if test="buyerComment != null">#{buyerComment},</if>
+            <if test="sellerComment != null">#{sellerComment},</if>
+            <if test="orderCreateTime != null">#{orderCreateTime},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="version != null">#{version},</if>
+            <if test="isDeleted != null">#{isDeleted},</if>
+            <if test="tenantId != null">#{tenantId},</if>
+            <if test="toStatus != null">#{toStatus},</if>
+            <if test="sendKjbStatus != null">#{sendKjbStatus},</if>
+            <if test="warehouseCode != null">#{warehouseCode},</if>
+            <if test="toSystem != null">#{toSystem},</if>
+        </trim>
+    </insert>
+</mapper>

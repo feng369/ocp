@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="zh-cmn-Hans" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="common/layout::header( ~{::title})">
+    <title id="title">全球仓订单明细</title>
+</head>
+<body>
+<style>
+    .subContainer .panel {
+        box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.3), 0px 0px 3px rgba(0, 0, 0, 0.1) inset;
+    }
+
+    .subContainer > .panel.easyui-fluid:first-child {
+        margin-bottom: 10px;
+    }
+
+    .subContainer .panel-body {
+        border-width: 0;
+        margin-top: 8px;
+    }
+
+    .subContainer .tableBox .datagrid .panel-body {
+        box-shadow: none;
+    }
+
+</style>
+<div class="ui fluid subContainer container box-form" style="margin-top:10px;width: 98%">
+    <div id="tb" class="easyui-panel" title="明细" style="width:100%;"
+         data-options="collapsible:true">
+        <div class="tableBox">
+            <input th:value="${orderId}" type="hidden" id="id">
+            <table id="itemTable" striped="true" style="width:99%;"
+                   data-options="collapsible:true">
+                <thead>
+                <tr>
+                    <th field="skuId" width="25%">货号</th>
+                    <th field="declarePrice" width="25%">单价(单位：元)</th>
+                    <th field="count" width="25%">数量</th>
+                    <th field="totalPrice" width="25%">总价(单位：元)</th>
+                </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    $(function () {
+        var id = $("#id").val();
+        $('#itemTable').datagrid({
+            initCount: 1,//开始就加载
+            url: basePath + '/orderGlobal/detail/json/' + id,
+            method: 'post',
+            rownumbers :true
+
+        });
+        $(window).resize();
+
+    })
+
+
+</script>
+</body>
+</html>

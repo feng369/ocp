@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.topideal.supplychain.ocp.order.mapper.OrderPubBoxMapper" >
+  <resultMap id="BaseResultMap" type="com.topideal.supplychain.ocp.order.model.OrderPubBox" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="order_id" property="orderId" jdbcType="BIGINT" />
+    <result column="number" property="number" jdbcType="VARCHAR" />
+    <result column="client_weight" jdbcType="DECIMAL" property="clientWeight" />
+    <result column="client_length" jdbcType="DECIMAL" property="clientLength" />
+    <result column="client_width" jdbcType="DECIMAL" property="clientWidth" />
+    <result column="client_height" jdbcType="DECIMAL" property="clientHeight" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, order_id, number, client_weight, client_length, client_width, client_height
+  </sql>
+  <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from doc_order_pub_box
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteById" parameterType="java.lang.Long" >
+    delete from doc_order_pub_box
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+  <insert id="insert" parameterType="com.topideal.supplychain.ocp.order.model.OrderPubBox" useGeneratedKeys="true" keyProperty="id">
+    insert into doc_order_pub_box
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="orderId != null" >
+        order_id,
+      </if>
+      <if test="number != null" >
+        number,
+      </if>
+      <if test="clientWeight != null" >
+        client_weight,
+      </if>
+      <if test="clientLength != null" >
+        client_length,
+      </if>
+      <if test="clientWidth != null" >
+        client_width,
+      </if>
+      <if test="clientHeight != null" >
+        client_height,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="orderId != null" >
+        #{orderId,jdbcType=BIGINT},
+      </if>
+      <if test="number != null" >
+        #{number,jdbcType=VARCHAR},
+      </if>
+      <if test="clientWeight != null" >
+        #{clientWeight,jdbcType=DECIMAL},
+      </if>
+      <if test="clientLength != null" >
+        #{clientLength,jdbcType=DECIMAL},
+      </if>
+      <if test="clientWidth != null" >
+        #{clientWidth,jdbcType=DECIMAL},
+      </if>
+      <if test="clientHeight != null" >
+        #{clientHeight,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateById" parameterType="com.topideal.supplychain.ocp.order.model.OrderPubBox" >
+    update doc_order_pub_box
+    <set >
+      <if test="orderId != null" >
+        order_id = #{orderId,jdbcType=BIGINT},
+      </if>
+      <if test="number != null" >
+        number = #{number,jdbcType=VARCHAR},
+      </if>
+      <if test="clientWeight != null" >
+        client_weight = #{clientWeight,jdbcType=DECIMAL},
+      </if>
+      <if test="clientLength != null" >
+        client_length = #{clientLength,jdbcType=DECIMAL},
+      </if>
+      <if test="clientWidth != null" >
+        client_width = #{clientWidth,jdbcType=DECIMAL},
+      </if>
+      <if test="clientHeight != null" >
+        client_height = #{clientHeight,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+
+  <insert id="batchInsert">
+    insert into doc_order_pub_box (order_id, number,
+    client_weight, client_length, client_width,
+    client_height)
+    values
+    <foreach collection="boxList" item="item" separator=",">
+      (#{orderId,jdbcType=BIGINT}, #{item.number,jdbcType=VARCHAR},
+      #{item.clientWeight,jdbcType=DECIMAL}, #{item.clientLength,jdbcType=DECIMAL}, #{item.clientWidth,jdbcType=DECIMAL},
+      #{item.clientHeight,jdbcType=DECIMAL})
+    </foreach>
+  </insert>
+
+
+  <select id="selectByOrderId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from doc_order_pub_box
+    where order_id = #{orderId,jdbcType=BIGINT}
+  </select>
+
+</mapper>
